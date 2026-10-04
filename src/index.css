@@ -1287,39 +1287,6 @@ ul[role="listbox"] li { margin: 0; }
   gap: calc(var(--space) * 2);
 }
 
-.city-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.city-facts li {
-  flex: 1 1 9rem;
-  margin: 0;
-  padding: 0.75rem 0.9rem;
-  border-radius: 12px;
-}
-
-.city-facts .stat-fare { background: #ffe08a; }
-.city-facts .stat-stops { background: #d4e6ff; }
-.city-facts .stat-changes { background: #d4f2de; }
-
-.city-facts strong {
-  display: block;
-  font-size: 1.15rem;
-  line-height: 1.3;
-}
-
-.city-facts li > span {
-  display: block;
-  margin-top: 0.15rem;
-  color: var(--ink);
-  font-size: 0.85rem;
-}
-
 .city-legs {
   list-style: none;
   display: flex;
@@ -1579,45 +1546,51 @@ ul[role="listbox"] li { margin: 0; }
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: calc(var(--space) * 1.5);
+  gap: 8px;
   margin: 0;
 }
 
-.fare-stat { grid-column: 1 / -1; }
-
-.fare-figures {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 1rem;
+.stat-row {
+  display: grid;
+  gap: 8px;
 }
 
-.fare-figures > span { display: block; }
+.fare-single { grid-column: 1 / -1; }
 
-.stats div {
+.stats > div {
   margin: 0;
-  padding: calc(var(--space) * 1.5);
-  border-radius: var(--radius);
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
 }
 
-.stats .stat-fare { background: #ffe08a; }
+.stats .stat-weekday,
+.stats .fare-single { background: #ffe08a; }
+.stats .stat-weekend { background: #fff3c9; }
 .stats .stat-stops { background: #d4e6ff; }
 .stats .stat-changes { background: #d4f2de; }
 
 .stats dt {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.35rem;
+  font-size: 0.75rem;
   font-weight: 600;
+  line-height: 1.2;
   color: var(--ink);
+}
+
+.stats dt > span:last-child {
+  min-width: 0;
 }
 
 .stat-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.85rem;
-  height: 1.85rem;
-  border-radius: 0.55rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 0.4rem;
   background: #fff;
   flex: none;
 }
@@ -1633,10 +1606,10 @@ ul[role="listbox"] li { margin: 0; }
 .stats dd {
   margin: 0.15rem 0 0;
   font-family: var(--display);
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 section.departures {
@@ -1731,9 +1704,23 @@ section.departures {
   font-size: 1.05rem;
 }
 
-@media (min-width: 720px) {
-  .stats { grid-template-columns: 1.6fr 1fr 1fr; }
-  .fare-stat { grid-column: auto; }
+.itinerary,
+.city-ride-sheet {
+  container-type: inline-size;
+}
+
+@container (min-width: 36rem) {
+  .stat-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats > div {
+    padding: 10px 12px;
+  }
+
+  .stats dd {
+    font-size: 1.35rem;
+  }
 }
 
 .stat-note {
@@ -2008,17 +1995,36 @@ summary {
 
 @media (max-width: 959px) {
   .sheet {
-    gap: 12px;
-    padding: 12px;
+    gap: 8px;
+    padding: 8px 12px 12px;
   }
 
-  .pane,
+  .pane {
+    padding: 0;
+    gap: 8px;
+  }
+
   .planner,
   .map-intro,
   .map-list,
+  .map-stage,
   .itinerary,
-  .ticket {
-    padding: 12px;
+  .ticket,
+  section:not(.ticket):not(.departures) {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .result {
+    gap: 8px;
+  }
+
+  section.departures {
+    padding: 10px 12px;
+  }
+
+  .city-page {
+    margin: 8px;
   }
 
   .choices {
@@ -2038,7 +2044,7 @@ summary {
   }
 
   .board {
-    padding: 0.7rem 0.75rem;
+    padding: 8px 10px;
     overflow: visible;
   }
 
@@ -2060,12 +2066,21 @@ summary {
     right: -9px;
   }
 
+  h1 {
+    font-size: 1.15rem;
+  }
+
+  .lede,
+  .criterion {
+    font-size: 0.88rem;
+  }
+
   .board-names {
     display: flex;
     flex-wrap: wrap;
     gap: 0.15rem 0.35rem;
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: 0.82rem;
+    font-weight: 600;
     line-height: 1.35;
   }
 
@@ -2077,47 +2092,175 @@ summary {
 
   .itinerary h2,
   .city-route-bar h2,
-  .map-route-title {
-    font-size: 1.15rem;
-  }
-
-  .stats {
-    grid-template-columns: 1.35fr 0.82fr 0.82fr;
-    gap: 8px;
-  }
-
-  .fare-stat {
-    grid-column: auto;
-  }
-
-  .stats div {
-    padding: 8px;
-  }
-
-  .stats dd,
-  .depart-clock {
+  .map-route-title,
+  .city-leg-stop,
+  .stop-name {
     font-size: 1.05rem;
   }
 
-  .stat-note {
-    font-size: 0.68rem;
+  .stats {
+    gap: 8px;
   }
 
-  .timeline {
-    gap: 12px;
+  .stats > div {
+    padding: 8px 10px;
   }
 
-  .fact {
-    padding: 4px 8px;
+  .stats dd {
+    margin-top: 0.1rem;
+    font-size: 1.15rem;
+  }
+
+  .depart-clock {
+    font-size: 1.45rem;
+  }
+
+  .timeline,
+  .city-legs,
+  .ride,
+  .city-leg {
+    gap: 8px;
+  }
+
+  .ride {
+    margin-left: 0.45rem;
+    padding-left: 1.35rem;
+    border-left-width: 4px;
+  }
+
+  .stop-name::before {
+    width: 0.78rem;
+    height: 0.78rem;
+    border-width: 3px;
+    left: -1.9rem;
+    top: 0.16rem;
+  }
+
+  .stat-row {
+    display: contents;
+  }
+
+  .fare-stats {
+    order: 1;
+  }
+
+  section.departures,
+  .departures-strip {
+    order: 2;
+  }
+
+  .line-pill,
+  .ride-facts .fact,
+  .change-note,
+  .stops-toggle summary {
+    align-items: center;
+    min-height: 36px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .line-pill,
+  .ride-facts .fact {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .ride-facts {
+    gap: 6px;
+  }
+
+  .ride-facts svg,
+  .change-note svg,
+  .stops-label svg,
+  .stops-chevron {
+    width: 15px;
+    height: 15px;
+  }
+
+  .stops-toggle {
+    width: 100%;
+  }
+
+  .stops-toggle summary {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 36px;
+    background: var(--shade);
+    border: 0;
+  }
+
+  .stops-toggle summary::after {
+    content: "";
+    position: absolute;
+    inset: -4px 0;
+  }
+
+  .stops-toggle[open] summary {
+    border-radius: 8px;
+  }
+
+  .stops-count {
+    min-width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.78rem;
+  }
+
+  .city-leg {
+    padding: 10px 10px 10px 12px;
+    border-left-width: 4px;
+    border-radius: 10px;
+  }
+
+  .route-map ol {
+    max-height: 38vh;
+    overflow: auto;
+  }
+
+  .route-stop {
+    padding-bottom: 0.35rem;
+    font-size: 0.92rem;
+  }
+
+  .route-stem {
+    min-height: 0.35rem;
+  }
+
+  .route-dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-width: 2px;
+  }
+
+  .route-change {
+    font-size: 0.78rem;
+  }
+
+  .map-stage .zoom-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .map-stage .zoom-row button {
+    min-height: 44px;
+    padding: 0 0.35rem;
+    font-size: 0.88rem;
+  }
+
+  .schematic text {
+    font-size: 16px;
   }
 
   .city-route-bar {
-    padding: 0.75rem 0.75rem 0.15rem;
+    padding: 10px 12px 2px;
   }
 
   .city-route-body {
-    gap: 10px;
-    padding: 0.55rem 0.75rem 1rem;
+    gap: 8px;
+    padding: 8px 12px 12px;
   }
 
   .city-split {

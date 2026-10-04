@@ -471,7 +471,6 @@ export function JourneyCard({
   lines: LineSequence[]
   lang: Lang
 }) {
-  const stops = totalStops(journey)
   return (
     <article className="itinerary">
       <RouteBoard journey={journey} lines={lines} lang={lang} />
@@ -483,37 +482,7 @@ export function JourneyCard({
         <span className="place-name">{journey.destinationName}</span>
       </h2>
       <TripMeta copy={copy} journey={journey} />
-      <dl className="stats">
-        <div className="fare-stat stat-fare">
-          <dt>
-            <span className="stat-icon">
-              <IndianRupee aria-hidden="true" size={18} strokeWidth={2} />
-            </span>
-            {copy.fareLabel}
-          </dt>
-          <dd>
-            <Fare copy={copy} journey={journey} />
-          </dd>
-        </div>
-        <div className="stat-stops">
-          <dt>
-            <span className="stat-icon">
-              <Signpost aria-hidden="true" size={18} strokeWidth={2} />
-            </span>
-            {copy.stopsLabel}
-          </dt>
-          <dd>{stops === null ? copy.timingUnavailable : copy.stopCount(stops)}</dd>
-        </div>
-        <div className="stat-changes">
-          <dt>
-            <span className="stat-icon">
-              <Shuffle aria-hidden="true" size={18} strokeWidth={2} />
-            </span>
-            {copy.changesLabel}
-          </dt>
-          <dd>{journey.changes === 0 ? copy.noChanges : copy.changeCount(journey.changes)}</dd>
-        </div>
-      </dl>
+      <JourneyStats copy={copy} journey={journey} />
       <ol className="timeline">
         {journey.legs.map((leg, index) => {
           const color = legColor(leg, lines, lang)
@@ -660,21 +629,72 @@ function totalStops(journey: Journey): number | null {
   return journey.legs.reduce((sum, leg) => sum + (leg.rideStops ?? 0), 0)
 }
 
-function Fare({ copy, journey }: { copy: Copy; journey: Journey }) {
+export function JourneyStats({ copy, journey }: { copy: Copy; journey: Journey }) {
+  const stops = totalStops(journey)
+  return (
+    <div className="stat-row">
+      <dl className="stats fare-stats">
+        <FareTiles copy={copy} journey={journey} />
+      </dl>
+      <dl className="stats count-stats">
+        <div className="stat-stops">
+          <dt>
+            <span className="stat-icon">
+              <Signpost aria-hidden="true" size={16} strokeWidth={2} />
+            </span>
+            <span>{copy.stopsLabel}</span>
+          </dt>
+          <dd>{stops === null ? copy.timingUnavailable : copy.stopCount(stops)}</dd>
+        </div>
+        <div className="stat-changes">
+          <dt>
+            <span className="stat-icon">
+              <Shuffle aria-hidden="true" size={16} strokeWidth={2} />
+            </span>
+            <span>{copy.changesLabel}</span>
+          </dt>
+          <dd>{journey.changes === 0 ? copy.noChanges : copy.changeCount(journey.changes)}</dd>
+        </div>
+      </dl>
+    </div>
+  )
+}
+
+function FareTiles({ copy, journey }: { copy: Copy; journey: Journey }) {
   if (journey.fare.kind === "weekday-weekend") {
     return (
-      <span className="fare-figures">
-        <span>
-          ₹{journey.fare.weekday}
-          <span className="stat-note">{copy.weekdayFare}</span>
-        </span>
-        <span>
-          ₹{journey.fare.weekend}
-          <span className="stat-note">{copy.weekendFare}</span>
-        </span>
-      </span>
+      <>
+        <div className="stat-fare stat-weekday">
+          <dt>
+            <span className="stat-icon">
+              <IndianRupee aria-hidden="true" size={16} strokeWidth={2} />
+            </span>
+            <span>{copy.weekdayFare}</span>
+          </dt>
+          <dd>₹{journey.fare.weekday}</dd>
+        </div>
+        <div className="stat-fare stat-weekend">
+          <dt>
+            <span className="stat-icon">
+              <IndianRupee aria-hidden="true" size={16} strokeWidth={2} />
+            </span>
+            <span>{copy.weekendFare}</span>
+          </dt>
+          <dd>₹{journey.fare.weekend}</dd>
+        </div>
+      </>
     )
   }
-  if (journey.fare.kind === "untyped") return <>₹{journey.fare.amount}</>
-  return <>{copy.fareUnavailable}</>
+  const value = journey.fare.kind === "untyped" ? `₹${journey.fare.amount}` : copy.fareUnavailable
+  return (
+    <div className="stat-fare fare-single">
+      <dt>
+        <span className="stat-icon">
+          <IndianRupee aria-hidden="true" size={16} strokeWidth={2} />
+        </span>
+        <span>{copy.fareLabel}</span>
+      </dt>
+      <dd>{value}</dd>
+    </div>
+  )
 }
