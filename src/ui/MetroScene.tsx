@@ -15,17 +15,7 @@ export function MetroScene() {
           <rect key={color} x={80 + index * 70} y="8" width="70" height="8" fill={color} />
         ))}
       </g>
-      <g>
-        {run ? (
-          <animateTransform
-            attributeName="transform"
-            type="translate"
-            from="0 0"
-            to={`-${tile} 0`}
-            dur="8s"
-            repeatCount="indefinite"
-          />
-        ) : null}
+      <g className={run ? "metro-track" : undefined}>
         <Track />
         <Track dx={tile} />
       </g>

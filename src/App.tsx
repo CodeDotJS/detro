@@ -10,7 +10,7 @@ import { savedJourneys } from "./lib/offline/saved"
 import { alternateRide, planRoute, sameRide } from "./lib/transit/route"
 import { startLineCode } from "./lib/transit/routeMap"
 import { readSelection, writeSelection } from "./lib/plan/selection"
-import { readTextSize, textDefault } from "./lib/plan/textSize"
+import { readTextSize, textDefault, textStorageKey } from "./lib/plan/textSize"
 import { createPlanState, planReducer, routeBlockReason } from "./lib/plan/state"
 import { clearTrips, readTripQuery, readTrips, removeTrip, saveTrip, tripQuery, type SavedTrip } from "./lib/plan/trips"
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
@@ -133,7 +133,8 @@ export function App() {
     document.documentElement.style.fontSize = `${textSize}px`
     try {
       localStorage.removeItem("dms-lang")
-      localStorage.setItem("dms-text", String(textSize))
+      localStorage.removeItem("dms-text")
+      localStorage.setItem(textStorageKey, String(textSize))
     } catch {
       // The planner still works when storage is blocked.
     }
@@ -386,6 +387,7 @@ export function App() {
   function clearSavedData() {
     try {
       localStorage.removeItem("dms-text")
+      localStorage.removeItem(textStorageKey)
       clearTrips(localStorage)
     } catch {
       // The controls still reset on screen.
