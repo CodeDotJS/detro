@@ -1,0 +1,140 @@
+{
+  "id": 230,
+  "station_code": "UNW",
+  "station_name": "UTTAM NAGAR WEST",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 3,
+      "name": "Line 3",
+      "line_color": "Blue Line",
+      "line_code": "LN3",
+      "primary_color_code": "#3b76c0",
+      "secondary_color_code": "#edf5ff",
+      "class_primary": "blue",
+      "class_secondary": null,
+      "start_station": "DWARKA SECTOR - 21",
+      "end_station": "NOIDA ELECTRONIC CITY",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Parking Available",
+      "class_name": "flaticon-parking-area",
+      "image": {
+        "title": "012-parking-area.png",
+        "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Unpaid Concourse To Ground ",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "Unpaid Concourse To Ground ",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "LIFT NO. 04",
+      "description_location": "Ground to Concourse",
+      "code": "LC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 350 days 17 hours 38 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "ESCALATOR NO.02",
+      "description_location": "Ground to Concourse",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 350 days 17 hours 36 minutes ago"
+    }
+  ]
+}

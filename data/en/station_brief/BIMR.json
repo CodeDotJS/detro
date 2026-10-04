@@ -1,0 +1,296 @@
+{
+  "id": 50,
+  "station_code": "BIMR",
+  "station_name": "HAIDERPUR BADLI MOR",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 2,
+      "name": "Line 2",
+      "line_color": "Yellow Line",
+      "line_code": "LN2",
+      "primary_color_code": "#f6d71a",
+      "secondary_color_code": "#fffdf0",
+      "class_primary": "yellow",
+      "class_secondary": null,
+      "start_station": "SAMAYPUR BADLI",
+      "end_station": "MILLENNIUM CITY CENTRE GURUGRAM",
+      "status": "Normal Service"
+    },
+    {
+      "id": 14,
+      "name": "Line 8 Ext.",
+      "line_color": "Magenta (Ext.)",
+      "line_code": "LN8EXTN",
+      "primary_color_code": "#f300f3",
+      "secondary_color_code": "#ffe5ff",
+      "class_primary": "magenta",
+      "class_secondary": null,
+      "start_station": "MAJLIS PARK",
+      "end_station": "DEEPALI CHOWK",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Parking Available",
+      "class_name": "flaticon-parking-area",
+      "image": {
+        "title": "012-parking-area.png",
+        "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    },
+    {
+      "name": "Interchange Station",
+      "class_name": "flaticon-exchange",
+      "image": {
+        "title": "008-exchange.png",
+        "file": "/media/original_images/008-exchange_q4UnGQr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 5",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC5",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 4",
+      "description_location": "UNAVAILABLE",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": "",
+      "last_update": "81 days 11 hours 54 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3",
+      "description_location": "UNAVAILABLE",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": "",
+      "last_update": "81 days 11 hours 54 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": "",
+      "last_update": "205 days 16 hours 24 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": "",
+      "last_update": "205 days 16 hours 24 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 6",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC6",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 22 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 7",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC7",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 22 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 8",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC8",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 19 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 9",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC9",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 19 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 10",
+      "description_location": "PLATFORM 1/2 TO PLATFORM 3/4",
+      "code": "EC10",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 18 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 11",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC11",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 17 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 12",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC12",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 17 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 13",
+      "description_location": "PAID CONCOURSE TO PLATFORM 3/4",
+      "code": "EC13",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 16 hours 16 minutes ago"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": 180,
+  "station_code": "TKPR",
+  "station_name": "TRILOKPURI-SANJAY LAKE",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 7,
+      "name": "Line 7",
+      "line_color": "Pink Line",
+      "line_code": "LN7",
+      "primary_color_code": "#ed91c9",
+      "secondary_color_code": "#fff6fb",
+      "class_primary": "pink",
+      "class_secondary": null,
+      "start_station": "YAMUNA VIHAR",
+      "end_station": "MAUJPUR-BABARPUR",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 4",
+      "description_location": "Gate No.1 to PD Area",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 343 days 15 hours 57 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3",
+      "description_location": "PD Area to Concourse",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 343 days 15 hours 57 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2",
+      "description_location": "Concourse to Platform 2",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 343 days 15 hours 57 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Concourse to Platform 1",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 343 days 15 hours 57 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 4",
+      "description_location": "Concourse to Gate No.2",
+      "code": "LA4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": "",
+      "last_update": "1 year 343 days 15 hours 59 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "Concourse to Gate No.1",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": "",
+      "last_update": "1 year 343 days 15 hours 58 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Concourse to Platform 2",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Concourse to Platform 1",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    }
+  ]
+}

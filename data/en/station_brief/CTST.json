@@ -1,0 +1,281 @@
+{
+  "id": 60,
+  "station_code": "CTST",
+  "station_name": "CENTRAL SECRETARIAT",
+  "station_image": null,
+  "station_commercial_name": "CENTRAL SECRETARIAT PNB",
+  "metro_lines": [
+    {
+      "id": 2,
+      "name": "Line 2",
+      "line_color": "Yellow Line",
+      "line_code": "LN2",
+      "primary_color_code": "#f6d71a",
+      "secondary_color_code": "#fffdf0",
+      "class_primary": "yellow",
+      "class_secondary": null,
+      "start_station": "SAMAYPUR BADLI",
+      "end_station": "MILLENNIUM CITY CENTRE GURUGRAM",
+      "status": "Normal Service"
+    },
+    {
+      "id": 6,
+      "name": "Line 6",
+      "line_color": "Violet Line",
+      "line_code": "LN6",
+      "primary_color_code": "#8115ff",
+      "secondary_color_code": "#f9f3ff",
+      "class_primary": "violet",
+      "class_secondary": null,
+      "start_station": "KASHMERE GATE",
+      "end_station": "RAJA NAHAR SINGH (BALLABHGARH)",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    },
+    {
+      "name": "Interchange Station",
+      "class_name": "flaticon-exchange",
+      "image": {
+        "title": "008-exchange.png",
+        "file": "/media/original_images/008-exchange_q4UnGQr.png"
+      }
+    },
+    {
+      "name": "Airtel NCMC",
+      "class_name": "flaticon-porter",
+      "image": {
+        "title": "013-porter.png",
+        "file": "/media/original_images/013-porter.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 4 (Violet Line)",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1A (Violet Line)",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA1A",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2A (Violet Line)",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA2A",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3A (Violet Line)",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "LA3A",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 73",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC73",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 61",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC61",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 59",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC59",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 58",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC58",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 25 minutes ago"
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "id": 26,
+  "station_code": "NDI",
+  "station_name": "NEW DELHI (Yellow & Airport Line)",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 2,
+      "name": "Line 2",
+      "line_color": "Yellow Line",
+      "line_code": "LN2",
+      "primary_color_code": "#f6d71a",
+      "secondary_color_code": "#fffdf0",
+      "class_primary": "yellow",
+      "class_secondary": null,
+      "start_station": "SAMAYPUR BADLI",
+      "end_station": "MILLENNIUM CITY CENTRE GURUGRAM",
+      "status": "Normal Service"
+    },
+    {
+      "id": 10,
+      "name": "Airport Express",
+      "line_color": "Orange Line",
+      "line_code": "LN10",
+      "primary_color_code": "#f46808",
+      "secondary_color_code": "#feede1",
+      "class_primary": "ael",
+      "class_secondary": null,
+      "start_station": "NEW DELHI (Yellow & Airport Line)",
+      "end_station": "YASHOBHOOMI DWARKA SECTOR  - 25",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    },
+    {
+      "name": "Interchange Station",
+      "class_name": "flaticon-exchange",
+      "image": {
+        "title": "008-exchange.png",
+        "file": "/media/original_images/008-exchange_q4UnGQr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 47",
+      "description_location": "Unpaid Concourse To Ground",
+      "code": "EC47",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "outside ",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 45",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "EC45",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Unpaid Concourse To Ground",
+      "code": "LF2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "LF1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 17,18",
+      "description_location": "Mezzanine To Ground  ",
+      "code": "EC17,EC18",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 15,16",
+      "description_location": "Ground to Mezzanine Near Frisking Point",
+      "code": "EC15,EC16",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 13,14",
+      "description_location": "Unpaid Concourse To Ground",
+      "code": "EC13,EC14",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 9,10,11,12",
+      "description_location": "Unpaid Concourse To Mezzanine ",
+      "code": "EC9,EC10,EC11,EC12",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 7,8",
+      "description_location": "Unpaid Concourse Near Frisking Point To Mezzanine Connecting Yellow Line",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator 4,5",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "EC4,EC5",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 9,10,11,12",
+      "description_location": "Unpaid Concourse Near Check-In Counters To Mezzanine  ",
+      "code": "LF9,LF10,LF11,LF12",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 8",
+      "description_location": "Unpaid Concourse Near Frisking Point To Mezzanine And Gate No. 6",
+      "code": "LF8",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 5 and 6",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "LF5,LF6",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 32 minutes ago"
+    }
+  ]
+}

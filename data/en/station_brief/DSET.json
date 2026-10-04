@@ -1,0 +1,87 @@
+{
+  "id": 240,
+  "station_code": "DSET",
+  "station_name": "DWARKA SECTOR - 8",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 3,
+      "name": "Line 3",
+      "line_color": "Blue Line",
+      "line_code": "LN3",
+      "primary_color_code": "#3b76c0",
+      "secondary_color_code": "#edf5ff",
+      "class_primary": "blue",
+      "class_secondary": null,
+      "start_station": "DWARKA SECTOR - 21",
+      "end_station": "NOIDA ELECTRONIC CITY",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LF2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LF1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    }
+  ]
+}

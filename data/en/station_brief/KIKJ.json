@@ -1,0 +1,132 @@
+{
+  "id": 142,
+  "station_code": "KIKJ",
+  "station_name": "KALINDI KUNJ",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 8,
+      "name": "Line 8",
+      "line_color": "Magenta Line",
+      "line_code": "LN8",
+      "primary_color_code": "#f300f3",
+      "secondary_color_code": "#ffe5ff",
+      "class_primary": "magenta",
+      "class_secondary": null,
+      "start_station": "KRISHNA PARK EXTENSION",
+      "end_station": "BOTANICAL GARDEN",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3",
+      "description_location": "Platform to Paid Concourse ",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 31 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2",
+      "description_location": "Platform to Paid Concourse ",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 31 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Unpaid Concourse to Ground ",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 31 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "Unpaid Concourse to Ground & Basement",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 31 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Platform to Paid Concourse ",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 31 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Platform to Paid Concourse ",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 31 minutes ago"
+    }
+  ]
+}

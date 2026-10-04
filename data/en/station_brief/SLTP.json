@@ -1,0 +1,170 @@
+{
+  "id": 39,
+  "station_code": "SLTP",
+  "station_name": "SULTANPUR",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 2,
+      "name": "Line 2",
+      "line_color": "Yellow Line",
+      "line_code": "LN2",
+      "primary_color_code": "#f6d71a",
+      "secondary_color_code": "#fffdf0",
+      "class_primary": "yellow",
+      "class_secondary": null,
+      "start_station": "SAMAYPUR BADLI",
+      "end_station": "MILLENNIUM CITY CENTRE GURUGRAM",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Parking Available",
+      "class_name": "flaticon-parking-area",
+      "image": {
+        "title": "012-parking-area.png",
+        "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 28 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 4",
+      "description_location": "from ground to unpaid concourse at gate no. 2",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 355 days 12 hours 56 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 4",
+      "description_location": "unpaid concourse to ground towards gate no. 1",
+      "code": "LA4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": "",
+      "last_update": "1 year 355 days 12 hours 56 minutes ago"
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "id": 263,
+  "station_code": "KPEN",
+  "station_name": "KRISHNA PARK EXTENSION",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 8,
+      "name": "Line 8",
+      "line_color": "Magenta Line",
+      "line_code": "LN8",
+      "primary_color_code": "#f300f3",
+      "secondary_color_code": "#ffe5ff",
+      "class_primary": "magenta",
+      "class_secondary": null,
+      "start_station": "KRISHNA PARK EXTENSION",
+      "end_station": "BOTANICAL GARDEN",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "NORTH CONCOURSE TO PLATFORM",
+      "code": "LF1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 54 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "SOUTH CONCOURSE TO PLATFORM",
+      "code": "LF2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 53 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "CONCOURSE TO GROUND",
+      "code": "LF3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 51 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 4",
+      "description_location": "CONCOURSE TO GROUND",
+      "code": "LF4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 49 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 1",
+      "description_location": "NORTH CONCOURSE TO PLATFORM",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 48 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 2",
+      "description_location": "NORTH CONCOURSE TO PLATFORM",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 46 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 3",
+      "description_location": "SOUTH CONCOURSE TO PLATFORM",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 44 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 4",
+      "description_location": "SOUTH CONCOURSE TO PLATFORM",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 42 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 5",
+      "description_location": "CONCOURSE TO GROUND",
+      "code": "EC5",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 18 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 6",
+      "description_location": "CONCOURSE TO GROUND",
+      "code": "EC6",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 17 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 7",
+      "description_location": "CONCOURSE TO GROUND",
+      "code": "EC7",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 15 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 8",
+      "description_location": "CONCOURSE TO GROUND",
+      "code": "EC8",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "1 year 268 days 6 hours 14 minutes ago"
+    }
+  ]
+}

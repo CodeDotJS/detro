@@ -1,0 +1,102 @@
+{
+  "id": 59,
+  "station_code": "PTCK",
+  "station_name": "PATEL CHOWK",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 2,
+      "name": "Line 2",
+      "line_color": "Yellow Line",
+      "line_code": "LN2",
+      "primary_color_code": "#f6d71a",
+      "secondary_color_code": "#fffdf0",
+      "class_primary": "yellow",
+      "class_secondary": null,
+      "start_station": "SAMAYPUR BADLI",
+      "end_station": "MILLENNIUM CITY CENTRE GURUGRAM",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    },
+    {
+      "name": "Airtel NCMC",
+      "class_name": "flaticon-porter",
+      "image": {
+        "title": "013-porter.png",
+        "file": "/media/original_images/013-porter.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 56",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC56",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 26 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 55",
+      "description_location": "Paid Concourse to Platform",
+      "code": "EC55",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 26 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 26 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platform",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 26 minutes ago"
+    }
+  ]
+}

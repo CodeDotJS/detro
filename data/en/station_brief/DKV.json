@@ -1,0 +1,206 @@
+{
+  "id": 245,
+  "station_code": "DKV",
+  "station_name": "DHAULA KUAN",
+  "station_image": null,
+  "station_commercial_name": "ONGC Dhaula Kuan",
+  "metro_lines": [
+    {
+      "id": 10,
+      "name": "Airport Express",
+      "line_color": "Orange Line",
+      "line_code": "LN10",
+      "primary_color_code": "#f46808",
+      "secondary_color_code": "#feede1",
+      "class_primary": "ael",
+      "class_secondary": null,
+      "start_station": "NEW DELHI (Yellow & Airport Line)",
+      "end_station": "YASHOBHOOMI DWARKA SECTOR  - 25",
+      "status": "Normal Service"
+    },
+    {
+      "id": 13,
+      "name": "FOB Dhaula Kuan",
+      "line_color": "FOB",
+      "line_code": "LN12",
+      "primary_color_code": "#808080",
+      "secondary_color_code": "#ececec",
+      "class_primary": "grey",
+      "class_secondary": null,
+      "start_station": "DURGABAI DESHMUKH SOUTH CAMPUS",
+      "end_station": "DHAULA KUAN",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Parking Available",
+      "class_name": "flaticon-parking-area",
+      "image": {
+        "title": "012-parking-area.png",
+        "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    },
+    {
+      "name": "Interchange Station",
+      "class_name": "flaticon-exchange",
+      "image": {
+        "title": "008-exchange.png",
+        "file": "/media/original_images/008-exchange_q4UnGQr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 6",
+      "description_location": "Ground Floor to Basement",
+      "code": "EC6",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 5",
+      "description_location": "Unpaid Concourse to Ground",
+      "code": "EC5",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 4",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "Unpaid concourse to Basement",
+      "code": "LA3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "LA2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Paid Concourse to Platfrom",
+      "code": "LA1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 30 minutes ago"
+    }
+  ]
+}

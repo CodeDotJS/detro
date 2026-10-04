@@ -1,0 +1,296 @@
+{
+  "id": 76,
+  "station_code": "WC",
+  "station_name": "WELCOME",
+  "station_image": null,
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 1,
+      "name": "Line 1",
+      "line_color": "Red Line",
+      "line_code": "LN1",
+      "primary_color_code": "#c0282c",
+      "secondary_color_code": "#fff3f3",
+      "class_primary": "red",
+      "class_secondary": "red",
+      "start_station": "SHAHEED STHAL ( NEW BUS ADDA)",
+      "end_station": "RITHALA",
+      "status": "Normal Service"
+    },
+    {
+      "id": 7,
+      "name": "Line 7",
+      "line_color": "Pink Line",
+      "line_code": "LN7",
+      "primary_color_code": "#ed91c9",
+      "secondary_color_code": "#fff6fb",
+      "class_primary": "pink",
+      "class_secondary": null,
+      "start_station": "YAMUNA VIHAR",
+      "end_station": "MAUJPUR-BABARPUR",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Parking Available",
+      "class_name": "flaticon-parking-area",
+      "image": {
+        "title": "012-parking-area.png",
+        "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    },
+    {
+      "name": "Interchange Station",
+      "class_name": "flaticon-exchange",
+      "image": {
+        "title": "008-exchange.png",
+        "file": "/media/original_images/008-exchange_q4UnGQr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 7A (Pink Line)",
+      "description_location": "Concourse to Interchange Lobby",
+      "code": "EC7",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 6A (Pink Line)",
+      "description_location": "Concourse to Interchange Lobby",
+      "code": "EC6",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 5A (Pink Line)",
+      "description_location": "Ground to unpaid concourse",
+      "code": "EC5",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 4A (Pink Line)",
+      "description_location": "Concourse to Platform No.4",
+      "code": "EC4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 3A (Pink Line)",
+      "description_location": "Concourse to Platform No.4",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 2A (Pink Line)",
+      "description_location": "Concourse to Platform No.3",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator 1A (Pink Line)",
+      "description_location": "Concourse to Platform No.3",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 4A (Pink Line) ",
+      "description_location": "Ground to unpaid concourse",
+      "code": "LF4",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3A (Pink Line)",
+      "description_location": "Concourse to Interchange Red Line",
+      "code": "LF3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2A (Pink Line)",
+      "description_location": "Concourse to Platform No.4",
+      "code": "LF2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1A (Pink Line)",
+      "description_location": "Concourse to Platform No.3",
+      "code": "LF1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator No. 3",
+      "description_location": "Concourse to Platform",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator No. 2",
+      "description_location": "Concourse to Platform",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Escalator ",
+      "name": "Escalator No. 1",
+      "description_location": "Concourse to Platform",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "Concourse to Platform",
+      "code": "LF1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": true,
+      "note": null,
+      "last_update": "4 years 340 days 4 hours 27 minutes ago"
+    }
+  ]
+}

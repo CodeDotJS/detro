@@ -1,0 +1,135 @@
+{
+  "id": 274,
+  "station_code": "PHVR",
+  "station_name": "PRASHANT VIHAR",
+  "station_image": {
+    "title": "MAGENTA-LINE-Exten.jpg",
+    "file": "/media/original_images/MAGENTA-LINE-Exten.jpg"
+  },
+  "station_commercial_name": null,
+  "metro_lines": [
+    {
+      "id": 14,
+      "name": "Line 8 Ext.",
+      "line_color": "Magenta (Ext.)",
+      "line_code": "LN8EXTN",
+      "primary_color_code": "#f300f3",
+      "secondary_color_code": "#ffe5ff",
+      "class_primary": "magenta",
+      "class_secondary": null,
+      "start_station": "MAJLIS PARK",
+      "end_station": "DEEPALI CHOWK",
+      "status": "Normal Service"
+    }
+  ],
+  "station_facility": [
+    {
+      "name": "Divyang Friendly Station",
+      "class_name": "flaticon-disabled",
+      "image": {
+        "title": "disabled.png",
+        "file": "/media/original_images/disabled_nq1qwhI.png"
+      }
+    },
+    {
+      "name": "Lift/Escalator Available",
+      "class_name": "flaticon-elevator",
+      "image": {
+        "title": "007-elevator.png",
+        "file": "/media/original_images/007-elevator_ew8UOTr.png"
+      }
+    }
+  ],
+  "lifts": [
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 1",
+      "description_location": "PAID CONCOURSE TO PLATFORM 1",
+      "code": "LF1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 14 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 2",
+      "description_location": "PAID CONCOURSE TO PLATFORM 2",
+      "code": "LF2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 14 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Lift",
+      "name": "Lift No. 3",
+      "description_location": "CONCOURSE TO GROUND(GATE-1)",
+      "code": "LF3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": true,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 14 hours 29 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 1",
+      "description_location": "PAID CONCOURSE TO PLATFORM 1",
+      "code": "EC1",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "206 days 14 hours 58 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 2",
+      "description_location": "PAID CONCOURSE TO PLATFORM 2",
+      "code": "EC2",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Inside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "206 days 14 hours 57 minutes ago"
+    },
+    {
+      "lift_type": "Escalator",
+      "name": "Escalator No. 3",
+      "description_location": "GROUND TO UNPAID CONCOURSE",
+      "code": "EC3",
+      "from_gate_code": [],
+      "to_gate_code": [],
+      "from_platform_code": [],
+      "to_platform_code": [],
+      "available_outside_inside": "Outside",
+      "divyang_friendly": false,
+      "status": false,
+      "note": "",
+      "last_update": "205 days 14 hours 29 minutes ago"
+    }
+  ]
+}
