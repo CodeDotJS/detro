@@ -1,0 +1,33 @@
+node_modules
+dist
+.DS_Store
+*.local
+__pycache__/
+*.pyc
+
+# Original product brief. The shipped scope is docs/PRODUCT.md and AGENTS.md.
+prompt.md
+
+# Saved request samples. Field notes stay in curls/STRUCTURE.md.
+curls/
+
+# Hindi snapshot. The app loads the English lists.
+data/hi/
+
+# Downloaded station-pair files. Calculated routes use data/en/stations.
+data/en/routes/
+data/en/fares/
+data/en/first-last/
+
+# Extra downloads the app does not read.
+data/en/facilities/
+data/en/linepage/
+data/en/metro_line/
+data/en/menus.json
+data/en/facility_category.json
+data/en/service_information.json
+data/download-*
+
+# Local collectors. The app does not import these.
+scripts/
+detro.archives/
