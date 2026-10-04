@@ -5,7 +5,11 @@ alwaysApply: true
 
 # Deployment
 
-Every change goes through a branch and a pull request. Do not commit or push directly to `main`.
+Do not deploy until the user has used the change on this machine and said to deploy. A push that opens a pull request uploads a preview. A merge to `main` uploads production. Both are a deploy. Do not push, do not open a pull request, and do not merge before that.
+
+Check the change with `npm run dev` at `http://127.0.0.1:5173`, including a phone-width window.
+
+When the user says to deploy:
 
 1. Branch from `main`.
 2. Commit on that branch. `type(scope): description`. One commit is one change.

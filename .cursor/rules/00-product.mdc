@@ -19,6 +19,6 @@ Follow `docs/DMRC_API.md` for upstream calls. Follow `docs/DECISIONS.md` for def
 
 Files that stay on this machine and out of git are listed in the local-files rule. Do not delete them, and do not add them to a commit.
 
-Ship through a branch and a pull request. Follow the deployment rule. Do not push straight to `main`.
+Do not push or open a pull request until the user has verified the change locally and said to deploy. Follow the deployment rule.
 
 Commits use `type(scope): description`. `type` is `feat`, `fix`, `docs`, `test`, `refactor`, or `chore`. `scope` is the area that changed, such as `plan`, `map`, `city`, `offline`, `deploy`, `data`, or `docs`. The description is the change itself, in lowercase, with no period. One commit is one change. Do not use a label that does not name the work.
