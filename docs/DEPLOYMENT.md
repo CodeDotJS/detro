@@ -4,7 +4,7 @@ Checked 2026-10-04. The app is a static site. It does not need a server, a datab
 
 Production is live at `https://detro.pages.dev`. The Pages project `detro` is Direct Upload, and it is not connected to Git. The first upload was the local `dist` built from `94e3b40`.
 
-The GitHub Actions upload is the next step. It waits on two secrets: `CLOUDFLARE_API_TOKEN` (permission to edit this Pages project only) and `CLOUDFLARE_ACCOUNT_ID`. Do not print the token and do not commit it. After those secrets exist, add `.github/workflows/ci.yml` as written below and require that check on `main`. Do not connect Pages to Git to get around a missing token.
+GitHub Actions runs `.github/workflows/ci.yml`. The job uses `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Do not print the token and do not commit it. A push to `main` publishes production. A pull request from this repository publishes a preview. Do not connect Pages to Git.
 
 ## Procedure
 
@@ -72,7 +72,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=detro
+          command: pages deploy dist --project-name=detro --branch=${{ github.head_ref || github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 

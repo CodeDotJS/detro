@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Pages file limits
+        run: |
+          node --input-type=module -e "
+          import { readdirSync, statSync } from 'node:fs'
+          import { join } from 'node:path'
+          const files = []
+          const walk = (dir) => {
+            for (const name of readdirSync(dir)) {
+              const path = join(dir, name)
+              if (statSync(path).isDirectory()) walk(path)
+              else files.push(path)
+            }
+          }
+          walk('dist')
+          const limit = 25 * 1024 * 1024
+          const tooBig = files.filter((file) => statSync(file).size > limit)
+          if (files.length > 20000 || tooBig.length > 0) {
+            console.error({ files: files.length, tooBig })
+            process.exit(1)
+          }
+          "
+      - name: Deploy
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=detro --branch=${{ github.head_ref || github.ref_name }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
