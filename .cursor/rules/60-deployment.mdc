@@ -9,6 +9,8 @@ Do not create the Cloudflare project, do not add the workflow, do not set secret
 
 When they approve, follow `docs/DEPLOYMENT.md` from the top and stop at the first failed check. Report the check and the URL. Do not continue past a failure.
 
+The Pages project `detro` already exists and is Direct Upload. Do not create a second project and do not connect it to Git.
+
 - Production is Cloudflare Pages only. Project name `detro`. Public URL `https://detro.pages.dev`.
 - GitHub Actions runs `npm ci`, `npm test`, and `npm run build`, then Wrangler uploads `dist`. Pages does not also build from Git.
 - A pull request from this repository uploads a preview. A push to `main` uploads production. `npm run smoke` is not part of the job.

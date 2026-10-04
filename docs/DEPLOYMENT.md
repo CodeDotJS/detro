@@ -2,7 +2,9 @@
 
 Checked 2026-10-04. The app is a static site. It does not need a server, a database, or a paid add-on.
 
-Deployment is not approved. An agent stops here until the user says to deploy. The steps below are the procedure to follow after that approval.
+Production is live at `https://detro.pages.dev`. The Pages project `detro` is Direct Upload, and it is not connected to Git. The first upload was the local `dist` built from `94e3b40`.
+
+The GitHub Actions upload is the next step. It waits on two secrets: `CLOUDFLARE_API_TOKEN` (permission to edit this Pages project only) and `CLOUDFLARE_ACCOUNT_ID`. Do not print the token and do not commit it. After those secrets exist, add `.github/workflows/ci.yml` as written below and require that check on `main`. Do not connect Pages to Git to get around a missing token.
 
 ## Procedure
 
@@ -117,7 +119,7 @@ Cloudflare Pages rejects a single file over 25 MiB and a site over 20,000 files.
 
 The raw pair download is about 1.5 GB and hundreds of thousands of files. It stays on the machine and out of Git. The packed journeys in `data/en/journeys/` are about 39 MB across 254 files. The street tiles in `public/map-tiles/` are 1,219 files and about 9.5 MB. Together with the app shell, that is far under 20,000 files.
 
-The journey pack is currently compiled into one JavaScript bundle. That bundle will be larger than 25 MiB. Before the first Pages deploy, serve each origin file as its own static file and let the service worker cache those files. Station briefs are small enough to stay in the bundle. Do not upload `data/en/routes/`, `data/en/fares/`, or `data/en/first-last/`.
+Each origin is its own file at `dist/snapshot/en/journeys/`. The first production build had 1,781 files. The largest file was the app script, 1.58 MiB. Station briefs stay in the script bundle. Do not upload `data/en/routes/`, `data/en/fares/`, or `data/en/first-last/`.
 
 ## Build settings
 
