@@ -48,6 +48,7 @@ export function HelpView({
       <section>
         <h2>{copy.freshnessTitle}</h2>
         <p>{copy.networkSaved(snapshotDate)}</p>
+        <p>{copy.offlineHelp(snapshotDate)}</p>
         <p>{copy.snapshotNote(snapshotDate)}</p>
         <p>{copy.journeysSaved(journeyAt)}</p>
         <p>{copy.offlineLimit}</p>

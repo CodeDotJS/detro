@@ -1,4 +1,4 @@
-const SHELL = "dms-shell-2026-10-04g"
+const SHELL = "dms-shell-2026-10-04h"
 const SNAPSHOT = "dms-snapshot-2026-09-30"
 
 self.addEventListener("install", (event) => {
@@ -26,7 +26,7 @@ self.addEventListener("fetch", (event) => {
     return
   }
   if (url.pathname.startsWith("/snapshot/")) {
-    event.respondWith(networkThenCache(SNAPSHOT, request))
+    event.respondWith(cacheFirst(SNAPSHOT, request))
     return
   }
   if (url.pathname.startsWith("/assets/")) {
@@ -39,8 +39,8 @@ self.addEventListener("fetch", (event) => {
 async function precacheApp() {
   const list = await precacheList()
   if (!list) return
-  await addAll(SHELL, list.shell)
   await addAll(SNAPSHOT, list.snapshot)
+  await addAll(SHELL, list.shell)
 }
 
 async function precacheList() {
@@ -81,17 +81,27 @@ async function navigate(request) {
   }
 }
 
+async function cacheFirst(name, request) {
+  const cache = await caches.open(name)
+  const cached = await cache.match(request)
+  if (cached) return cached
+  return networkThenCache(name, request)
+}
+
 async function networkThenCache(name, request) {
   const cache = await caches.open(name)
   try {
     const response = await fetch(request)
-    if (response.ok) await cache.put(request, response.clone())
-    return response
+    if (response.ok) {
+      await cache.put(request, response.clone())
+      return response
+    }
   } catch {
-    const cached = await cache.match(request)
-    if (cached) return cached
-    throw new Error("Missing cached snapshot")
+    // The network is down. A saved copy is enough.
   }
+  const cached = await cache.match(request)
+  if (cached) return cached
+  return new Response("missing", { status: 404 })
 }
 
 async function cacheThenNetwork(name, request) {

@@ -5,6 +5,7 @@ import { journeyFromPack, type PackRide } from "./pack"
 type PackFile = Record<string, { d?: PackRide; c?: PackRide }>
 
 const packs = new Map<string, PackFile>()
+const SNAPSHOT_CACHE = "dms-snapshot-2026-09-30"
 
 export async function savedJourneys(
   from: string,
@@ -55,10 +56,27 @@ async function bundle(
 }
 
 async function readSnapshotJson(url: string): Promise<unknown | null> {
+  const response = await readSnapshot(url)
+  if (!response) return null
+  try {
+    return await response.json()
+  } catch {
+    return null
+  }
+}
+
+async function readSnapshot(url: string): Promise<Response | null> {
   try {
     const response = await fetch(url)
-    if (!response.ok) return null
-    return await response.json()
+    if (response.ok) return response
+  } catch {
+    // The network is down. The saved pack may still be on this phone.
+  }
+  if (!("caches" in globalThis)) return null
+  try {
+    const cache = await caches.open(SNAPSHOT_CACHE)
+    const cached = await cache.match(url)
+    return cached?.ok ? cached : null
   } catch {
     return null
   }

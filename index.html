@@ -46,20 +46,81 @@
         }
       }
     </script>
+    <style>
+      .boot {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+        margin: 0;
+        padding: 2rem;
+        background: #eef1f5;
+        color: #16181d;
+        font-family: "IBM Plex Sans", sans-serif;
+        text-align: center;
+      }
+      .boot img {
+        width: 96px;
+        height: 96px;
+        padding: 12px;
+        background: #f3f5f8;
+        border-radius: 20px;
+        animation: boot-pulse 1.6s ease-in-out infinite;
+      }
+      .boot p {
+        margin: 0;
+        max-width: 18rem;
+        font-size: 1.15rem;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+      @keyframes boot-pulse {
+        50% { transform: translateY(-4px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot img { animation: none; }
+      }
+    </style>
   </head>
   <body>
     <div id="root">
-      <main>
-        <h1>DETRO — Delhi Metro Simple</h1>
-        <p>DETRO plans a Delhi Metro trip. Choose a start station and a destination to see the train, where to change, and the fare. Free, ad-free, and not an official DMRC app.</p>
-        <nav>
-          <a href="/">Plan a route</a>
-          <a href="/map">Delhi Metro line map</a>
-          <a href="/city">Delhi Metro city map</a>
-          <a href="/help">Help</a>
-        </nav>
-      </main>
+      <div class="boot">
+        <img src="/attractions/metro-people.svg" alt="" width="96" height="96" />
+        <p id="boot-line">Laying Delhi’s routes onto this phone</p>
+      </div>
+      <noscript>
+        <main>
+          <h1>DETRO — Delhi Metro Simple</h1>
+          <p>DETRO plans a Delhi Metro trip. Choose a start station and a destination to see the train, where to change, and the fare. Free, ad-free, and not an official DMRC app.</p>
+          <nav>
+            <a href="/">Plan a route</a>
+            <a href="/map">Delhi Metro line map</a>
+            <a href="/city">Delhi Metro city map</a>
+            <a href="/help">Help</a>
+          </nav>
+        </main>
+      </noscript>
     </div>
+    <script>
+      const bootLines = [
+        "Laying Delhi’s routes onto this phone",
+        "Packing fares and platforms for the ride home",
+        "Saving the first train and the last",
+        "Unfolding the city for a cut signal",
+      ]
+      let bootIndex = 0
+      const bootTimer = setInterval(() => {
+        const line = document.getElementById("boot-line")
+        if (!line) {
+          clearInterval(bootTimer)
+          return
+        }
+        bootIndex = (bootIndex + 1) % bootLines.length
+        line.textContent = bootLines[bootIndex]
+      }, 1600)
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
