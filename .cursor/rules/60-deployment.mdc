@@ -1,20 +1,26 @@
 ---
-description: When and how to deploy DETRO. Do not deploy until the user approves.
+description: Branch, preview, and production deploy for DETRO
 alwaysApply: true
 ---
 
 # Deployment
 
-Do not create the Cloudflare project, do not add the workflow, do not set secrets, and do not upload a build until the user explicitly approves a deploy.
+Every change goes through a branch and a pull request. Do not commit or push directly to `main`.
 
-When they approve, follow `docs/DEPLOYMENT.md` from the top and stop at the first failed check. Report the check and the URL. Do not continue past a failure.
+1. Branch from `main`.
+2. Commit on that branch. `type(scope): description`. One commit is one change.
+3. Push the branch and open a pull request in this repository.
+4. Wait for the `check` job in the CI workflow. It runs `npm ci`, `npm test`, and `npm run build`, rejects `dist` above 20,000 files or any file over 25 MiB, then uploads a preview. `npm run smoke` is not in the job.
+5. Open the preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen. Confirm `/`, `/map`, `/city`, and `/help` load. If the check fails, stop and report the check and the URL.
+6. Merge into `main` only after that job is green. Branch protection requires the `check` job.
+7. The merge publishes production at `https://detro.pages.dev`.
 
-The Pages project `detro` already exists and is Direct Upload. Do not create a second project and do not connect it to Git.
+The Pages project `detro` already exists and is Direct Upload. Do not create a second project, do not connect Pages to Git, and do not upload with Wrangler from this machine.
 
-- Production is Cloudflare Pages only. Project name `detro`. Public URL `https://detro.pages.dev`.
-- GitHub Actions runs `npm ci`, `npm test`, and `npm run build`, then Wrangler uploads `dist`. Pages does not also build from Git.
-- A pull request from this repository uploads a preview. A push to `main` uploads production. `npm run smoke` is not part of the job.
-- Fail the job if `dist` has more than 20,000 files or any file over 25 MiB.
-- Do not deploy `data/en/routes/`, `data/en/fares/`, `data/en/first-last/`, `data/hi/`, `scripts/`, `detro.archives/`, `curls/`, or `prompt.md`.
-- No Vercel project, Pages Functions, Workers, R2, KV, D1, analytics, or a paid add-on.
-- `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are GitHub Actions secrets. Never commit them or print them.
+Production is Cloudflare Pages only. No Vercel project, Pages Functions, Workers, R2, KV, D1, analytics, or a paid add-on.
+
+Do not deploy `data/en/routes/`, `data/en/fares/`, `data/en/first-last/`, `data/hi/`, `scripts/`, `detro.archives/`, `curls/`, or `prompt.md`.
+
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are GitHub Actions secrets. Never commit them or print them.
+
+The first-time setup is already done. It is recorded in `docs/DEPLOYMENT.md`. Do not repeat it.

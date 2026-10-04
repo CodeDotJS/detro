@@ -4,7 +4,17 @@ Checked 2026-10-04. The app is a static site. It does not need a server, a datab
 
 Production is live at `https://detro.pages.dev`. The Pages project `detro` is Direct Upload, and it is not connected to Git. The first upload was the local `dist` built from `94e3b40`.
 
-GitHub Actions runs `.github/workflows/ci.yml`. The job uses `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Do not print the token and do not commit it. A push to `main` publishes production. A pull request from this repository publishes a preview. Do not connect Pages to Git.
+Every later change uses a branch and a pull request. Do not commit or push directly to `main`.
+
+1. Branch from `main` and commit there.
+2. Open a pull request. The `check` job in the CI workflow tests the build, enforces the file limits, and uploads a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen.
+3. Confirm `/`, `/map`, `/city`, and `/help` on that preview.
+4. Merge only after the `check` job is green. Branch protection requires that job.
+5. The merge publishes production at `https://detro.pages.dev`.
+
+Do not upload with Wrangler from a laptop, and do not connect Pages to Git. The secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` stay in GitHub. Do not print the token and do not commit it.
+
+The numbered procedure below is the first-time setup. It is already done. Do not repeat it.
 
 ## Procedure
 
@@ -76,7 +86,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-A push to `main` publishes production. Any other branch from this repository publishes a preview at `https://<branch>.detro.pages.dev`. A pull request from a fork does not receive the secrets, so the deploy step must not run for it. `npm run smoke` is not in this job.
+A push to `main` publishes production. A pull request from this repository publishes a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen. A pull request from a fork does not receive the secrets, so the deploy step must not run for it. `npm run smoke` is not in this job.
 
 Production traffic goes to Cloudflare Pages. Pages does not meter static bandwidth and does not bill overage. GitHub Actions runs the tests and uploads the built site. Vercel is not part of this pipeline.
 
