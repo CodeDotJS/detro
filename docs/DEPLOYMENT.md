@@ -7,9 +7,9 @@ Production is live at `https://detro.pages.dev`. The Pages project `detro` is Di
 Every later change uses a branch and a pull request. Do not commit or push directly to `main`.
 
 1. Branch from `main` and commit there.
-2. Open a pull request. `CI / check` tests the build, enforces the file limits, and uploads a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen.
+2. Open a pull request. The `check` job in the CI workflow tests the build, enforces the file limits, and uploads a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen.
 3. Confirm `/`, `/map`, `/city`, and `/help` on that preview.
-4. Merge only after `CI / check` is green. Branch protection requires that check.
+4. Merge only after the `check` job is green. Branch protection requires that job.
 5. The merge publishes production at `https://detro.pages.dev`.
 
 Do not upload with Wrangler from a laptop, and do not connect Pages to Git. The secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` stay in GitHub. Do not print the token and do not commit it.
