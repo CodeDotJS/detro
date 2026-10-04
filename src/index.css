@@ -163,10 +163,20 @@ summary:active {
   aspect-ratio: 720 / 220;
 }
 
+.metro-track {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: metro-track-slide 8s linear infinite;
+}
+
 .metro-wheel {
   transform-box: fill-box;
   transform-origin: center;
   animation: metro-wheel-spin 0.7s linear infinite;
+}
+
+@keyframes metro-track-slide {
+  to { transform: translate(-50%, 0); }
 }
 
 @keyframes metro-wheel-spin {
@@ -174,6 +184,7 @@ summary:active {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .metro-track,
   .metro-wheel { animation: none; }
   button,
   .tabbar a,
