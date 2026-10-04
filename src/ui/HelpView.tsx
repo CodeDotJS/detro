@@ -1,4 +1,5 @@
 import type { Copy } from "../i18n/copy"
+import { textMax, textMin } from "../lib/plan/textSize"
 import { Notice } from "./Notice"
 
 export function HelpView({
@@ -12,11 +13,11 @@ export function HelpView({
   onDismissNotice,
 }: {
   copy: Copy
-  textSize: "small" | "normal" | "large"
+  textSize: number
   snapshotDate: string
   notice: string | null
   journeyAt: string
-  onTextSize: (size: "small" | "normal" | "large") => void
+  onTextSize: (size: number) => void
   onClear: () => void
   onDismissNotice: () => void
 }) {
@@ -33,16 +34,21 @@ export function HelpView({
       </section>
       <section>
         <h2>{copy.textSize}</h2>
-        <div className="languages" role="group" aria-label={copy.textSize}>
-          <button type="button" aria-pressed={textSize === "small"} onClick={() => onTextSize("small")}>
-            {copy.textSmall}
-          </button>
-          <button type="button" aria-pressed={textSize === "normal"} onClick={() => onTextSize("normal")}>
-            {copy.textNormal}
-          </button>
-          <button type="button" aria-pressed={textSize === "large"} onClick={() => onTextSize("large")}>
-            {copy.textLarger}
-          </button>
+        <div className="text-size">
+          <span className="text-size-end">{copy.textSmall}</span>
+          <input
+            type="range"
+            min={textMin}
+            max={textMax}
+            step={1}
+            value={textSize}
+            aria-label={copy.textSize}
+            aria-valuemin={textMin}
+            aria-valuemax={textMax}
+            aria-valuenow={textSize}
+            onChange={(event) => onTextSize(Number(event.target.value))}
+          />
+          <span className="text-size-end">{copy.textLarger}</span>
         </div>
       </section>
       <section>

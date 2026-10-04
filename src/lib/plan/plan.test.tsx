@@ -195,7 +195,7 @@ describe("plan screen", () => {
     const html = renderToStaticMarkup(
       <HelpView
         copy={copy.en}
-        textSize="normal"
+        textSize={16}
         snapshotDate="2026-09-30"
         notice={null}
         journeyAt="2026-09-30T12:00:00.000"

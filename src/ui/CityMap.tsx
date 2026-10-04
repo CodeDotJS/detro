@@ -11,7 +11,7 @@ import { routeStops } from "../lib/transit/routeMap"
 import type { Journey, Lang } from "../lib/transit/types"
 import { measureSwap, playSwap, type SwapDelta } from "./flipSwap"
 import { Notice } from "./Notice"
-import { ServiceTimes, TripMeta } from "./PlanView"
+import { JourneyStats, ServiceTimes, TripMeta } from "./PlanView"
 
 const coordinates = coordinatesFile.stations as Record<string, LatLng>
 const CLEAR_TILE =
@@ -503,25 +503,10 @@ function CityRide({
   lines: LineSequence[]
   lang: Lang
 }) {
-  const stops = journey.legs.some((leg) => leg.rideStops === null)
-    ? null
-    : journey.legs.reduce((sum, leg) => sum + (leg.rideStops ?? 0), 0)
   return (
     <div className="city-ride-sheet">
       <TripMeta copy={copy} journey={journey} />
-      <ul className="city-facts">
-        <li className="stat-fare">
-          <FareFact copy={copy} journey={journey} />
-        </li>
-        <li className="stat-stops">
-          <strong>{stops === null ? copy.timingUnavailable : stops}</strong>
-          <span>{copy.stopsLabel}</span>
-        </li>
-        <li className="stat-changes">
-          <strong>{journey.changes}</strong>
-          <span>{copy.changesLabel}</span>
-        </li>
-      </ul>
+      <JourneyStats copy={copy} journey={journey} />
       <ol className="city-legs">
         {journey.legs.map((leg, index) => {
           const color = legColor(leg, lines, lang)
@@ -577,38 +562,6 @@ function CityRide({
       </ol>
       <ServiceTimes copy={copy} journey={journey} compact />
     </div>
-  )
-}
-
-function FareFact({ copy, journey }: { copy: Copy; journey: Journey }) {
-  if (journey.fare.kind === "weekday-weekend") {
-    return (
-      <>
-        <strong>
-          ₹{journey.fare.weekday}
-          <span aria-hidden="true"> · </span>₹{journey.fare.weekend}
-        </strong>
-        <span>
-          {copy.weekdayFare}
-          <span aria-hidden="true"> · </span>
-          {copy.weekendFare}
-        </span>
-      </>
-    )
-  }
-  if (journey.fare.kind === "untyped") {
-    return (
-      <>
-        <strong>₹{journey.fare.amount}</strong>
-        <span>{copy.fareLabel}</span>
-      </>
-    )
-  }
-  return (
-    <>
-      <strong>{copy.fareUnavailable}</strong>
-      <span>{copy.fareLabel}</span>
-    </>
   )
 }
 

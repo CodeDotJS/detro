@@ -10,6 +10,7 @@ import { savedJourneys } from "./lib/offline/saved"
 import { alternateRide, planRoute, sameRide } from "./lib/transit/route"
 import { startLineCode } from "./lib/transit/routeMap"
 import { readSelection, writeSelection } from "./lib/plan/selection"
+import { readTextSize, textDefault } from "./lib/plan/textSize"
 import { createPlanState, planReducer, routeBlockReason } from "./lib/plan/state"
 import { clearTrips, readTripQuery, readTrips, removeTrip, saveTrip, tripQuery, type SavedTrip } from "./lib/plan/trips"
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
@@ -120,7 +121,7 @@ export function App() {
   const [cityMessage, setCityMessage] = useState<string | null>(null)
   const [routeOpen, setRouteOpen] = useState(false)
   const cityRequest = useRef(0)
-  const [textSize, setTextSize] = useState<"small" | "normal" | "large">(readTextSize)
+  const [textSize, setTextSize] = useState(readTextSize)
   const [helpNotice, setHelpNotice] = useState<string | null>(null)
   const [trips, setTrips] = useState<SavedTrip[]>(readStoredTrips)
   const [online, setOnline] = useState(() => navigator.onLine)
@@ -129,11 +130,10 @@ export function App() {
 
   useEffect(() => {
     document.documentElement.lang = lang
-    document.documentElement.style.fontSize =
-      textSize === "large" ? "22px" : textSize === "normal" ? "18px" : "14px"
+    document.documentElement.style.fontSize = `${textSize}px`
     try {
       localStorage.removeItem("dms-lang")
-      localStorage.setItem("dms-text", textSize)
+      localStorage.setItem("dms-text", String(textSize))
     } catch {
       // The planner still works when storage is blocked.
     }
@@ -390,7 +390,7 @@ export function App() {
     } catch {
       // The controls still reset on screen.
     }
-    setTextSize("small")
+    setTextSize(textDefault)
     setTrips([])
     dispatch({ type: "apply-language", names: namesFor(snapshot.stations, "en") })
     clearResult()
@@ -578,16 +578,6 @@ export function App() {
     ) : null}
     </div>
   )
-}
-
-function readTextSize(): "small" | "normal" | "large" {
-  try {
-    const saved = localStorage.getItem("dms-text")
-    if (saved === "large" || saved === "normal" || saved === "small") return saved
-    return "small"
-  } catch {
-    return "small"
-  }
 }
 
 function readStoredTrips(): SavedTrip[] {
