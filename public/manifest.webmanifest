@@ -1,0 +1,19 @@
+{
+  "name": "DETRO — Delhi Metro Simple",
+  "short_name": "DETRO",
+  "description": "DETRO plans a Delhi Metro trip. See the train, where to change, and the fare. Free, ad-free, and independent of DMRC.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eef1f5",
+  "theme_color": "#16181d",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
