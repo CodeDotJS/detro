@@ -2,7 +2,7 @@ const SHELL = "dms-shell-2026-10-04h"
 const SNAPSHOT = "dms-snapshot-2026-09-30"
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(precacheApp().then(() => self.skipWaiting()))
+  event.waitUntil(self.skipWaiting())
 })
 
 self.addEventListener("activate", (event) => {
@@ -35,40 +35,6 @@ self.addEventListener("fetch", (event) => {
   }
   event.respondWith(networkThenCache(SHELL, request))
 })
-
-async function precacheApp() {
-  const list = await precacheList()
-  if (!list) return
-  await addAll(SNAPSHOT, list.snapshot)
-  await addAll(SHELL, list.shell)
-}
-
-async function precacheList() {
-  const response = await fetch("/precache.json")
-  if (!response.ok) return null
-  const list = await response.json()
-  return {
-    shell: Array.isArray(list.shell) ? list.shell : [],
-    snapshot: Array.isArray(list.snapshot) ? list.snapshot : [],
-  }
-}
-
-async function addAll(name, urls) {
-  const cache = await caches.open(name)
-  for (let index = 0; index < urls.length; index += 24) {
-    const batch = urls.slice(index, index + 24)
-    await Promise.all(
-      batch.map(async (url) => {
-        try {
-          const response = await fetch(url)
-          if (response.ok) await cache.put(url, response)
-        } catch {
-          // One missing file does not block the rest of the shell.
-        }
-      }),
-    )
-  }
-}
 
 async function navigate(request) {
   const cache = await caches.open(SHELL)
