@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Save the metro-area street tiles into public/map-tiles."""
 
+import hashlib
 import json
 import math
 import time
@@ -15,7 +16,8 @@ ZOOMS = (9, 10, 11, 12, 13, 14)
 PAD = 0.08
 WORKERS = 2
 PAUSE = 0.2
-AGENT = "DETRO/1.0 (offline Delhi Metro map)"
+AGENT = "DETRO/1.0 (offline Delhi Metro map; https://detro.pages.dev)"
+BLOCKED = "b02c44252dac5a5e820ecef1e9bf9200e9407c042df668a466a1aa81a9ecca7a"
 
 
 def main() -> None:
@@ -58,19 +60,25 @@ def tile_list() -> list[tuple[int, int, int]]:
 
 def saved(tile: tuple[int, int, int]) -> bool:
     path = tile_path(tile)
-    return path.is_file() and path.stat().st_size > 100
+    if not path.is_file() or path.stat().st_size <= 100:
+        return False
+    if hashlib.sha256(path.read_bytes()).hexdigest() == BLOCKED:
+        return False
+    return True
 
 
 def fetch(tile: tuple[int, int, int]) -> bool:
     zoom, x, y = tile
     time.sleep(PAUSE)
-    url = f"https://tile.openstreetmap.org/{zoom}/{x}/{y}.png"
+    url = f"https://tile.openstreetmap.de/{zoom}/{x}/{y}.png"
     request = urllib.request.Request(url, headers={"User-Agent": AGENT})
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
             body = response.read()
             status = response.status
         if status != 200 or not body.startswith(b"\x89PNG"):
+            return False
+        if hashlib.sha256(body).hexdigest() == BLOCKED:
             return False
         path = tile_path(tile)
         path.parent.mkdir(parents=True, exist_ok=True)

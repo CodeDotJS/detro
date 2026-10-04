@@ -426,11 +426,6 @@ export function App() {
 
   return (
     <div className="app">
-    {online ? null : (
-      <p className="offline-banner" role="status">
-        {copy[lang].offlineBanner(snapshotDate)}
-      </p>
-    )}
     <header className="app-bar">
       <a
         className="mark"
@@ -445,7 +440,7 @@ export function App() {
         <span className="mark-name">DETRO</span>
         <span className="mark-tag">Delhi Metro Simple</span>
       </a>
-      <TabBar copy={copy.en} tab={tab} onTab={openTab} />
+      <TabBar copy={copy.en} tab={tab} online={online} onTab={openTab} />
     </header>
     {tab === "plan" ? (
     <PlanView

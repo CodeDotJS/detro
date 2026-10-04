@@ -107,7 +107,19 @@ summary:active {
 }
 
 .pane-stage:not(:has(.result)) {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ride-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
 }
 
 .ride-line {
@@ -149,12 +161,10 @@ summary:active {
   summary:active { transform: none; }
 }
 
-.offline-banner {
-  margin: 0;
-  padding: 0.8rem 1rem;
-  background: #f6d71a;
-  color: #16181d;
-  font-weight: 700;
+.signal-mark {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
 }
 
 .color-rail {

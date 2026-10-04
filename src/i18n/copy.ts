@@ -118,7 +118,7 @@ export type Copy = {
   chooseOnMap: string
   routeDetails: string
   onRoute: string
-  offlineBanner: (date: string) => string
+  offlineHelp: (date: string) => string
   offlineRoute: string
   freshnessTitle: string
   networkSaved: (date: string) => string
@@ -249,7 +249,7 @@ export const copy = {
     chooseOnMap: "Choose on the map",
     routeDetails: "Route details",
     onRoute: "On this route",
-    offlineBanner: (date) => `You are offline. Search, both maps, fares, and saved journeys use the ${date} snapshot.`,
+    offlineHelp: (date) => `Search, both maps, fares, and saved journeys use the ${date} snapshot. They stay on this phone when the signal is cut.`,
     offlineRoute: "You are offline, and this pair was not in the saved journeys. The route is calculated from the station lists. Fare and timing are unavailable.",
     freshnessTitle: "Saved information",
     networkSaved: (date) => `Lines and stations were saved on ${date}.`,
@@ -378,7 +378,7 @@ export const copy = {
     chooseOnMap: "नक्शे पर चुनें",
     routeDetails: "रास्ते का विवरण",
     onRoute: "इस रास्ते पर",
-    offlineBanner: (date) => `आप ऑफ़लाइन हैं। खोज, दोनों नक्शे, किराया, और सेव की हुई यात्राएँ ${date} की सूची से हैं।`,
+    offlineHelp: (date) => `खोज, दोनों नक्शे, किराया, और सेव की हुई यात्राएँ ${date} की सूची से हैं। सिग्नल कटने पर भी वे इस फ़ोन पर रहती हैं।`,
     offlineRoute: "आप ऑफ़लाइन हैं, और यह जोड़ी सेव यात्राओं में नहीं थी। रास्ता स्टेशन सूची से गिना गया है। किराया और समय उपलब्ध नहीं हैं।",
     freshnessTitle: "सेव की गई जानकारी",
     networkSaved: (date) => `लाइन और स्टेशन ${date} को सेव हुए।`,
