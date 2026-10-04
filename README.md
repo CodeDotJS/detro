@@ -93,14 +93,14 @@ The product scope is [`docs/PRODUCT.md`](docs/PRODUCT.md). The upstream API reco
 ## Credits
 
 <p align="center">
-  <img src="public/share/cover.jpg" width="360" alt="Ink drawing of a train at a station, by Péchane" />
+  <img src="public/share/cover.jpg" width="550" alt="The Great Wave off Kanagawa, a woodblock print by Katsushika Hokusai" />
 </p>
 
 The landmark drawings are from [SVG Repo](https://www.svgrepo.com/).
 
 Lines, stations, fares, platforms, and first and last trains come from the public site of the [Delhi Metro Rail Corporation](https://delhimetrorail.com/). DETRO is not an official DMRC app.
 
-The cover image is a work by [Péchane](https://www.artmajeur.com/pechane).
+The cover image is [The Great Wave off Kanagawa](https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa) by Katsushika Hokusai.
 
 ---
 
