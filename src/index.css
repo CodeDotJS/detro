@@ -189,7 +189,7 @@ summary:active {
   flex-direction: column;
   align-items: stretch;
   gap: 6px;
-  padding: 8px 12px;
+  padding: max(8px, env(safe-area-inset-top)) 12px 8px;
   background: #fff;
   border-bottom: 1px solid var(--line);
 }
@@ -912,6 +912,17 @@ ul[role="listbox"] li { margin: 0; }
   line-height: 1.15;
   text-align: center;
   overflow-wrap: break-word;
+}
+
+.board-names {
+  display: none;
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.place-name {
+  white-space: nowrap;
 }
 
 .trip-row {
@@ -1968,6 +1979,129 @@ summary {
 
   .city-split .city-route-body {
     animation: city-pane-in 0.4s ease;
+  }
+}
+
+@media (max-width: 719px) {
+  .sheet {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .pane,
+  .planner,
+  .map-intro,
+  .map-list,
+  .itinerary,
+  .ticket {
+    padding: 12px;
+  }
+
+  .choices {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .choices button {
+    min-height: 44px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.92rem;
+  }
+
+  .choice-detail {
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+
+  .board {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .board-line {
+    min-width: 0;
+    align-items: center;
+  }
+
+  .board-joint {
+    width: auto;
+  }
+
+  .board-name {
+    display: none;
+  }
+
+  .board-seg::before {
+    left: -9px;
+    right: -9px;
+  }
+
+  .board-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .board-names li:not(:last-child)::after {
+    content: " ·";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .itinerary h2,
+  .city-route-bar h2,
+  .map-route-title {
+    font-size: 1.15rem;
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .stats div {
+    padding: 10px;
+  }
+
+  .stats dd,
+  .depart-clock {
+    font-size: 1.35rem;
+  }
+
+  .city-route-bar {
+    padding: 0.75rem 0.75rem 0.15rem;
+  }
+
+  .city-route-body {
+    gap: 10px;
+    padding: 0.55rem 0.75rem 1rem;
+  }
+
+  .city-split {
+    grid-template-rows: minmax(14rem, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .result .zoom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .result .zoom-row button {
+    white-space: normal;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 359px) {
+  .mark-tag {
+    display: none;
+  }
+
+  .tabbar a {
+    gap: 0.2rem;
+    padding: 0 4px;
+    font-size: 0.78rem;
   }
 }
 

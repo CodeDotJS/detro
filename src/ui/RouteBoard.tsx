@@ -40,6 +40,11 @@ export function RouteBoard({
           </div>
         ))}
       </div>
+      <ol className="board-names">
+        {names.map((name, index) => (
+          <li key={`${name}-${index}`}>{name}</li>
+        ))}
+      </ol>
     </div>
   )
 }
