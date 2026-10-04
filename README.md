@@ -1,62 +1,111 @@
-# DETRO
+<p align="center">
+  <img src="public/attractions/metro-people.svg" width="72" alt="DETRO" />
+</p>
 
-A free, ad-free Delhi Metro planner. It is an independent project and is not affiliated with DMRC.
+<h1 align="center">DETRO</h1>
 
-Pick two stations. The result shows the train, where to change, the platform when a saved journey has one, and the fare when that journey has one.
+<p align="center">
+  A free, ad-free Delhi Metro planner.<br />
+  Independent of DMRC.
+</p>
+
+The network, the fares, the platforms, and the first and last trains come from a snapshot saved on 30 September 2026. The page plans a trip from that snapshot. It does not sell tickets and it does not show live arrivals.
+
+---
 
 ## What you get
 
 | | |
 | --- | --- |
-| Plan | Search by station name or code. Swap the ends. Show one ride, and a second when fewer changes takes different stations. |
-| Map | One line at a time. Start here and Go here set the trip. |
-| City | Stations with a saved position, on a street map kept in this repo. A ride draws between the ends that have positions. |
-| Offline | After the app has loaded once, search, fares, platforms, first and last trains, station briefs, and both maps still open with the network off. |
-| Saved trips | Stay on this device. A shared link carries station codes only. |
+| Plan | Origin, destination, swap, and one ride. A second ride appears when fewer changes visits different stations. Search accepts the station name or the station code. |
+| Ride | Line, direction, stop count, platform when the saved journey includes one, and weekday and weekend fare when it includes them. |
+| Map | One line at a time, with the stations on that line. Start here and Go here set the trip. Station details list the facilities saved for that station. |
+| City | 154 stations with a saved latitude and longitude, on street tiles kept in this repo. The ride is drawn between the ends that have positions. |
+| Offline | After this browser has loaded the app once, the snapshot still plans the trip with the network off. |
+| Saved trips | Stored on this device. A shared link carries the two station codes. |
+| Help | Usage, text size, and the snapshot date. |
 
-There is no account, payment, ad, or live arrival board.
+254 stations are in the snapshot. The city map omits the ones with no saved position. The plan and the line map still include them.
 
-## Run
+## What you run
 
-Node 22 or newer.
+| Piece | Where | Job |
+| --- | --- | --- |
+| App | `src/` | Plan, map, city, and help. |
+| Snapshot | `data/en/` | Lines, stations, briefs, coordinates, and one journey file per origin. |
+| Street tiles | `public/map-tiles/` | Metro area, zoom 9 through 14. |
+
+No server. `npm run dev` serves the app on port 5173.
+
+---
+
+## You need
+
+- Node 22 or newer
+- npm
+
+---
+
+## Install locally
 
 ```bash
+git clone https://github.com/CodeDotJS/detro.git
+cd detro
 npm install
 npm test
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173`. `npm run build` typechecks and writes `dist`. `npm run smoke` is a local check against the DMRC backend. It is not part of `npm test`.
+Open `http://127.0.0.1:5173`.
 
-## Docs
+`npm run build` typechecks and writes `dist`.
 
-| File | Contents |
-| --- | --- |
-| `AGENTS.md` | Commands, boundaries, and commit form |
-| `docs/PRODUCT.md` | Scope and journeys |
-| `docs/ARCHITECTURE.md` | Boundaries |
-| `docs/DMRC_API.md` | Endpoint evidence and access blockers |
-| `docs/DATA_SOURCES.md` | Sources, line list, and gaps |
-| `docs/ACCEPTANCE_CRITERIA.md` | What done means |
-| `docs/IMPLEMENTATION_PLAN.md` | Phases |
-| `docs/DECISIONS.md` | Defaults already chosen |
-| `docs/DEPLOYMENT.md` | Cloudflare Pages and GitHub Actions, after approval |
+---
 
-## Do not
+## Production
 
-- Invent a station, fare, platform, contact, or coordinate.
-- Spoof the official site’s `Origin` or `Referer`, copy challenge cookies, or retry HTTP 403.
-- Commit `data/en/routes/`, `data/en/fares/`, `data/en/first-last/`, `data/hi/`, `scripts/`, `detro.archives/`, `curls/`, or `prompt.md`.
-- Deploy, or add analytics, ads, or a paid service, until that work is approved. See `docs/DEPLOYMENT.md`.
+The public site is the `dist` folder on Cloudflare Pages: [detro.pages.dev](https://detro.pages.dev).
 
-## Commits
+GitHub Actions installs, tests, and builds. Wrangler then uploads `dist`. A pull request from this repository is a preview deployment. A push to `main` is production. Pages does not build the repository itself.
 
-`type(scope): description`
+The file limits, the API token, and the order of steps are in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
-`feat(offline): pack every saved journey into the app`
+---
 
-`fix(plan): keep the current ride on screen while the next one loads`
+## After it is up
 
-`docs(deploy): describe the Cloudflare Pages pipeline`
+1. Choose the two stations. The ride shows the line, the direction, and the stops.
+2. When that pair is in the snapshot, the fare, the platform, and the first and last train are on the same screen.
+3. Save the trip on this device, or share a link that carries the two station codes.
+4. The line map and the city map open from the same trip. Help holds text size and the snapshot date.
+5. With the network off, a browser that has loaded the app once still opens that trip.
 
-The type is `feat`, `fix`, `docs`, `test`, `refactor`, or `chore`. The scope is the area that changed. The description is the change, in lowercase, with no period.
+| Kind | Where | How long |
+| --- | --- | --- |
+| Lines, stations, fares, platforms | The snapshot in this repo | Saved 30 September 2026 |
+| Street map | `public/map-tiles/` | Zoom 9 through 14 |
+| Saved trips, text size | This browser | Until cleared on Help |
+
+The product scope is [`docs/PRODUCT.md`](docs/PRODUCT.md). The upstream API record is [`docs/DMRC_API.md`](docs/DMRC_API.md).
+
+---
+
+<br>
+
+<div align="center">
+
+<p align="center">
+  <img src="public/attractions/metro-people.svg" width="128" alt="DETRO" />
+</p>
+
+__License__
+
+<br>
+
+Copyright © 2026 [Rishi Giri](https://rishi.rest)
+
+<br>
+
+DETRO is released under the [MIT License](LICENSE)
+
+</div>
