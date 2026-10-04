@@ -434,9 +434,9 @@ export function CityMap({
               <h2 id="city-route-title">
                 {shown ? (
                   <>
-                    {shown.originName}
+                    <span className="place-name">{shown.originName}</span>
                     <span aria-hidden="true"> → </span>
-                    {shown.destinationName}
+                    <span className="place-name">{shown.destinationName}</span>
                   </>
                 ) : (
                   copy.loadingRoute

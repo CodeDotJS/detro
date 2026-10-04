@@ -477,10 +477,10 @@ export function JourneyCard({
       <RouteBoard journey={journey} lines={lines} lang={lang} />
       <h2>
         <span className="sr-only">{copy.from} </span>
-        {journey.originName}
+        <span className="place-name">{journey.originName}</span>
         <span aria-hidden="true"> → </span>
         <span className="sr-only"> {copy.to} </span>
-        {journey.destinationName}
+        <span className="place-name">{journey.destinationName}</span>
       </h2>
       <TripMeta copy={copy} journey={journey} />
       <dl className="stats">

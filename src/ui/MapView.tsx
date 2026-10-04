@@ -115,7 +115,9 @@ export function MapView({
       {journey && journey.legs.length > 0 ? (
         <div className="route-on-map">
           <p className="map-route-title">
-            {journey.originName} → {journey.destinationName}
+            <span className="place-name">{journey.originName}</span>
+            <span aria-hidden="true"> → </span>
+            <span className="place-name">{journey.destinationName}</span>
           </p>
           <RouteBoard journey={journey} lines={lines} lang={lang} />
           <div className="route-lines">
