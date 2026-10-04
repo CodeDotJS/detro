@@ -1,0 +1,30 @@
+{
+  "first_train": {
+    "endstation_from_first_train_estimated_time": "06:34:02",
+    "first_train_route_detail": [
+      {
+        "start_st": "RI",
+        "start_time": "06:00:02",
+        "end_st": "KG",
+        "end_time": "06:34:02",
+        "interchange_time": "",
+        "start_station_name": "RITHALA",
+        "end_station_name": "KASHMERE GATE"
+      }
+    ]
+  },
+  "last_train": {
+    "endstation_from_last_train_estimated_time": "23:25:49",
+    "last_train_route_detail": [
+      {
+        "start_st": "RI",
+        "start_time": "23:00:00",
+        "end_st": "KG",
+        "end_time": "23:25:49",
+        "interchange_time": 0,
+        "start_station_name": "RITHALA",
+        "end_station_name": "KASHMERE GATE"
+      }
+    ]
+  }
+}
