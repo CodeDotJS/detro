@@ -1,11 +1,11 @@
 import { journeyFromSaved } from "../transit/route"
 import type { Journey } from "../transit/types"
+import { SNAPSHOT_CACHE } from "./caches"
 import { journeyFromPack, type PackRide } from "./pack"
 
 type PackFile = Record<string, { d?: PackRide; c?: PackRide }>
 
 const packs = new Map<string, PackFile>()
-const SNAPSHOT_CACHE = "dms-snapshot-2026-09-30"
 
 export async function savedJourneys(
   from: string,
