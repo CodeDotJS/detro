@@ -91,11 +91,16 @@ export function App() {
     const page = pageMeta(tab)
     document.title = page.title
     setMeta("description", page.description)
+    const canonical = `${window.location.origin}${pathForTab(tab)}`
+    const cover = `${window.location.origin}/share/cover.jpg`
     setMeta("og:title", page.title, true)
     setMeta("og:description", page.description, true)
+    setMeta("og:url", canonical, true)
+    setMeta("og:image", cover, true)
+    setMeta("twitter:card", "summary_large_image")
     setMeta("twitter:title", page.title)
     setMeta("twitter:description", page.description)
-    const canonical = `${window.location.origin}${pathForTab(tab)}`
+    setMeta("twitter:image", cover)
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
     if (!link) {
       link = document.createElement("link")
