@@ -1,0 +1,25 @@
+---
+description: Stack, state, and adapter boundaries
+globs: src/**/*.{ts,tsx},vite.config.ts,package.json
+alwaysApply: false
+---
+
+# Engineering
+
+Stack: React, TypeScript, Vite, plain CSS custom properties, Zod, and Vitest. Commit the lockfile. No UI kit and no analytics SDK. Fonts may be vendored and bundled. Do not load them from a CDN at runtime.
+
+- Keep screens free of DMRC JSON. Map responses in `src/lib/dmrc/` onto types in `src/lib/transit/`.
+- Prefer local component state and pure functions. Add a same-origin adapter only if a real browser request from this app cannot read the API.
+- That adapter may call fixed DMRC operations only. It rejects arbitrary URLs, sets timeouts and size limits, and does not forward cookies or spoof the official origin.
+- Cancel stale search requests. Deduplicate identical in-flight requests.
+- Store language, text size, saved trips, and the chosen origin and destination locally. A refresh keeps that selection. If storage fails, the trip planner still works.
+- "View route on map" shows that ride: the colored route and the marked stations, scrolled into view. Changing the tab alone is not enough.
+- A street map uses Leaflet only after `station_code` coordinates are saved. Do not invent latitude or longitude. Gate exits appear only when a saved record names the gate and where it comes out.
+- Do not add empty-state sentences such as "Your route will show here."
+- Ride facts use an icon and a label on one row. Do not stack direction and platform as separate text blocks, and do not repeat the stop count in a second wording.
+- Do not add `.env` until a real setting exists. Never commit secrets.
+
+```ts
+// Missing fare stays unknown. It is not zero.
+const fare = typeof payload.fare === "number" ? payload.fare : null;
+```

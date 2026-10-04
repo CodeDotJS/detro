@@ -1,0 +1,18 @@
+---
+description: Accessibility and visual rules for screens, styles, and copy
+globs: src/**/*.{tsx,css},index.html
+alwaysApply: false
+---
+
+# Accessibility
+
+Target WCAG 2.2 AA. Automated checks do not replace manual keyboard, zoom, contrast, and screen-reader notes.
+
+- Light background, high-contrast text, generous spacing. Small text is the default, about 16px. Normal is about 18px and Larger is about 22px. A journey is a timeline with the line name and color together.
+- Touch targets at least 48×48 CSS pixels, with visible text labels. Placeholders do not replace labels.
+- Line color is always paired with the line name. Do not use color as the only distinction.
+- Keep keyboard focus visible and in a sensible order. Announce route results and form errors.
+- Support browser zoom and a visible larger-text control. At 200% text, controls stay usable.
+- At narrow widths, the page does not scroll sideways. The map may pan inside its own region.
+- Respect `prefers-reduced-motion`. No essential swipe, hover, long-press, or pinch-only action.
+- The interface is English. Do not add a Hindi language control until Hindi routes are part of the product again.

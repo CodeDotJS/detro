@@ -1,0 +1,18 @@
+---
+description: Local files that stay on disk and out of git
+alwaysApply: true
+---
+
+# Local files
+
+These paths stay on this machine. They are listed in `.gitignore`. Do not delete them, and do not add them to a commit.
+
+- `data/hi/` — Hindi snapshot. The app loads English lists only.
+- `data/en/routes/`, `data/en/fares/`, `data/en/first-last/` — downloaded station-pair files. `python3 src/lib/offline/build_journeys.py` packs them into `data/en/journeys/`. The app ships that pack so fares, platforms, and first and last trains work offline. Do not delete the pack or the pair files it was built from.
+- `data/en/facilities/`, `data/en/linepage/`, `data/en/metro_line/`, `data/en/menus.json`, `data/en/facility_category.json`, `data/en/service_information.json`, and every `data/download-*` file — extra downloads. The app does not read them.
+- `scripts/` — `download-dmrc-snapshot.py`, `download-dmrc-extra.py`, `download-dmrc-routes.py`, `download-overnight.sh`, and `smoke-journeys.py`. `npm run smoke` runs the last one.
+- `detro.archives/` — later collectors. Read `detro.archives/README.md` and `detro.archives/CATALOG.md`. The app does not import this folder.
+- `curls/` — saved request samples. Field notes are in `curls/STRUCTURE.md`. `docs/DMRC_API.md` records what those captures showed.
+- `prompt.md` — original product brief. Shipped scope is in `docs/PRODUCT.md` and `AGENTS.md`.
+
+Committed data the app reads: `data/manifest.json`, `data/en/line_list.json`, `data/en/stations/`, `data/en/station_brief/`, `data/en/coordinates.json`, and `data/en/journeys/` once the pack has been built. `tests/fixtures/dmrc/` stays too. Hindi strings in `src/i18n/copy.ts` stay so the types compile. The screen is English. Street tiles for the metro area are saved in `public/map-tiles/` by `python3 src/lib/offline/download_tiles.py`. Do not add zoom levels past 14, and do not download them from the service worker.

@@ -1,0 +1,21 @@
+---
+description: Transit data, routing honesty, and DMRC evidence rules
+globs: src/lib/dmrc/**,src/lib/transit/**,tests/fixtures/dmrc/**,docs/DMRC_API.md,docs/DATA_SOURCES.md
+alwaysApply: false
+---
+
+# Transit data
+
+Treat `docs/DMRC_API.md` as the contract. A string in JavaScript is not a verified schema.
+
+- Journey requests use `station_code` values from a successful search or line list.
+- Send journey time as `YYYY-MM-DDTHH:mm:ss.SSS` in Asia/Kolkata, with no `Z` and no offset.
+- The first online criterion is `least-distance`. Label it as least distance, not fastest.
+- Show a platform string only when that journey leg includes one. Do not infer it from color or name.
+- Show “Fare unavailable” when fare is absent. Do not add fares together or estimate them from distance.
+- Route path names can disagree with `station_name` for the same code. Join on `station_code` and `map-path`.
+- LN3 and LN4 are both Blue Line. Show the line name with its code when colors match.
+- Exclude `show_in_frontend: false` from selectable lines until its role is verified.
+- Rapid Metro and Airport Express appear in `line_list`. Add them to routing only after a verified journey for that service.
+- Offline routing waits for a tested graph. A station list is not a graph. Saved trips and a cached map must say they can be stale.
+- Fixtures come from sanitized real responses. Label any synthetic fixture and keep it out of production data.

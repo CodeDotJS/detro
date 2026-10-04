@@ -1,0 +1,15 @@
+---
+description: Test expectations for transit logic, fixtures, and UI flows
+globs: "**/*.{test,spec}.{ts,tsx},tests/**,docs/ACCEPTANCE_CRITERIA.md"
+alwaysApply: false
+---
+
+# Testing
+
+Use Vitest for deterministic tests. Keep real-backend checks opt-in so CI does not depend on DMRC.
+
+Cover same-station input, a direct journey, one interchange, unknown station codes, HTML error bodies, missing fare, and Hindi versus English names.
+
+A fixture test that passes is not a live integration. Record the command and result before calling a flow verified.
+
+Manual notes still required before release claims: keyboard-only planning, 200% text, narrow and desktop layouts, contrast, and one screen-reader pass. Write down what was not run.
