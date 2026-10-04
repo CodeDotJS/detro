@@ -1,0 +1,209 @@
+[
+  {
+    "id": 163,
+    "station_name": "MAJLIS PARK",
+    "station_code": "MKPR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 276,
+    "station_name": "BHALASWA",
+    "station_code": "BLSW",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 50,
+    "station_name": "HAIDERPUR BADLI MOR",
+    "station_code": "BIMR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 275,
+    "station_name": "NORTH PITAMPURA",
+    "station_code": "NPPR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 274,
+    "station_name": "PRASHANT VIHAR",
+    "station_code": "PHVR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 87,
+    "station_name": "MADHUBAN CHOWK (earlier PITAMPURA)",
+    "station_code": "PTP",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 273,
+    "station_name": "DEEPALI CHOWK",
+    "station_code": "DPCK",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  }
+]

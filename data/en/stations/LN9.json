@@ -1,0 +1,126 @@
+[
+  {
+    "id": 233,
+    "station_name": "DWARKA-KAKROLA",
+    "station_code": "DW",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 241,
+    "station_name": "NANGLI",
+    "station_code": "NNGI",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 242,
+    "station_name": "NAJAFGARH",
+    "station_code": "NFGH",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 260,
+    "station_name": "DHANSA BUS STAND",
+    "station_code": "DNBT",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  }
+]

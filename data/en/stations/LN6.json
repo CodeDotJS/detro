@@ -1,0 +1,1060 @@
+[
+  {
+    "id": 21,
+    "station_name": "KASHMERE GATE",
+    "station_code": "KG",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 16,
+    "station_name": "LAL QUILA",
+    "station_code": "LLQA",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 17,
+    "station_name": "JAMA MASJID",
+    "station_code": "JAMD",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 18,
+    "station_name": "DELHI GATE",
+    "station_code": "DLIG",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 19,
+    "station_name": "ITO",
+    "station_code": "ITO",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 24,
+    "station_name": "MANDI HOUSE",
+    "station_code": "MDHS",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 114,
+    "station_name": "JANPATH",
+    "station_code": "JNPH",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 60,
+    "station_name": "CENTRAL SECRETARIAT",
+    "station_code": "CTST",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      },
+      {
+        "name": "Airtel NCMC",
+        "class_name": "flaticon-porter",
+        "image": {
+          "title": "013-porter.png",
+          "file": "/media/original_images/013-porter.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 115,
+    "station_name": "KHAN MARKET",
+    "station_code": "KM",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 116,
+    "station_name": "JLN STADIUM",
+    "station_code": "JLNS",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 117,
+    "station_name": "JANGPURA",
+    "station_code": "JGPA",
+    "station_facility": [
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 118,
+    "station_name": "LAJPAT NAGAR",
+    "station_code": "LJPN",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 119,
+    "station_name": "MOOLCHAND",
+    "station_code": "MLCD",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 120,
+    "station_name": "KAILASH COLONY",
+    "station_code": "KHCY",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 121,
+    "station_name": "NEHRU PLACE",
+    "station_code": "NP",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 148,
+    "station_name": "KALKAJI MANDIR",
+    "station_code": "KJMD",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 122,
+    "station_name": "GOVIND PURI",
+    "station_code": "GDPI",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 123,
+    "station_name": "HARKESH NAGAR OKHLA",
+    "station_code": "HNOK",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 124,
+    "station_name": "JASOLA-APOLLO",
+    "station_code": "JLA",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 125,
+    "station_name": "SARITA VIHAR",
+    "station_code": "STVR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 126,
+    "station_name": "MOHAN ESTATE",
+    "station_code": "METE",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 127,
+    "station_name": "TUGHLAKABAD STATION",
+    "station_code": "TKDS",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 128,
+    "station_name": "BADARPUR BORDER",
+    "station_code": "BAPB",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 129,
+    "station_name": "SARAI",
+    "station_code": "SRAI",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 130,
+    "station_name": "NHPC CHOWK",
+    "station_code": "NHPC",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 131,
+    "station_name": "MEWALA MAHARAJPUR",
+    "station_code": "MMJR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 132,
+    "station_name": "SECTOR-28",
+    "station_code": "STTA",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 133,
+    "station_name": "BADKAL MOR",
+    "station_code": "BKMR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 134,
+    "station_name": "OLD FARIDABAD",
+    "station_code": "OFDB",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 136,
+    "station_name": "NEELAM CHOWK AJRONDA",
+    "station_code": "NCAJ",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 135,
+    "station_name": "BATA CHOWK",
+    "station_code": "BACH",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 137,
+    "station_name": "ESCORTS MUJESAR",
+    "station_code": "ECMJ",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 138,
+    "station_name": "SANT SURDAS (SIHI)",
+    "station_code": "NCBC",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 139,
+    "station_name": "RAJA NAHAR SINGH (BALLABHGARH)",
+    "station_code": "BVHM",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Parking Available",
+        "class_name": "flaticon-parking-area",
+        "image": {
+          "title": "012-parking-area.png",
+          "file": "/media/original_images/012-parking-area_1BNoFOj.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  }
+]

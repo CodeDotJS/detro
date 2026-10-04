@@ -1,0 +1,110 @@
+[
+  {
+    "id": 188,
+    "station_name": "MAUJPUR-BABARPUR",
+    "station_code": "MUPR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      },
+      {
+        "name": "Interchange Station",
+        "class_name": "flaticon-exchange",
+        "image": {
+          "title": "008-exchange.png",
+          "file": "/media/original_images/008-exchange_q4UnGQr.png"
+        }
+      }
+    ],
+    "interchange": true,
+    "status": "Station Open"
+  },
+  {
+    "id": 189,
+    "station_name": "GOKULPURI",
+    "station_code": "GKPR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 190,
+    "station_name": "JOHRI ENCLAVE",
+    "station_code": "JIEE",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  },
+  {
+    "id": 191,
+    "station_name": "SHIV VIHAR",
+    "station_code": "SVVR",
+    "station_facility": [
+      {
+        "name": "Divyang Friendly Station",
+        "class_name": "flaticon-disabled",
+        "image": {
+          "title": "disabled.png",
+          "file": "/media/original_images/disabled_nq1qwhI.png"
+        }
+      },
+      {
+        "name": "Lift/Escalator Available",
+        "class_name": "flaticon-elevator",
+        "image": {
+          "title": "007-elevator.png",
+          "file": "/media/original_images/007-elevator_ew8UOTr.png"
+        }
+      }
+    ],
+    "interchange": false,
+    "status": "Station Open"
+  }
+]
