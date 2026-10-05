@@ -84,6 +84,50 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=detro --branch=${{ github.head_ref || github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  delete-merged-branch:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Delete the merged branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="${GITHUB_REPOSITORY}"
+          sha="${GITHUB_SHA}"
+          branches=$(gh api "repos/${repo}/commits/${sha}/pulls" \
+            | jq -r --arg repo "$repo" \
+              '.[] | select(.base.ref == "main" and (.head.repo.full_name // $repo) == $repo) | .head.ref' \
+            | sort -u)
+          if [ -z "${branches}" ]; then
+            message=$(gh api "repos/${repo}/commits/${sha}" --jq .commit.message)
+            if [[ "${message}" =~ Merge\ pull\ request\ #([0-9]+) ]]; then
+              branches=$(gh pr view "${BASH_REMATCH[1]}" --repo "$repo" --json headRefName --jq .headRefName)
+            fi
+          fi
+          if [ -z "${branches}" ]; then
+            echo "No merged branch on this commit"
+            exit 0
+          fi
+          while IFS= read -r branch; do
+            [ -z "${branch}" ] && continue
+            if [ "${branch}" = "main" ]; then
+              echo "Refusing to delete main"
+              continue
+            fi
+            encoded=$(jq -nr --arg branch "$branch" '$branch | @uri')
+            if gh api "repos/${repo}/git/refs/heads/${encoded}" >/dev/null 2>&1; then
+              gh api --method DELETE "repos/${repo}/git/refs/heads/${encoded}"
+              echo "Deleted ${branch}"
+            else
+              echo "${branch} is already gone"
+            fi
+          done <<< "${branches}"
 ```
 
 A push to `main` publishes production. A pull request from this repository publishes a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen. A pull request from a fork does not receive the secrets, so the deploy step must not run for it. `npm run smoke` is not in this job.
@@ -104,6 +148,7 @@ Two free steps, and a deploy cannot start unless the tests pass.
 2. The same job counts the files in `dist` and measures the largest file. It fails at 20,000 files or at a file over 25 MiB, which are the Pages free limits.
 3. On a pull request from this repository, the job uploads `dist` with Wrangler as a Pages preview. The address looks like `https://<branch>.detro.pages.dev`.
 4. On a push to `main`, after the same tests, the job uploads `dist` as production.
+5. After that production upload succeeds, a second job deletes the merged feature branch. It does not run on a pull request, and it does not delete `main`. If the production upload fails, the branch stays.
 
 Cloudflare Pages is a Direct Upload project. It does not also build from Git. A Git-connected build would deploy even when the tests failed, and it would spend the 500 builds a month. A Wrangler upload does not use that build quota. GitHub-hosted runners are free for a public repository, and a private repository includes 2,000 minutes a month, which this test-and-build job will not use up.
 
