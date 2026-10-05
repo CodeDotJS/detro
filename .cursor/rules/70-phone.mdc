@@ -13,7 +13,7 @@ Check 320, 390, and 430 CSS pixels. The page does not scroll sideways.
 - The route strip keeps one colored line. Station names wrap underneath it and do not overlap.
 - A station name stays on one line. A title wraps at the arrow between the two stations.
 - A pair of actions may sit side by side. If a label needs three lines, stack that row.
-- The header is the mark plus four tabs. It stays on screen, clears the safe area, and does not cover the first line of the page.
+- The header is the mark plus five tabs. It stays on screen, clears the safe area, and does not cover the first line of the page.
 - On City, the map is visible without scrolling. The trip sheet is the part that scrolls.
 - Do not add a banner, a tutorial, or extra chrome to fix spacing.
 - Default type on a phone is compact. Help has a text-size slider. Do not leave a layout that only becomes readable after the user drags that slider.

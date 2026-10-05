@@ -22,7 +22,7 @@ The network, the fares, the platforms, and the first and last trains come from a
 | Map | One line at a time, with the stations on that line. Start here and Go here set the trip. Station details list the facilities saved for that station. |
 | City | 154 stations with a saved latitude and longitude, on street tiles kept in this repo. The ride is drawn between the ends that have positions. |
 | Offline | After this browser has loaded the app once, the snapshot still plans the trip with the network off. |
-| Saved trips | Stored on this device. A shared link carries the two station codes. |
+| Saved trips | Own tab. Stored on this device. A shared link carries the two station codes. |
 | Help | Usage, text size, and the snapshot date. |
 
 254 stations are in the snapshot. The city map omits the ones with no saved position. The plan and the line map still include them.
@@ -31,7 +31,7 @@ The network, the fares, the platforms, and the first and last trains come from a
 
 | Piece | Where | Job |
 | --- | --- | --- |
-| App | `src/` | Plan, map, city, and help. |
+| App | `src/` | Plan, map, city, saved, and help. |
 | Snapshot | `data/en/` | Lines, stations, briefs, coordinates, and one journey file per origin. |
 | Street tiles | `public/map-tiles/` | Metro area, zoom 9 through 14. |
 

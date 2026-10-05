@@ -65,6 +65,9 @@ export type Copy = {
   plan: string
   map: string
   help: string
+  saved: string
+  onlineStatus: string
+  offlineStatus: string
   lineLabel: string
   findOnLine: string
   zoomIn: string
@@ -96,6 +99,8 @@ export type Copy = {
   sources: string
   noBrief: string
   savedTrips: string
+  savedLead: string
+  savedEmpty: string
   saveTrip: string
   removeTrip: string
   removeSaved: (label: string) => string
@@ -195,6 +200,9 @@ export const copy = {
     plan: "Plan",
     map: "Map",
     help: "Help",
+    saved: "Saved",
+    onlineStatus: "Online",
+    offlineStatus: "Offline",
     lineLabel: "Line",
     findOnLine: "Find a station on this line",
     zoomIn: "Zoom in",
@@ -226,6 +234,8 @@ export const copy = {
     sources: "Data comes from the Delhi Metro website backend. This app is independent.",
     noBrief: "More detail for this station is not in the saved snapshot yet.",
     savedTrips: "Saved trips",
+    savedLead: "Trips you save stay on this phone.",
+    savedEmpty: "Save a trip from Plan after you have a route.",
     saveTrip: "Save trip",
     removeTrip: "Remove",
     removeSaved: (label) => `Remove ${label}`,
@@ -324,6 +334,9 @@ export const copy = {
     plan: "योजना",
     map: "नक्शा",
     help: "सहायता",
+    saved: "सेव",
+    onlineStatus: "ऑनलाइन",
+    offlineStatus: "ऑफ़लाइन",
     lineLabel: "लाइन",
     findOnLine: "इस लाइन पर स्टेशन खोजें",
     zoomIn: "बड़ा करें",
@@ -355,6 +368,8 @@ export const copy = {
     sources: "डेटा दिल्ली मेट्रो वेबसाइट के बैकएंड से है। यह ऐप स्वतंत्र है।",
     noBrief: "इस स्टेशन का और विवरण सेव की गई सूची में अभी नहीं है।",
     savedTrips: "सेव यात्राएँ",
+    savedLead: "सेव की गई यात्राएँ इस फ़ोन पर रहती हैं।",
+    savedEmpty: "रास्ता दिखने के बाद योजना से यात्रा सेव करें।",
     saveTrip: "यात्रा सेव करें",
     removeTrip: "हटाएँ",
     removeSaved: (label) => `${label} हटाएँ`,

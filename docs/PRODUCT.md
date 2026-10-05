@@ -18,17 +18,19 @@ A child with an adult, an older adult, a first-time visitor, and someone unfamil
 
 ## Destinations
 
-1. **Plan a trip** — origin, destination, swap, and “Show my route.” On a wide screen the route sits beside the form. A saved trip can be opened or removed.
+1. **Plan a trip** — origin, destination, swap, and “Show my route.” On a wide screen the route sits beside the form.
 2. **Map** — one line at a time, with a sentence that says to pick a line and then a station. Start here and Go here sit with the chosen station. On a wide screen the line diagram sits beside the list.
-3. **Help** — how to use the app, verified contacts, text size, offline status, privacy, and sources.
+3. **City** — stations with a saved coordinate on street tiles. The ride is drawn between the ends that have positions.
+4. **Saved** — trips stored on this device. Open one to see the ride, or remove it.
+5. **Help** — how to use the app, verified contacts, text size, offline status, privacy, and sources.
 
-Plan, Map, and Help live in a top bar. The bar does not cover the page.
+Plan, Map, City, Saved, and Help live in a top bar. The bar does not cover the page.
 
-Station details open from search, the map, and journey results. They are not a fourth top-level destination.
+Station details open from search, the map, and journey results. They are not a top-level destination.
 
 ## Home
 
-The first screen shows “Where do you want to go?”, From, To, swap, and one primary route button. “Use my location” is secondary. Recent or saved trips appear only when some exist.
+The first screen shows “Where do you want to go?”, From, To, swap, and one primary route button. “Use my location” is secondary. Saved trips live under Saved, not on Plan.
 
 Search supports English and Hindi names, aliases, and spelling variants. Suggestions show the line when membership is known. Similar names stay distinct. A fuzzy match is never selected silently.
 
