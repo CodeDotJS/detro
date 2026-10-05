@@ -49,3 +49,47 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=detro --branch=${{ github.head_ref || github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  delete-merged-branch:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Delete the merged branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="${GITHUB_REPOSITORY}"
+          sha="${GITHUB_SHA}"
+          branches=$(gh api "repos/${repo}/commits/${sha}/pulls" \
+            | jq -r --arg repo "$repo" \
+              '.[] | select(.base.ref == "main" and (.head.repo.full_name // $repo) == $repo) | .head.ref' \
+            | sort -u)
+          if [ -z "${branches}" ]; then
+            message=$(gh api "repos/${repo}/commits/${sha}" --jq .commit.message)
+            if [[ "${message}" =~ Merge\ pull\ request\ #([0-9]+) ]]; then
+              branches=$(gh pr view "${BASH_REMATCH[1]}" --repo "$repo" --json headRefName --jq .headRefName)
+            fi
+          fi
+          if [ -z "${branches}" ]; then
+            echo "No merged branch on this commit"
+            exit 0
+          fi
+          while IFS= read -r branch; do
+            [ -z "${branch}" ] && continue
+            if [ "${branch}" = "main" ]; then
+              echo "Refusing to delete main"
+              continue
+            fi
+            encoded=$(jq -nr --arg branch "$branch" '$branch | @uri')
+            if gh api "repos/${repo}/git/refs/heads/${encoded}" >/dev/null 2>&1; then
+              gh api --method DELETE "repos/${repo}/git/refs/heads/${encoded}"
+              echo "Deleted ${branch}"
+            else
+              echo "${branch} is already gone"
+            fi
+          done <<< "${branches}"
