@@ -44,9 +44,6 @@ type Props = {
   onHighlight: (index: number) => void
   onSwap: () => void
   onSubmit: () => void
-  trips?: Array<{ fromCode: string; toCode: string; label: string }>
-  onOpenTrip?: (fromCode: string, toCode: string) => void
-  onRemoveTrip?: (fromCode: string, toCode: string) => void
   onSave?: () => void
   onShare?: (journey: Journey) => void
   onViewMap?: (journey: Journey) => void
@@ -70,9 +67,6 @@ export function PlanView({
   onHighlight,
   onSwap,
   onSubmit,
-  trips = [],
-  onOpenTrip,
-  onRemoveTrip,
   onSave,
   onShare,
   onViewMap,
@@ -204,24 +198,6 @@ export function PlanView({
           {phase === "loading" ? copy.loadingRoute : copy.showRoute}
         </button>
       </form>
-
-      {trips.length > 0 ? (
-        <section>
-          <h2>{copy.savedTrips}</h2>
-          <ul className="trip-list">
-            {trips.map((trip) => (
-              <li key={`${trip.fromCode}-${trip.toCode}`}>
-                <button type="button" onClick={() => onOpenTrip?.(trip.fromCode, trip.toCode)}>
-                  {trip.label}
-                </button>
-                <button type="button" className="remove" aria-label={copy.removeSaved(trip.label)} onClick={() => onRemoveTrip?.(trip.fromCode, trip.toCode)}>
-                  {copy.removeTrip}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
       </div>
       <div className="pane pane-stage">
         {result ?? <RideStage />}

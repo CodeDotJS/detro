@@ -9,6 +9,8 @@ import routeRiRck from "../../../tests/fixtures/dmrc/route-ri-rck.json"
 import { journeySteps } from "../transit/present"
 import { HelpView } from "../../ui/HelpView"
 import { PlanView } from "../../ui/PlanView"
+import { SavedView } from "../../ui/SavedView"
+import { SignalMark, TabBar } from "../../ui/TabBar"
 import { createPlanState, planReducer, routeBlockReason } from "./state"
 
 describe("station selection", () => {
@@ -211,6 +213,22 @@ describe("plan screen", () => {
 
   it("names a control that removes one saved trip", () => {
     const html = renderToStaticMarkup(
+      <SavedView
+        copy={copy.en}
+        trips={[{ fromCode: "RI", toCode: "KG", fromName: "RITHALA", toName: "KASHMERE GATE" }]}
+        onOpenTrip={() => undefined}
+        onRemoveTrip={() => undefined}
+      />,
+    )
+    expect(html).toContain("Saved")
+    expect(html).toContain("RITHALA")
+    expect(html).toContain("KASHMERE GATE")
+    expect(html).toContain('aria-label="Remove RITHALA → KASHMERE GATE"')
+    expect(html).not.toContain("Where do you want to go?")
+  })
+
+  it("keeps saved trips off the plan form", () => {
+    const html = renderToStaticMarkup(
       <PlanView
         copy={copy.en}
         lang="en"
@@ -218,11 +236,28 @@ describe("plan screen", () => {
         phase="idle"
         message={null}
         journey={null}
-        trips={[{ fromCode: "RI", toCode: "KG", label: "RITHALA → KASHMERE GATE" }]}
         {...handlers}
       />,
     )
-    expect(html).toContain('aria-label="Remove RITHALA → KASHMERE GATE"')
+    expect(html).toContain("Where do you want to go?")
+    expect(html).not.toContain("saved-list")
+    expect(html).not.toContain("Save a trip from Plan")
+  })
+
+  it("lists Saved between City and Help", () => {
+    const html = renderToStaticMarkup(
+      <TabBar copy={copy.en} tab="plan" onTab={() => undefined} />,
+    )
+    expect(html.indexOf('href="/city"')).toBeGreaterThan(-1)
+    expect(html.indexOf('href="/city"')).toBeLessThan(html.indexOf('href="/saved"'))
+    expect(html.indexOf('href="/saved"')).toBeLessThan(html.indexOf('href="/help"'))
+    expect(html).toContain("Saved")
+    expect(html).not.toContain("Online")
+  })
+
+  it("names the network status on its own mark", () => {
+    expect(renderToStaticMarkup(<SignalMark copy={copy.en} online={true} />)).toContain("Online")
+    expect(renderToStaticMarkup(<SignalMark copy={copy.en} online={false} />)).toContain("Offline")
   })
 
   it("marks the field filled from the map", () => {

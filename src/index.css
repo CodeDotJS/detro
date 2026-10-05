@@ -196,10 +196,37 @@ summary:active {
   summary:active { transform: none; }
 }
 
-.signal-mark {
-  width: 1.05rem;
-  height: 1.05rem;
+.signal {
+  grid-area: signal;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.signal svg {
+  width: 1.15rem;
+  height: 1.15rem;
   flex: none;
+}
+
+.signal-on {
+  color: var(--ink);
+  background: var(--shade);
+}
+
+.signal-off {
+  color: var(--ink);
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
 .color-rail {
@@ -220,16 +247,20 @@ summary:active {
   position: sticky;
   top: 0;
   z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "mark signal"
+    "tabs tabs";
+  align-items: center;
+  gap: 6px 8px;
   padding: max(8px, env(safe-area-inset-top)) 12px 8px;
   background: #fff;
   border-bottom: 1px solid var(--line);
 }
 
 .app-bar .mark {
+  grid-area: mark;
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -266,6 +297,7 @@ summary:active {
 }
 
 .tabbar {
+  grid-area: tabs;
   position: static;
   display: flex;
   align-items: stretch;
@@ -280,17 +312,19 @@ summary:active {
 .tabbar a {
   flex: 1 1 0;
   min-width: 0;
-  min-height: 36px;
+  min-height: 44px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  padding: 0 8px;
+  gap: 2px;
+  padding: 6px 2px;
   background: transparent;
   color: var(--ink);
   border: 0;
   border-radius: calc(var(--radius) - 2px);
   cursor: pointer;
+  font-size: 0.78rem;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -303,9 +337,8 @@ summary:active {
 
 @media (min-width: 720px) {
   .app-bar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "mark tabs signal";
     gap: 16px;
     min-height: 0;
     padding: 8px 20px;
@@ -313,12 +346,22 @@ summary:active {
 
   .tabbar {
     width: auto;
-    margin-left: auto;
+    justify-self: end;
   }
 
   .tabbar a {
     flex: 0 0 auto;
-    padding: 0 18px;
+    flex-direction: row;
+    gap: 0.35rem;
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 720px) and (max-width: 859px) {
+  .mark-tag {
+    display: none;
   }
 }
 
@@ -386,7 +429,7 @@ select { margin: 0; }
 .zoom-row button,
 .station-actions button,
 .station-list button,
-.trip-list button {
+.saved-list button {
   min-height: 48px;
   padding: 0 12px;
   background: #fff;
@@ -968,7 +1011,7 @@ ul[role="listbox"] li { margin: 0; }
 
 .trip-row li { margin: 0; }
 
-.trip-list {
+.saved-list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -977,20 +1020,41 @@ ul[role="listbox"] li { margin: 0; }
   padding: 0;
 }
 
-.trip-list li {
+.saved-list li {
   display: flex;
   align-items: stretch;
   gap: var(--space);
+  min-width: 0;
   margin: 0;
 }
 
-.trip-list li > button:first-child {
+.saved-open {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.45rem;
   text-align: left;
 }
 
-.trip-list .remove {
+.saved-from,
+.saved-to {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saved-arrow {
   flex: none;
+  color: var(--muted);
+}
+
+.saved-list .remove {
+  flex: none;
+  min-width: 44px;
   background: transparent;
 }
 
@@ -2295,9 +2359,14 @@ summary {
   }
 
   .tabbar a {
-    gap: 0.2rem;
-    padding: 0 4px;
-    font-size: 0.78rem;
+    gap: 1px;
+    padding: 4px 0;
+    font-size: 0.68rem;
+  }
+
+  .tab-icon {
+    width: 1rem;
+    height: 1rem;
   }
 }
 

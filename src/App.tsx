@@ -17,9 +17,10 @@ import type { Journey, Lang, Suggestion } from "./lib/transit/types"
 import { HelpView } from "./ui/HelpView"
 import { MapView } from "./ui/MapView"
 import { PlanView } from "./ui/PlanView"
+import { SavedView } from "./ui/SavedView"
 import { CityMap } from "./ui/CityMap"
 import { pathForTab, tabFromPath } from "./lib/nav"
-import { TabBar, type Tab } from "./ui/TabBar"
+import { SignalMark, TabBar, type Tab } from "./ui/TabBar"
 
 const snapshot = loadSnapshot()
 const snapshotDate = snapshot.fetchedAt.slice(0, 10)
@@ -39,6 +40,12 @@ function pageMeta(tab: Tab): { title: string; description: string } {
     return {
       title: "City map · DETRO",
       description: "See a Delhi Metro ride on the city map in DETRO. Choose a start and a destination and follow the line between them.",
+    }
+  }
+  if (tab === "saved") {
+    return {
+      title: "Saved trips · DETRO",
+      description: "Open a saved Delhi Metro trip in DETRO. Trips stay on this phone. Free, ad-free, and independent of DMRC.",
     }
   }
   if (tab === "help") {
@@ -447,7 +454,8 @@ export function App() {
         <span className="mark-name">DETRO</span>
         <span className="mark-tag">Delhi Metro Simple</span>
       </a>
-      <TabBar copy={copy.en} tab={tab} online={online} onTab={openTab} />
+      <TabBar copy={copy.en} tab={tab} onTab={openTab} />
+      <SignalMark copy={copy.en} online={online} />
     </header>
     {tab === "plan" ? (
     <PlanView
@@ -480,19 +488,6 @@ export function App() {
         clearResult()
       }}
       onSubmit={onSubmit}
-      trips={trips.map((trip) => ({
-        fromCode: trip.fromCode,
-        toCode: trip.toCode,
-        label: `${namesFor(snapshot.stations, lang).get(trip.fromCode) ?? trip.fromCode} → ${namesFor(snapshot.stations, lang).get(trip.toCode) ?? trip.toCode}`,
-      }))}
-      onOpenTrip={openTrip}
-      onRemoveTrip={(fromCode, toCode) => {
-        try {
-          setTrips(removeTrip(localStorage, { fromCode, toCode }))
-        } catch {
-          setTrips((current) => current.filter((trip) => trip.fromCode !== fromCode || trip.toCode !== toCode))
-        }
-      }}
       onSave={() => {
         if (!state.from || !state.to) return
         setTrips(saveTrip(localStorage, { fromCode: state.from.code, toCode: state.to.code }))
@@ -511,6 +506,25 @@ export function App() {
         })
       }}
     />
+    ) : null}
+    {tab === "saved" ? (
+      <SavedView
+        copy={copy[lang]}
+        trips={trips.map((trip) => ({
+          fromCode: trip.fromCode,
+          toCode: trip.toCode,
+          fromName: namesFor(snapshot.stations, lang).get(trip.fromCode) ?? trip.fromCode,
+          toName: namesFor(snapshot.stations, lang).get(trip.toCode) ?? trip.toCode,
+        }))}
+        onOpenTrip={openTrip}
+        onRemoveTrip={(fromCode, toCode) => {
+          try {
+            setTrips(removeTrip(localStorage, { fromCode, toCode }))
+          } catch {
+            setTrips((current) => current.filter((trip) => trip.fromCode !== fromCode || trip.toCode !== toCode))
+          }
+        }}
+      />
     ) : null}
     {tab === "map" ? (
       <MapView
