@@ -45,6 +45,7 @@ type Props = {
   onSwap: () => void
   onSubmit: () => void
   onSave?: () => void
+  saved?: boolean
   onShare?: (journey: Journey) => void
   onViewMap?: (journey: Journey) => void
   onClearRoute?: () => void
@@ -68,6 +69,7 @@ export function PlanView({
   onSwap,
   onSubmit,
   onSave,
+  saved = false,
   onShare,
   onViewMap,
   onClearRoute,
@@ -122,10 +124,7 @@ export function PlanView({
           </div>
         ) : null}
         <div className="zoom-row">
-          <button type="button" onClick={onSave}>
-            <Bookmark aria-hidden="true" size={18} strokeWidth={2} />
-            {copy.saveTrip}
-          </button>
+          <SaveTripButton copy={copy} saved={saved} onSave={onSave} />
           <button type="button" onClick={() => onShare?.(shown)}>
             <Share2 aria-hidden="true" size={18} strokeWidth={2} />
             {copy.shareRoute}
@@ -597,6 +596,35 @@ function TrainStrip({
       </span>{" "}
       <strong>{train.depart}</strong> <span className="depart-arrive">{copy.arrivesAt(train.arrive)}</span>
     </span>
+  )
+}
+
+export function SaveTripButton({
+  copy,
+  saved,
+  onSave,
+}: {
+  copy: Copy
+  saved: boolean
+  onSave?: () => void
+}) {
+  const [pop, setPop] = useState(false)
+  const previous = useRef(saved)
+  useEffect(() => {
+    if (saved && !previous.current) {
+      setPop(true)
+      const id = window.setTimeout(() => setPop(false), 420)
+      previous.current = true
+      return () => window.clearTimeout(id)
+    }
+    previous.current = saved
+  }, [saved])
+  const tone = pop ? "save-trip is-saved is-pop" : saved ? "save-trip is-saved" : "save-trip"
+  return (
+    <button type="button" className={tone} aria-pressed={saved} onClick={onSave}>
+      <Bookmark aria-hidden="true" size={18} strokeWidth={2} fill={saved ? "currentColor" : "none"} />
+      {saved ? copy.saved : copy.saveTrip}
+    </button>
   )
 }
 

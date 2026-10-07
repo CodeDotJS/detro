@@ -8,9 +8,24 @@ import routeRiKg from "../../../tests/fixtures/dmrc/route-ri-kg.json"
 import routeRiRck from "../../../tests/fixtures/dmrc/route-ri-rck.json"
 import { journeySteps } from "../transit/present"
 import { HelpView } from "../../ui/HelpView"
+import { PlayView } from "../../ui/PlayView"
 import { PlanView } from "../../ui/PlanView"
 import { SavedView } from "../../ui/SavedView"
 import { SignalMark, TabBar } from "../../ui/TabBar"
+import { loadSnapshot } from "../dmrc/snapshot"
+import coordinatesFile from "../../../data/en/coordinates.json"
+import platformsFile from "../../../data/en/platforms.json"
+import { PlayQuiz } from "../../ui/PlayQuiz"
+import { buildGameNetwork } from "../play/network"
+import { platformQuestions, type PlatformTable } from "../play/platform"
+import { emptyPlayProgress } from "../play/progress"
+import { mulberry32 } from "../play/rng"
+
+const network = buildGameNetwork(
+  loadSnapshot().lines,
+  (coordinatesFile as { stations: Record<string, { lat: number; lng: number }> }).stations,
+)
+const platformTable = (platformsFile as { stations: PlatformTable }).stations
 import { createPlanState, planReducer, routeBlockReason } from "./state"
 
 describe("station selection", () => {
@@ -209,12 +224,15 @@ describe("plan screen", () => {
     expect(html).toContain("Not an official DMRC app")
     expect(html).not.toContain("हिन्दी")
     expect(html).toContain("not a live planner")
+    expect(html).toContain("Open Play to name the next stop, find where to change, pick the right platform")
   })
 
   it("names a control that removes one saved trip", () => {
     const html = renderToStaticMarkup(
       <SavedView
         copy={copy.en}
+        lines={loadSnapshot().lines}
+        lang="en"
         trips={[{ fromCode: "RI", toCode: "KG", fromName: "RITHALA", toName: "KASHMERE GATE" }]}
         onOpenTrip={() => undefined}
         onRemoveTrip={() => undefined}
@@ -223,6 +241,8 @@ describe("plan screen", () => {
     expect(html).toContain("Saved")
     expect(html).toContain("RITHALA")
     expect(html).toContain("KASHMERE GATE")
+    expect(html).toContain("Red Line")
+    expect(html).toContain("No changes")
     expect(html).toContain('aria-label="Remove RITHALA → KASHMERE GATE"')
     expect(html).not.toContain("Where do you want to go?")
   })
@@ -244,15 +264,89 @@ describe("plan screen", () => {
     expect(html).not.toContain("Save a trip from Plan")
   })
 
-  it("lists Saved between City and Help", () => {
+  it("lists Play between Saved and Help", () => {
     const html = renderToStaticMarkup(
       <TabBar copy={copy.en} tab="plan" onTab={() => undefined} />,
     )
     expect(html.indexOf('href="/city"')).toBeGreaterThan(-1)
     expect(html.indexOf('href="/city"')).toBeLessThan(html.indexOf('href="/saved"'))
-    expect(html.indexOf('href="/saved"')).toBeLessThan(html.indexOf('href="/help"'))
-    expect(html).toContain("Saved")
+    expect(html.indexOf('href="/saved"')).toBeLessThan(html.indexOf('href="/play"'))
+    expect(html.indexOf('href="/play"')).toBeLessThan(html.indexOf('href="/help"'))
+    expect(html).toContain("Play")
     expect(html).not.toContain("Online")
+  })
+
+  it("opens Play on the four games", () => {
+    const snapshot = loadSnapshot()
+    const html = renderToStaticMarkup(
+      <PlayView
+        lines={snapshot.lines}
+        fetchedAt={snapshot.fetchedAt}
+        progress={emptyPlayProgress()}
+        onProgress={() => undefined}
+        seed={21}
+      />,
+    )
+    for (const game of ["Next stop", "Change here", "Platform", "Faster or cheaper"]) expect(html).toContain(game)
+    expect(html).toMatch(/0 of \d+ platforms learned/)
+    expect(html).toMatch(/0 of \d+ interchanges learned/)
+    expect(html).not.toContain("Next stop: pick a line")
+    expect(html).toMatch(/0 of \d+ stations stamped/)
+    expect(html).toContain("Not played yet")
+    expect(html).not.toContain("FOB")
+    expect(html).not.toContain("Where do you want to go?")
+  })
+
+  it("asks a platform question from the saved platforms", () => {
+    const questions = platformQuestions(network, platformTable, mulberry32(4))
+    const html = renderToStaticMarkup(
+      <PlayQuiz
+        mode="platform"
+        title="Platform"
+        hue="#b45309"
+        questions={questions}
+        progress={emptyPlayProgress()}
+        onProgress={() => undefined}
+        onAgain={() => undefined}
+        onPassport={() => undefined}
+      />,
+    )
+    expect(html).toContain(questions[0].prompt)
+    expect(html).toContain(questions[0].kicker)
+    for (const choice of questions[0].choices) expect(html).toContain(choice.label)
+    expect(html).toContain("3 tokens left")
+    expect(html).toContain("Leave ride")
+    expect(html).not.toContain("Continue")
+  })
+
+  it("asks the next stop on a ride without naming it on the track", () => {
+    const snapshot = loadSnapshot()
+    const ride = { lineCode: "LN3", codes: ["RCK", "BRKR", "MDHS", "PTMD"], towardsCode: "NECC", behindCode: "RKAM" }
+    const html = renderToStaticMarkup(
+      <PlayView
+        lines={snapshot.lines}
+        fetchedAt={snapshot.fetchedAt}
+        progress={emptyPlayProgress()}
+        onProgress={() => undefined}
+        seed={21}
+        startRide={ride}
+      />,
+    )
+    expect(html).toContain("Blue Line")
+    expect(html).toContain("Towards NOIDA ELECTRONIC CITY")
+    expect(html).toContain("RAJIV CHOWK")
+    expect(html).toContain("Next stop?")
+    expect(html).toContain("Next stop towards NOIDA ELECTRONIC CITY?")
+    expect(html).toContain("2 more stops")
+    expect(html).toContain("3 tokens left")
+    expect(html).toContain("Leave ride")
+    const track = html.slice(html.indexOf("play-track"), html.indexOf("play-question"))
+    expect(track).toContain("RAMAKRISHNA ASHRAM MARG")
+    expect(track).toContain("Last stop")
+    expect(track.indexOf("RAMAKRISHNA ASHRAM MARG")).toBeLessThan(track.indexOf("RAJIV CHOWK"))
+    expect(track).not.toContain("BARAKHAMBA ROAD")
+    expect(html.slice(html.indexOf("play-question"))).not.toContain("RAMAKRISHNA ASHRAM MARG")
+    expect(html.slice(html.indexOf("play-question"))).toContain("BARAKHAMBA ROAD")
   })
 
   it("names the network status on its own mark", () => {
@@ -294,7 +388,30 @@ describe("plan screen", () => {
     expect(html).toContain("Fare unavailable")
     expect(html).toContain("Least distance")
     expect(html).toContain("About 26 minutes")
+    expect(html).toContain("Save trip")
+    expect(html).toContain('aria-pressed="false"')
     expect(html).not.toContain("₹0")
+  })
+
+  it("shows a bookmarked Saved control when this ride is already stored", () => {
+    const result = normalizeJourney(routeFareRemoved, null, "2026-09-30T12:00:00.000Z")
+    if (!result.ok) throw new Error("expected journey")
+    const html = renderToStaticMarkup(
+      <PlanView
+        copy={copy.en}
+        lang="en"
+        state={createPlanState()}
+        phase="ready"
+        message={null}
+        journey={result.journey}
+        saved
+        {...handlers}
+      />,
+    )
+    expect(html).toContain("Saved")
+    expect(html).toContain('aria-pressed="true"')
+    expect(html).toContain("is-saved")
+    expect(html).not.toContain("Save trip")
   })
 
   it("shows the line, direction, and platform on the timeline", () => {

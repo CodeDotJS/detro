@@ -40,7 +40,11 @@ async function navigate(request) {
   const cache = await caches.open(SHELL)
   try {
     const response = await fetch(request)
-    if (response.ok) await cache.put(request, response.clone())
+    if (response.ok && (response.headers.get("content-type") || "").includes("text/html")) {
+      const page = await response.clone().text()
+      const save = (key) => cache.put(key, new Response(page, { headers: response.headers }))
+      await Promise.all([save(request), save("/"), save("/index.html")])
+    }
     return response
   } catch {
     return (await cache.match(request)) || (await cache.match("/index.html")) || (await cache.match("/"))

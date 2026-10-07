@@ -1,4 +1,5 @@
 import type { Copy } from "../i18n/copy"
+import { playCopy } from "../i18n/play"
 import { textMax, textMin } from "../lib/plan/textSize"
 import { Notice } from "./Notice"
 
@@ -30,6 +31,7 @@ export function HelpView({
           <li>{copy.howStep1}</li>
           <li>{copy.howStep2}</li>
           <li>{copy.howStep3}</li>
+          <li>{playCopy.howTo}</li>
         </ol>
       </section>
       <section>

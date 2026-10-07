@@ -4,15 +4,21 @@ import { SHELL_CACHE, SNAPSHOT_CACHE } from "./caches"
 const WIDTH = 2
 
 let started = false
+let running = false
 
 export function warmOffline(): void {
   if (started || !("caches" in window)) return
   started = true
   const run = () => {
-    void fill()
+    if (running) return
+    running = true
+    void fill().finally(() => {
+      running = false
+    })
   }
   if ("requestIdleCallback" in window) window.requestIdleCallback(run, { timeout: 2000 })
   else globalThis.setTimeout(run, 1500)
+  window.addEventListener("online", run)
 }
 
 async function fill(): Promise<void> {
@@ -34,9 +40,22 @@ async function fill(): Promise<void> {
     [SNAPSHOT_CACHE, briefs],
     [SHELL_CACHE, tiles],
   ]
+  await refreshShell(list.shell)
   for (const [name, urls] of groups) {
     if (!navigator.onLine) return
     await storeMissing(name, urls)
+  }
+}
+
+const PAGES = ["/", "/index.html"]
+
+async function refreshShell(current: string[]): Promise<void> {
+  const cache = await caches.open(SHELL_CACHE)
+  await Promise.all(PAGES.map((url) => storeOne(cache, url)))
+  const keep = new Set(current)
+  for (const request of await cache.keys()) {
+    const path = new URL(request.url).pathname
+    if (path.startsWith("/assets/") && !keep.has(path)) await cache.delete(request)
   }
 }
 

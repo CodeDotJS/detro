@@ -22,12 +22,13 @@ src/lib/dmrc/       Upstream shapes. Validate with Zod. Do not leak them into th
 src/lib/transit/    Normalized stations, lines, and journeys.
 src/lib/offline/    Saved journey packs and the street-tile set.
 src/lib/plan/       Plan state, saved trips, selection.
+src/lib/play/       Play games. Questions are built only from saved data.
 src/ui/             Screens. They consume transit types.
-data/en/            English snapshot that ships: lines, stations, briefs, coordinates, journeys.
+data/en/            English snapshot that ships: lines, stations, briefs, coordinates, journeys, platforms.
 public/map-tiles/   Street tiles for the metro area, through zoom 14.
 ```
 
-Routes are calculated from station order. A packed journey supplies the fare, platform, and first and last train when that pair was saved.
+Routes are calculated from station order. A packed journey supplies the fare, platform, and first and last train when that pair was saved. `python3 src/lib/offline/build_platforms.py` reads the packs and writes `data/en/platforms.json`, one boarding platform per station, line, and direction.
 
 ## Constraints
 
