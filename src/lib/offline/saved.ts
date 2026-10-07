@@ -3,7 +3,7 @@ import type { Journey } from "../transit/types"
 import { SNAPSHOT_CACHE } from "./caches"
 import { journeyFromPack, type PackRide } from "./pack"
 
-type PackFile = Record<string, { d?: PackRide; c?: PackRide }>
+export type PackFile = Record<string, { d?: PackRide; c?: PackRide }>
 
 const packs = new Map<string, PackFile>()
 
@@ -26,6 +26,41 @@ export async function savedJourneys(
     bundle("minimum-interchange", from, to, fetchedAt, "fewest-changes"),
   ])
   return { distance, changes }
+}
+
+const JOURNEY_PATH = /^\/snapshot\/en\/journeys\/([^/]+)\.json$/
+
+/** Starting stations whose journey pack is already in the offline cache, or null when the cache cannot be read. */
+export async function cachedJourneyOrigins(): Promise<Set<string> | null> {
+  if (!("caches" in globalThis)) return null
+  try {
+    const cache = await caches.open(SNAPSHOT_CACHE)
+    const out = new Set<string>()
+    for (const request of await cache.keys()) {
+      const match = JOURNEY_PATH.exec(new URL(request.url).pathname)
+      if (match) out.add(decodeURIComponent(match[1]))
+    }
+    return out
+  } catch {
+    return null
+  }
+}
+
+/** Every saved trip that starts at this station, or null when the pack is not on this phone. */
+export async function savedOriginPack(from: string): Promise<PackFile | null> {
+  return originPack(from)
+}
+
+/** Distinct weekday fares saved for trips that start at this station. */
+export async function savedWeekdayFares(from: string): Promise<number[]> {
+  const pack = await originPack(from)
+  if (!pack) return []
+  const fares = new Set<number>()
+  for (const row of Object.values(pack)) {
+    const fare = row.d?.w
+    if (typeof fare === "number" && fare > 0) fares.add(fare)
+  }
+  return [...fares].sort((a, b) => a - b)
 }
 
 async function originPack(from: string): Promise<PackFile | null> {

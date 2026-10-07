@@ -9,7 +9,7 @@ Build a free, ad-free, mobile-first PWA. Working name: Delhi Metro Simple. It is
 
 The home task is: choose origin, choose destination, show one readable route. Answer which train, where to change, and the fare when the payload includes one.
 
-Primary destinations are Plan, Map, City, Saved, and Help. Navigation is a compact top bar with an icon and a text label, so it does not cover the page. Wide screens use two panes: controls on the left, the route or the line on the right.
+Primary destinations are Plan, Map, City, Saved, Play, and Help. Navigation is a compact top bar with an icon and a text label, so it does not cover the page. Wide screens use two panes: controls on the left, the route or the line on the right.
 
 Out of v1: accounts, payments, ticket sales, ads, analytics, chatbots, social feeds, and mandatory install, onboarding, or location permission.
 

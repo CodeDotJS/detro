@@ -22,9 +22,16 @@ A child with an adult, an older adult, a first-time visitor, and someone unfamil
 2. **Map** — one line at a time, with a sentence that says to pick a line and then a station. Start here and Go here sit with the chosen station. On a wide screen the line diagram sits beside the list.
 3. **City** — stations with a saved coordinate on street tiles. The ride is drawn between the ends that have positions.
 4. **Saved** — trips stored on this device. Open one to see the ride, or remove it.
-5. **Help** — how to use the app, verified contacts, text size, offline status, privacy, and sources.
+5. **Play** — four games, each a round of eight questions with three tokens, Express points for three in a row, and +5 for answering before the doors close. Answers move on by themselves; a tap skips the wait. Every answer comes from saved data, and a question that could have two right answers is not asked.
+   - **Change here** — a trip from one starting station to a destination, the line and direction you board, and four interchanges. The question names both stations. The answer is where the saved route changes. Trips where the shortest and the fewest-changes routes change at different stations are skipped, and no wrong option is served by a later line on the trip. The answer shows every leg with its direction, platform, and stops.
+   - **Platform** — the station you are at and the station you are going to, then that station’s real platforms as the choices. The question names both stations. The answer comes from `data/en/platforms.json`, which `python3 src/lib/offline/build_platforms.py` builds from the journey packs. A destination that two platforms reach directly is skipped. The answer shows every platform at the station.
+   - **Faster or cheaper** — two saved trips from one station: which takes longer, or which costs more on a weekday. Each choice names the station you leave and the station you reach. The gap in minutes narrows as the round goes on, and fares never tie.
+   - **Next stop** — ride up to eight stops on a real line and name each next stop from four stations. The track shows the stop the train just left and the terminus it is heading to, and the station behind the train is never an option, so only one choice is next. Wrong options come from the saved network: the stop after next, the next stop on a line that meets here, or a station close by on the map. Three tokens a ride, Express points for three in a row, +5 for answering before the doors close, and an occasional interchange bonus. A completed ride ends with a fare guess when the pack has that pair; the choices are real weekday fares from the same origin. Right answers stamp stations in a passport per line, and the stamped total sets a rank; misses come back in later rides. The end card states the line’s length and ends, and, when the pair was saved, the trip’s minutes and fare.
+   - Platforms and interchanges answered right count as learned, misses come back sooner, and rounds lean towards stations in Saved trips. Progress stays in the passport.
+   - Play works offline. Platform and Next stop need only the app. Change here and Faster or cheaper start from stations whose journey pack is already saved; the Play page says how many are saved while the rest download. Next stop chooses the line.
+6. **Help** — how to use the app, verified contacts, text size, offline status, privacy, and sources.
 
-Plan, Map, City, Saved, and Help live in a top bar. The bar does not cover the page.
+Plan, Map, City, Saved, Play, and Help live in a top bar. The bar does not cover the page.
 
 Station details open from search, the map, and journey results. They are not a top-level destination.
 

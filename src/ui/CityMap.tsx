@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
-import { ArrowRight, ArrowRightLeft, ArrowUpDown, Bookmark, ChevronDown, DoorOpen, List, Share2, X } from "lucide-react"
+import { ArrowRight, ArrowRightLeft, ArrowUpDown, ChevronDown, DoorOpen, List, Share2, X } from "lucide-react"
 import type { Copy } from "../i18n/copy"
 import coordinatesFile from "../../data/en/coordinates.json"
 import { inkOn, legColor } from "../lib/transit/legStyle"
@@ -11,7 +11,7 @@ import { routeStops } from "../lib/transit/routeMap"
 import type { Journey, Lang } from "../lib/transit/types"
 import { measureSwap, playSwap, type SwapDelta } from "./flipSwap"
 import { Notice } from "./Notice"
-import { JourneyStats, ServiceTimes, TripMeta } from "./PlanView"
+import { JourneyStats, SaveTripButton, ServiceTimes, TripMeta } from "./PlanView"
 
 const coordinates = coordinatesFile.stations as Record<string, LatLng>
 const CLEAR_TILE =
@@ -109,6 +109,7 @@ export function CityMap({
   onDismiss,
   onDismissMessage,
   onSave,
+  saved = false,
   onShare,
 }: {
   copy: Copy
@@ -129,6 +130,7 @@ export function CityMap({
   onDismiss: () => void
   onDismissMessage: () => void
   onSave: () => void
+  saved?: boolean
   onShare: (journey: Journey) => void
 }) {
   const stations = useMemo(() => stationsFor(lines, lang), [lines, lang])
@@ -409,10 +411,7 @@ export function CityMap({
                   {` · ${shown.changes === 0 ? copy.noChanges : copy.changeCount(shown.changes)}`}
                 </p>
                 <div className="zoom-row">
-                  <button type="button" onClick={onSave}>
-                    <Bookmark aria-hidden="true" size={18} strokeWidth={2} />
-                    {copy.saveTrip}
-                  </button>
+                  <SaveTripButton copy={copy} saved={saved} onSave={onSave} />
                   <button type="button" onClick={() => onShare(shown)}>
                     <Share2 aria-hidden="true" size={18} strokeWidth={2} />
                     {copy.shareRoute}
@@ -467,10 +466,7 @@ export function CityMap({
                   ) : null}
                   {message ? <Notice message={message} closeLabel={copy.close} onClose={onDismissMessage} /> : null}
                   <div className="zoom-row">
-                    <button type="button" onClick={onSave}>
-                      <Bookmark aria-hidden="true" size={18} strokeWidth={2} />
-                      {copy.saveTrip}
-                    </button>
+                    <SaveTripButton copy={copy} saved={saved} onSave={onSave} />
                     <button type="button" onClick={() => onShare(shown)}>
                       <Share2 aria-hidden="true" size={18} strokeWidth={2} />
                       {copy.shareRoute}

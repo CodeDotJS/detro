@@ -8,7 +8,7 @@ Every later change uses a branch and a pull request. Do not commit or push direc
 
 1. Branch from `main` and commit there.
 2. Open a pull request. The `check` job in the CI workflow tests the build, enforces the file limits, and uploads a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen.
-3. Confirm `/`, `/map`, `/city`, `/saved`, and `/help` on that preview.
+3. Confirm `/`, `/map`, `/city`, `/saved`, `/play`, and `/help` on that preview.
 4. Merge only after the `check` job is green. Branch protection requires that job.
 5. The merge publishes production at `https://detro.pages.dev`.
 
@@ -25,7 +25,7 @@ The numbered procedure below is the first-time setup. It is already done. Do not
 5. Create the Cloudflare Pages project `detro` as Direct Upload, not a Git-connected build. The production branch is `main`. The public URL is `https://detro.pages.dev`.
 6. Create a Cloudflare API token that can edit that Pages project only. Store it as the GitHub secret `CLOUDFLARE_API_TOKEN`, and store the account id as `CLOUDFLARE_ACCOUNT_ID`. Do not print the token and do not commit it.
 7. Add `.github/workflows/ci.yml` as specified below. Require that check on `main` before a merge.
-8. Open a pull request and confirm the preview URL loads `/`, `/map`, `/city`, `/saved`, and `/help`.
+8. Open a pull request and confirm the preview URL loads `/`, `/map`, `/city`, `/saved`, `/play`, and `/help`.
 9. Merge to `main` and open `https://detro.pages.dev` on a phone. Turn the network off and reload. Search, a saved fare, a station brief, the line map, and the city map must still open.
 
 Stop at the first failed step and report it. Do not retry a deploy by connecting Pages to Git.
@@ -194,7 +194,7 @@ No app environment variables. No install of private packages.
 
 ## Addresses inside the app
 
-The app uses `/`, `/map`, `/city`, `/saved`, and `/help`. Pages must serve `index.html` for those paths when a file of that name does not exist. `public/_redirects` contains:
+The app uses `/`, `/map`, `/city`, `/saved`, `/play`, and `/help`. Pages must serve `index.html` for those paths when a file of that name does not exist. `public/_redirects` contains:
 
 ```text
 /*    /index.html   200

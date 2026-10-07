@@ -6,6 +6,7 @@ export function tabFromPath(pathname: string): Tab | null {
   if (path === "/map") return "map"
   if (path === "/city") return "city"
   if (path === "/saved") return "saved"
+  if (path === "/play") return "play"
   if (path === "/help") return "help"
   return null
 }

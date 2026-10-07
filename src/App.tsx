@@ -12,11 +12,19 @@ import { startLineCode } from "./lib/transit/routeMap"
 import { readSelection, writeSelection } from "./lib/plan/selection"
 import { readTextSize, textDefault, textStorageKey } from "./lib/plan/textSize"
 import { createPlanState, planReducer, routeBlockReason } from "./lib/plan/state"
+import {
+  clearPlayProgress,
+  emptyPlayProgress,
+  readPlayProgress,
+  writePlayProgress,
+  type PlayProgress,
+} from "./lib/play/progress"
 import { clearTrips, readTripQuery, readTrips, removeTrip, saveTrip, tripQuery, type SavedTrip } from "./lib/plan/trips"
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
 import { HelpView } from "./ui/HelpView"
 import { MapView } from "./ui/MapView"
 import { PlanView } from "./ui/PlanView"
+import { PlayView } from "./ui/PlayView"
 import { SavedView } from "./ui/SavedView"
 import { CityMap } from "./ui/CityMap"
 import { pathForTab, tabFromPath } from "./lib/nav"
@@ -46,6 +54,12 @@ function pageMeta(tab: Tab): { title: string; description: string } {
     return {
       title: "Saved trips · DETRO",
       description: "Open a saved Delhi Metro trip in DETRO. Trips stay on this phone. Free, ad-free, and independent of DMRC.",
+    }
+  }
+  if (tab === "play") {
+    return {
+      title: "Play · DETRO",
+      description: "Delhi Metro games in DETRO. Name the next stop, find where to change, pick the right platform, and compare trip times and fares. Free, ad-free, and independent of DMRC.",
     }
   }
   if (tab === "help") {
@@ -131,6 +145,18 @@ export function App() {
   const [textSize, setTextSize] = useState(readTextSize)
   const [helpNotice, setHelpNotice] = useState<string | null>(null)
   const [trips, setTrips] = useState<SavedTrip[]>(readStoredTrips)
+  const [savedMark, setSavedMark] = useState<{ n: number; fromCode: string; toCode: string } | null>(null)
+  useEffect(() => {
+    if (tab !== "saved" || savedMark === null) return
+    const id = window.setTimeout(() => setSavedMark(null), 1100)
+    return () => window.clearTimeout(id)
+  }, [tab, savedMark])
+
+  function keepTrip(fromCode: string, toCode: string) {
+    setTrips(saveTrip(localStorage, { fromCode, toCode }))
+    setSavedMark((current) => ({ n: (current?.n ?? 0) + 1, fromCode, toCode }))
+  }
+  const [playProgress, setPlayProgress] = useState(readStoredPlayProgress)
   const [online, setOnline] = useState(() => navigator.onLine)
   const searchRef = useRef<DebouncedSearch<Suggestion> | null>(null)
   const requestId = useRef(0)
@@ -391,16 +417,30 @@ export function App() {
     setRouteOpen(true)
   }
 
+  function updatePlayProgress(update: (current: PlayProgress) => PlayProgress) {
+    setPlayProgress((current) => {
+      const next = update(current)
+      try {
+        writePlayProgress(localStorage, next)
+      } catch {
+        // The passport still updates on screen.
+      }
+      return next
+    })
+  }
+
   function clearSavedData() {
     try {
       localStorage.removeItem("dms-text")
       localStorage.removeItem(textStorageKey)
       clearTrips(localStorage)
+      clearPlayProgress(localStorage)
     } catch {
       // The controls still reset on screen.
     }
     setTextSize(textDefault)
     setTrips([])
+    setPlayProgress(emptyPlayProgress())
     dispatch({ type: "apply-language", names: namesFor(snapshot.stations, "en") })
     clearResult()
     setHelpNotice(copy.en.cleared)
@@ -454,7 +494,13 @@ export function App() {
         <span className="mark-name">DETRO</span>
         <span className="mark-tag">Delhi Metro Simple</span>
       </a>
-      <TabBar copy={copy.en} tab={tab} onTab={openTab} />
+      <TabBar
+        copy={copy.en}
+        tab={tab}
+        onTab={openTab}
+        savedLand={savedMark?.n ?? 0}
+        savedCount={trips.length}
+      />
       <SignalMark copy={copy.en} online={online} />
     </header>
     {tab === "plan" ? (
@@ -488,9 +534,10 @@ export function App() {
         clearResult()
       }}
       onSubmit={onSubmit}
+      saved={pairSaved(trips, state.from, state.to)}
       onSave={() => {
         if (!state.from || !state.to) return
-        setTrips(saveTrip(localStorage, { fromCode: state.from.code, toCode: state.to.code }))
+        keepTrip(state.from.code, state.to.code)
         setMessage(copy[lang].tripSaved)
       }}
       onViewMap={viewRouteOnMap}
@@ -510,6 +557,9 @@ export function App() {
     {tab === "saved" ? (
       <SavedView
         copy={copy[lang]}
+        lines={snapshot.lines}
+        lang={lang}
+        landed={savedMark}
         trips={trips.map((trip) => ({
           fromCode: trip.fromCode,
           toCode: trip.toCode,
@@ -524,6 +574,15 @@ export function App() {
             setTrips((current) => current.filter((trip) => trip.fromCode !== fromCode || trip.toCode !== toCode))
           }
         }}
+      />
+    ) : null}
+    {tab === "play" ? (
+      <PlayView
+        lines={snapshot.lines}
+        fetchedAt={snapshot.fetchedAt}
+        progress={playProgress}
+        onProgress={updatePlayProgress}
+        homeCodes={trips.flatMap((trip) => [trip.fromCode, trip.toCode])}
       />
     ) : null}
     {tab === "map" ? (
@@ -565,9 +624,10 @@ export function App() {
         onCloseRoute={() => setRouteOpen(false)}
         onDismiss={dismissCityTrip}
         onDismissMessage={() => setCityMessage(null)}
+        saved={pairSaved(trips, cityFrom, cityTo)}
         onSave={() => {
           if (!cityFrom || !cityTo) return
-          setTrips(saveTrip(localStorage, { fromCode: cityFrom.code, toCode: cityTo.code }))
+          keepTrip(cityFrom.code, cityTo.code)
           setCityMessage(copy[lang].tripSaved)
         }}
         onShare={(shown) => {
@@ -596,11 +656,28 @@ export function App() {
   )
 }
 
+function pairSaved(
+  trips: SavedTrip[],
+  from: { code: string } | null,
+  to: { code: string } | null,
+): boolean {
+  if (!from || !to) return false
+  return trips.some((trip) => trip.fromCode === from.code && trip.toCode === to.code)
+}
+
 function readStoredTrips(): SavedTrip[] {
   try {
     return readTrips(localStorage)
   } catch {
     return []
+  }
+}
+
+function readStoredPlayProgress() {
+  try {
+    return readPlayProgress(localStorage)
+  } catch {
+    return emptyPlayProgress()
   }
 }
 
