@@ -39,7 +39,7 @@ Routes are calculated from station order. A packed journey supplies the fare, pl
 - Do not add a Hindi language control. Hindi strings in `src/i18n/copy.ts` exist so the types compile.
 - Do not load fonts from a CDN. Vendored font files are allowed.
 - Do not claim live arrivals, live lifts, or official affiliation.
-- Do not push or open a pull request until the user has verified the change locally and said to deploy. Follow `docs/DEPLOYMENT.md`. Do not add analytics, ads, or a paid service.
+- Do not push or open a pull request until the user has verified the change locally and said to deploy. A nit that cannot change the site stays local until the next product change. Follow `docs/DEPLOYMENT.md`. Do not add analytics, ads, or a paid service.
 
 ## Local files
 

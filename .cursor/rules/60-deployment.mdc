@@ -7,9 +7,11 @@ alwaysApply: true
 
 Do not deploy until the user has used the change on this machine and said to deploy. A push that opens a pull request uploads a preview. A merge to `main` uploads production. Both are a deploy. Do not push, do not open a pull request, and do not merge before that.
 
-Check the change with `npm run dev` at `http://127.0.0.1:5173`, including a phone-width window.
+A nit that cannot change what the site serves does not use this full path. That is a `.gitignore` line, an agent rule, a comment, or a docs note the app does not show. Leave it on the machine, or on a local branch, until the next product change. Do not open a pull request for it alone. If the user asks to ship that nit now, still use a branch and a pull request, wait for the `check` job, and merge when it is green. Do not run the app, and do not open the preview. Do not treat a Help or product-copy edit as a nit.
 
-When the user says to deploy:
+For a product change, check it with `npm run dev` at `http://127.0.0.1:5173`, including a phone-width window.
+
+When the user says to deploy a product change:
 
 1. Branch from `main`.
 2. Commit on that branch. `type(scope): description`. One commit is one change.

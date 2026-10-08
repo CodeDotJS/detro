@@ -4,7 +4,9 @@ Checked 2026-10-04. The app is a static site. It does not need a server, a datab
 
 Production is live at `https://detro.pages.dev`. The Pages project `detro` is Direct Upload, and it is not connected to Git. The first upload was the local `dist` built from `94e3b40`.
 
-Every later change uses a branch and a pull request. Do not commit or push directly to `main`.
+Every later product change uses a branch and a pull request. Do not commit or push directly to `main`. A merge still uploads production. There is no path onto `main` that skips that upload.
+
+A nit that cannot change what the site serves stays local until the next product pull request. That is a `.gitignore` line, an agent rule, a comment, or a docs note the app does not show. Do not open a pull request for it alone, and do not walk the preview routes. If that nit must land on GitHub now, open a pull request, wait for the `check` job, and merge when it is green. Skip the preview. A Help or product-copy edit is not a nit.
 
 1. Branch from `main` and commit there.
 2. Open a pull request. The `check` job in the CI workflow tests the build, enforces the file limits, and uploads a preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen.
