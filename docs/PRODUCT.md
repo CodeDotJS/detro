@@ -10,7 +10,7 @@ Tell the rider where to start, which train to take, where to change, and where t
 
 The first screen asks where you are going. A result opens with a colored diagram of that ride, then the timeline. When the saved journey and the fewest-changes ride visit different stations, both are offered. Each ride has the line name on that line’s color, the direction, the platform when the payload includes one, and the stops in between. A change is its own line of text. Fare, stop count, and changes sit above the timeline. Missing fare or time stays missing.
 
-The page starts in Day. Night and Contrast are a cycle on Help and next to the online mark. Line colours stay the DMRC hues. Type is vendored IBM Plex Sans. Icons are from Lucide, bundled with the app. Nothing is loaded from a font or icon CDN. The independent-app notice and the snapshot date live on Help. The line map is one line at a time. The city map draws stations that have a saved latitude and longitude.
+The interface is English. The page starts in Day. Night and Contrast are a cycle on Help and next to the online mark. Line colours stay the DMRC hues. Type is vendored IBM Plex Sans. Icons are from Lucide, bundled with the app. Nothing is loaded from a font or icon CDN. The independent-app notice and the snapshot date live on Help. The line map is one line at a time. The city map draws stations that have a saved latitude and longitude.
 
 ## People
 
@@ -39,7 +39,7 @@ Station details open from search, the map, and journey results. They are not a t
 
 The first screen shows “Where do you want to go?”, From, To, swap, and one primary route button. “Use my location” is secondary. Saved trips live under Saved, not on Plan.
 
-Search supports English and Hindi names, aliases, and spelling variants. Suggestions show the line when membership is known. Similar names stay distinct. A fuzzy match is never selected silently.
+The interface is English. Search matches English station names, aliases, and spelling variants from the English snapshot. Suggestions show the line when membership is known. Similar names stay distinct. A fuzzy match is never selected silently.
 
 ## Journey result
 

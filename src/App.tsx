@@ -328,13 +328,13 @@ export function App() {
         dispatch({ type: "set-station", field: "to", pick: picked })
       }
     }
-    const reason = routeBlockReason(from, to, copy[lang])
+    const reason = routeBlockReason(from, to, copy)
     if (reason || !from || !to) {
       requestId.current += 1
       setJourney(null)
       setAlternate(null)
       setPhase("error")
-      setMessage(reason ?? copy[lang].needBoth)
+      setMessage(reason ?? copy.needBoth)
       return
     }
     showRoute(from.code, to.code, lang)
@@ -366,12 +366,12 @@ export function App() {
     const to = field === "to" ? { code, name } : state.to
     if (from && to && from.code !== to.code) {
       showRoute(from.code, to.code, lang)
-      setMessage(copy[lang].placedRoute(from.name, to.name))
+      setMessage(copy.placedRoute(from.name, to.name))
       return
     }
     clearResult()
     setPlacedField(field)
-    setMessage(field === "from" ? copy[lang].placedFrom(name) : copy[lang].placedTo(name))
+    setMessage(field === "from" ? copy.placedFrom(name) : copy.placedTo(name))
   }
 
   function clearCityRoute() {
@@ -395,13 +395,13 @@ export function App() {
       const next = distance ?? calculated()
       if (!next) {
         setCityPhase("error")
-        setCityMessage(copy[lang].noSnapshotRoute)
+        setCityMessage(copy.noSnapshotRoute)
         return
       }
       setCityJourney(next)
       setCityAlternate(changes && !sameRide(next, changes) ? changes : null)
       setCityPhase("ready")
-      if (!distance && !navigator.onLine) setCityMessage(copy[lang].offlineRoute)
+      if (!distance && !navigator.onLine) setCityMessage(copy.offlineRoute)
     })
   }
 
@@ -411,13 +411,13 @@ export function App() {
       setCityFrom(pick)
       setCityTo(null)
       clearCityRoute()
-      setCityMessage(copy[lang].placedFrom(name))
+      setCityMessage(copy.placedFrom(name))
       return
     }
     setCityTo(pick)
     if (!cityFrom || cityFrom.code === code) {
       clearCityRoute()
-      setCityMessage(cityFrom && cityFrom.code === code ? copy[lang].sameStation : copy[lang].placedTo(name))
+      setCityMessage(cityFrom && cityFrom.code === code ? copy.sameStation : copy.placedTo(name))
       return
     }
     showCityRoute(cityFrom.code, code)
@@ -462,7 +462,7 @@ export function App() {
     setPlayProgress(emptyPlayProgress())
     dispatch({ type: "apply-language", names: namesFor(snapshot.stations, "en") })
     clearResult()
-    setHelpNotice(copy.en.cleared)
+    setHelpNotice(copy.cleared)
   }
 
   function viewRouteOnMap(shown: Journey) {
@@ -515,20 +515,20 @@ export function App() {
         <span className="mark-tag">Delhi Metro Simple</span>
       </a>
       <TabBar
-        copy={copy.en}
+        copy={copy}
         tab={tab}
         onTab={openTab}
         savedLand={savedMark?.n ?? 0}
         savedCount={trips.length}
       />
       <div className="chrome-tools">
-        <SignalMark copy={copy.en} online={online} />
-        <ThemeCycle copy={copy.en} />
+        <SignalMark copy={copy} online={online} />
+        <ThemeCycle copy={copy} />
       </div>
     </header>
     {tab === "plan" ? (
     <PlanView
-      copy={copy[lang]}
+      copy={copy}
       lang={lang}
       state={state}
       phase={phase}
@@ -561,7 +561,7 @@ export function App() {
       onSave={() => {
         if (!state.from || !state.to) return
         const stored = flipTrip(state.from.code, state.to.code)
-        setMessage(stored ? copy[lang].tripSaved : null)
+        setMessage(stored ? copy.tripSaved : null)
       }}
       onViewMap={viewRouteOnMap}
       onClearRoute={clearRoute}
@@ -570,16 +570,16 @@ export function App() {
       onShare={(shown) => {
         if (!state.from || !state.to) return
         const url = `${window.location.origin}${pathForTab("plan")}${tripQuery(state.from.code, state.to.code)}`
-        const text = `${journeySteps(shown, copy[lang]).join("\n")}\n${url}`
-        void shareOrCopy(url, text, copy[lang].appName).then((copied) => {
-          if (copied) setMessage(copy[lang].linkCopied)
+        const text = `${journeySteps(shown, copy).join("\n")}\n${url}`
+        void shareOrCopy(url, text, copy.appName).then((copied) => {
+          if (copied) setMessage(copy.linkCopied)
         })
       }}
     />
     ) : null}
     {tab === "saved" ? (
       <SavedView
-        copy={copy[lang]}
+        copy={copy}
         lines={snapshot.lines}
         lang={lang}
         landed={savedMark}
@@ -610,7 +610,7 @@ export function App() {
     ) : null}
     {tab === "map" ? (
       <MapView
-        copy={copy[lang]}
+        copy={copy}
         lang={lang}
         lines={snapshot.lines}
         interchangeCodes={interchangeCodes}
@@ -630,7 +630,7 @@ export function App() {
     ) : null}
     {tab === "city" ? (
       <CityMap
-        copy={copy[lang]}
+        copy={copy}
         lines={snapshot.lines}
         lang={lang}
         from={cityFrom}
@@ -651,21 +651,21 @@ export function App() {
         onSave={() => {
           if (!cityFrom || !cityTo) return
           const stored = flipTrip(cityFrom.code, cityTo.code)
-          setCityMessage(stored ? copy[lang].tripSaved : null)
+          setCityMessage(stored ? copy.tripSaved : null)
         }}
         onShare={(shown) => {
           if (!cityFrom || !cityTo) return
           const url = `${window.location.origin}${pathForTab("plan")}${tripQuery(cityFrom.code, cityTo.code)}`
-          const text = `${journeySteps(shown, copy[lang]).join("\n")}\n${url}`
-          void shareOrCopy(url, text, copy[lang].appName).then((copied) => {
-            if (copied) setCityMessage(copy[lang].linkCopied)
+          const text = `${journeySteps(shown, copy).join("\n")}\n${url}`
+          void shareOrCopy(url, text, copy.appName).then((copied) => {
+            if (copied) setCityMessage(copy.linkCopied)
           })
         }}
       />
     ) : null}
     {tab === "help" ? (
       <HelpView
-        copy={copy.en}
+        copy={copy}
         textSize={textSize}
         snapshotDate={snapshotDate}
         notice={helpNotice}

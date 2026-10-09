@@ -62,6 +62,6 @@ Usable routing starts with operational Delhi Metro lines whose journeys we have 
 - A dedicated station-detail endpoint. Not found in the bundles scanned.
 - Smart-card discounts and Sunday/holiday rules as data. The fare endpoint does distinguish weekday and weekend numbers; see `docs/DMRC_API.md`.
 - Official assistance phone numbers. Do not invent them.
-- Human review of Hindi UI chrome. Hindi names returned by `hi` responses are source strings, not our translation.
+- Hindi snapshot files may stay on this machine. The app does not load them, and the interface does not include Hindi chrome.
 - Route `path[].name` versus `station_name` for the same code. See the API doc.
 - Whether `minimum-interchange` changes a journey for pairs other than the one sample where it matched `least-distance`. `lowest-fare` returns an empty HTTP 200, so it is not a saved mode.
