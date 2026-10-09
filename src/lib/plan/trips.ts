@@ -37,6 +37,13 @@ export function removeTrip(store: KeyValueStore, trip: SavedTrip): SavedTrip[] {
   return next
 }
 
+/** Adds the trip, or removes it when it is already stored. */
+export function toggleTrip(store: KeyValueStore, trip: SavedTrip): { trips: SavedTrip[]; saved: boolean } {
+  const exists = readTrips(store).some((item) => sameTrip(item, trip))
+  if (exists) return { trips: removeTrip(store, trip), saved: false }
+  return { trips: saveTrip(store, trip), saved: true }
+}
+
 export function clearTrips(store: KeyValueStore): void {
   store.removeItem(KEY)
 }
