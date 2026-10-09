@@ -166,6 +166,7 @@ describe("plan screen", () => {
     expect(html).toContain("To")
     expect(html).toContain("Swap stations")
     expect(html).toContain("Show my route")
+    expect(html).toContain("Play Taj Mahal")
     expect(html).not.toContain("Not an official DMRC app")
     expect(html).not.toContain("not been reviewed")
     expect(html).not.toContain("not a live planner")

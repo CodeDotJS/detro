@@ -123,6 +123,8 @@ export type Copy = {
   allLines: string
   cityGap: string
   close: string
+  landmarkPlay: (name: string) => string
+  landmarkPause: (name: string) => string
   chooseOnMap: string
   routeDetails: string
   onRoute: string
@@ -262,6 +264,8 @@ export const copy = {
     allLines: "All lines",
     cityGap: "A dashed stretch means a station on this ride has no saved coordinate.",
     close: "Close",
+    landmarkPlay: (name) => `Play ${name}`,
+    landmarkPause: (name) => `Pause ${name}`,
     chooseOnMap: "Choose on the map",
     routeDetails: "Route details",
     onRoute: "On this route",
@@ -399,6 +403,8 @@ export const copy = {
     allLines: "सभी लाइनें",
     cityGap: "डैश का मतलब है कि इस सवारी के किसी स्टेशन का निर्देशांक सेव नहीं है।",
     close: "बंद करें",
+    landmarkPlay: (name) => `${name} चलाएँ`,
+    landmarkPause: (name) => `${name} रोकें`,
     chooseOnMap: "नक्शे पर चुनें",
     routeDetails: "रास्ते का विवरण",
     onRoute: "इस रास्ते पर",
