@@ -205,7 +205,7 @@ export function CityMap({
     if (shown && (filter === "ride" || filter === "all")) {
       for (const segment of ride) {
         L.polyline(segment.points, {
-          color: "#fffdf8",
+          color: "var(--halo)",
           weight: 10,
           opacity: 0.95,
           lineCap: "round",
