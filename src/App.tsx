@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react"
+import { useTheme } from "next-themes"
 import { copy } from "./i18n/copy"
 import { createDebouncedSearch, type DebouncedSearch } from "./lib/dmrc/debounce"
 import { DmrcError } from "./lib/dmrc/errors"
@@ -10,6 +11,7 @@ import { savedJourneys } from "./lib/offline/saved"
 import { alternateRide, planRoute, sameRide } from "./lib/transit/route"
 import { startLineCode } from "./lib/transit/routeMap"
 import { readSelection, writeSelection } from "./lib/plan/selection"
+import { defaultTheme, themeStorageKey } from "./lib/plan/theme"
 import { readTextSize, textDefault, textStorageKey } from "./lib/plan/textSize"
 import { createPlanState, planReducer, routeBlockReason } from "./lib/plan/state"
 import {
@@ -29,6 +31,7 @@ import { SavedView } from "./ui/SavedView"
 import { CityMap } from "./ui/CityMap"
 import { pathForTab, tabFromPath } from "./lib/nav"
 import { SignalMark, TabBar, type Tab } from "./ui/TabBar"
+import { ThemeChrome, ThemeCycle } from "./ui/ThemeCycle"
 
 const snapshot = loadSnapshot()
 const snapshotDate = snapshot.fetchedAt.slice(0, 10)
@@ -171,6 +174,7 @@ export function App() {
   }
   const [playProgress, setPlayProgress] = useState(readStoredPlayProgress)
   const [online, setOnline] = useState(() => navigator.onLine)
+  const { setTheme } = useTheme()
   const searchRef = useRef<DebouncedSearch<Suggestion> | null>(null)
   const requestId = useRef(0)
 
@@ -446,11 +450,13 @@ export function App() {
     try {
       localStorage.removeItem("dms-text")
       localStorage.removeItem(textStorageKey)
+      localStorage.removeItem(themeStorageKey)
       clearTrips(localStorage)
       clearPlayProgress(localStorage)
     } catch {
       // The controls still reset on screen.
     }
+    setTheme(defaultTheme)
     setTextSize(textDefault)
     setTrips([])
     setPlayProgress(emptyPlayProgress())
@@ -493,6 +499,7 @@ export function App() {
 
   return (
     <div className="app">
+    <ThemeChrome />
     <header className="app-bar">
       <a
         className="mark"
@@ -514,7 +521,10 @@ export function App() {
         savedLand={savedMark?.n ?? 0}
         savedCount={trips.length}
       />
-      <SignalMark copy={copy.en} online={online} />
+      <div className="chrome-tools">
+        <SignalMark copy={copy.en} online={online} />
+        <ThemeCycle copy={copy.en} />
+      </div>
     </header>
     {tab === "plan" ? (
     <PlanView

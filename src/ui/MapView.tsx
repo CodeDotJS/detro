@@ -182,13 +182,13 @@ export function MapView({
                     highlightCodes.has(station.code)
                       ? line.label.en.color
                       : selected === station.code
-                        ? "#1c1915"
-                        : "#fffdf8"
+                        ? "var(--ink)"
+                        : "var(--halo)"
                   }
-                  stroke="#1c1915"
+                  stroke="var(--ink)"
                   strokeWidth="3"
                 />
-                <text x="60" y="6" fill="#1c1915" fontSize="18">
+                <text x="60" y="6" fill="var(--ink)" fontSize="18">
                   {name}
                 </text>
               </g>

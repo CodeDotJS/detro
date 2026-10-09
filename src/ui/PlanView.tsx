@@ -201,7 +201,7 @@ export function PlanView({
       <div className="pane pane-stage">
         {result ?? <RideStage />}
       </div>
-      <Landmarks />
+      <Landmarks copy={copy} />
     </main>
   )
 }
@@ -229,15 +229,35 @@ const landmarks = [
   ["pearl-of-the-orient", "Pearl of the Orient"],
 ] as const
 
-function Landmarks() {
+function Landmarks({ copy }: { copy: Copy }) {
+  const [playing, setPlaying] = useState<ReadonlySet<string>>(() => new Set())
+  function toggle(file: string) {
+    setPlaying((current) => {
+      const next = new Set(current)
+      if (next.has(file)) next.delete(file)
+      else next.add(file)
+      return next
+    })
+  }
   return (
     <section className="landmarks" aria-label="Famous places">
       <ul>
-        {landmarks.map(([file, name]) => (
-          <li key={file}>
-            <img src={`/attractions/${file}.svg`} alt={name} width={56} height={56} />
-          </li>
-        ))}
+        {landmarks.map(([file, name]) => {
+          const on = playing.has(file)
+          return (
+            <li key={file}>
+              <button
+                type="button"
+                className={on ? "landmark is-playing" : "landmark"}
+                aria-pressed={on}
+                aria-label={on ? copy.landmarkPause(name) : copy.landmarkPlay(name)}
+                onClick={() => toggle(file)}
+              >
+                <img src={`/attractions/${file}.svg`} alt="" width={36} height={36} />
+              </button>
+            </li>
+          )
+        })}
       </ul>
     </section>
   )

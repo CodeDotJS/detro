@@ -31,16 +31,16 @@ function Track({ dx = 0 }: { dx?: number }) {
   return (
     <g transform={`translate(${dx} 0)`}>
       {hangers.map((x) => (
-        <line key={x} x1={x} y1="16" x2={x} y2="46" stroke="#16181d" strokeWidth="1.25" />
+        <line key={x} x1={x} y1="16" x2={x} y2="46" stroke="var(--ink)" strokeWidth="1.25" />
       ))}
-      <line x1="0" y1="46" x2={tile} y2="46" stroke="#16181d" strokeWidth="1.25" />
+      <line x1="0" y1="46" x2={tile} y2="46" stroke="var(--ink)" strokeWidth="1.25" />
       <rect y="186" width={tile} height="6" fill="#f6d71a" />
       {ties.map((x) => (
-        <line key={x} x1={x} y1="174" x2={x} y2="184" stroke="#16181d" strokeWidth="2" />
+        <line key={x} x1={x} y1="174" x2={x} y2="184" stroke="var(--ink)" strokeWidth="2" />
       ))}
-      <line x1="0" y1="180" x2={tile} y2="180" stroke="#16181d" strokeWidth="2" />
+      <line x1="0" y1="180" x2={tile} y2="180" stroke="var(--ink)" strokeWidth="2" />
       {dashes.map((x) => (
-        <line key={x} x1={x} y1="204" x2={x + 28} y2="204" stroke="#d5dbe3" strokeWidth="1.5" />
+        <line key={x} x1={x} y1="204" x2={x + 28} y2="204" stroke="var(--line)" strokeWidth="1.5" />
       ))}
     </g>
   )

@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#16181d" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("dms-theme")
+          var theme = stored === "night" || stored === "contrast" ? stored : "day"
+          var root = document.documentElement
+          var page = { day: "#eef1f5", night: "#101218", contrast: "#ffffff" }
+          var chrome = { day: "#16181d", night: "#101218", contrast: "#000000" }
+          root.setAttribute("data-theme", theme)
+          root.style.colorScheme = theme === "night" ? "dark" : "light"
+          root.style.backgroundColor = page[theme]
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute("content", chrome[theme])
+        } catch (e) {}
+      })()
+    </script>
     <title>DETRO — Delhi Metro Simple</title>
     <meta
       name="description"
@@ -59,8 +75,26 @@
       }
     </script>
     <style>
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        min-height: 100dvh;
+        background: #eef1f5;
+        color-scheme: light;
+      }
+      html[data-theme="night"],
+      html[data-theme="night"] body {
+        background: #101218;
+        color-scheme: dark;
+      }
+      html[data-theme="contrast"],
+      html[data-theme="contrast"] body {
+        background: #fff;
+        color-scheme: light;
+      }
       .boot {
         min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -68,7 +102,7 @@
         gap: 1.25rem;
         margin: 0;
         padding: 2rem;
-        background: #eef1f5;
+        background: inherit;
         color: #16181d;
         font-family: "IBM Plex Sans", sans-serif;
         text-align: center;
@@ -93,6 +127,18 @@
       }
       @media (prefers-reduced-motion: reduce) {
         .boot img { animation: none; }
+      }
+      html[data-theme="night"] .boot {
+        color: #e8eaef;
+      }
+      html[data-theme="night"] .boot img {
+        background: #14161c;
+      }
+      html[data-theme="contrast"] .boot {
+        color: #000;
+      }
+      html[data-theme="contrast"] .boot img {
+        background: #f0f0f0;
       }
     </style>
   </head>

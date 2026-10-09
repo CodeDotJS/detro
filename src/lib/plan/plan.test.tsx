@@ -166,6 +166,8 @@ describe("plan screen", () => {
     expect(html).toContain("To")
     expect(html).toContain("Swap stations")
     expect(html).toContain("Show my route")
+    expect(html).toContain("Play Taj Mahal")
+    expect(html).toContain("stroke=\"var(--ink)\"")
     expect(html).not.toContain("Not an official DMRC app")
     expect(html).not.toContain("not been reviewed")
     expect(html).not.toContain("not a live planner")
@@ -225,6 +227,9 @@ describe("plan screen", () => {
     expect(html).not.toContain("हिन्दी")
     expect(html).toContain("not a live planner")
     expect(html).toContain("Open Play to name the next stop, find where to change, pick the right platform")
+    expect(html).toContain("Theme")
+    expect(html).toContain("Day")
+    expect(html).toContain("Theme: Day. Switch theme.")
   })
 
   it("names a control that removes one saved trip", () => {

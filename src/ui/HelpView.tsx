@@ -2,6 +2,7 @@ import type { Copy } from "../i18n/copy"
 import { playCopy } from "../i18n/play"
 import { textMax, textMin } from "../lib/plan/textSize"
 import { Notice } from "./Notice"
+import { ThemeCycle } from "./ThemeCycle"
 
 export function HelpView({
   copy,
@@ -52,6 +53,10 @@ export function HelpView({
           />
           <span className="text-size-end">{copy.textLarger}</span>
         </div>
+      </section>
+      <section>
+        <h2>{copy.theme}</h2>
+        <ThemeCycle copy={copy} named />
       </section>
       <section>
         <h2>{copy.freshnessTitle}</h2>
