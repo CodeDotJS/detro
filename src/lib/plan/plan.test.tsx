@@ -225,6 +225,9 @@ describe("plan screen", () => {
     expect(html).not.toContain("हिन्दी")
     expect(html).toContain("not a live planner")
     expect(html).toContain("Open Play to name the next stop, find where to change, pick the right platform")
+    expect(html).toContain("Theme")
+    expect(html).toContain("Day")
+    expect(html).toContain("Theme: Day. Switch theme.")
   })
 
   it("names a control that removes one saved trip", () => {

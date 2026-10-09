@@ -10,7 +10,7 @@ Tell the rider where to start, which train to take, where to change, and where t
 
 The first screen asks where you are going. A result opens with a colored diagram of that ride, then the timeline. When the saved journey and the fewest-changes ride visit different stations, both are offered. Each ride has the line name on that line’s color, the direction, the platform when the payload includes one, and the stops in between. A change is its own line of text. Fare, stop count, and changes sit above the timeline. Missing fare or time stays missing.
 
-The page is light. Type is vendored IBM Plex Sans. Icons are from Lucide, bundled with the app. Nothing is loaded from a font or icon CDN. The independent-app notice and the snapshot date live on Help. The line map is one line at a time. The city map draws stations that have a saved latitude and longitude.
+The page starts in Day. Night and Contrast are a cycle on Help and next to the online mark. Line colours stay the DMRC hues. Type is vendored IBM Plex Sans. Icons are from Lucide, bundled with the app. Nothing is loaded from a font or icon CDN. The independent-app notice and the snapshot date live on Help. The line map is one line at a time. The city map draws stations that have a saved latitude and longitude.
 
 ## People
 
@@ -29,7 +29,7 @@ A child with an adult, an older adult, a first-time visitor, and someone unfamil
    - **Next stop** — ride up to eight stops on a real line and name each next stop from four stations. The track shows the stop the train just left and the terminus it is heading to, and the station behind the train is never an option, so only one choice is next. Wrong options come from the saved network: the stop after next, the next stop on a line that meets here, or a station close by on the map. Three tokens a ride, Express points for three in a row, +5 for answering before the doors close, and an occasional interchange bonus. A completed ride ends with a fare guess when the pack has that pair; the choices are real weekday fares from the same origin. Right answers stamp stations in a passport per line, and the stamped total sets a rank; misses come back in later rides. The end card states the line’s length and ends, and, when the pair was saved, the trip’s minutes and fare.
    - Platforms and interchanges answered right count as learned, misses come back sooner, and rounds lean towards stations in Saved trips. Progress stays in the passport.
    - Play works offline. Platform and Next stop need only the app. Change here and Faster or cheaper start from stations whose journey pack is already saved; the Play page says how many are saved while the rest download. Next stop chooses the line.
-6. **Help** — how to use the app, verified contacts, text size, offline status, privacy, and sources.
+6. **Help** — how to use the app, verified contacts, text size, Day/Night/Contrast, offline status, privacy, and sources.
 
 Plan, Map, City, Saved, Play, and Help live in a top bar. The bar does not cover the page.
 
@@ -55,7 +55,7 @@ The schematic uses the same network data as local routing, once that data exists
 
 ## Help and privacy
 
-Help includes a short usage note, official contacts after they are verified, text-size controls, data freshness, a way to clear local data, sources, and the independent-app notice. There is no analytics, advertising, or account.
+Help includes a short usage note, official contacts after they are verified, text-size controls, a Day/Night/Contrast cycle, data freshness, a way to clear local data, sources, and the independent-app notice. Clearing saved data also restores Day. There is no analytics, advertising, or account.
 
 ## Explicitly out of v1
 

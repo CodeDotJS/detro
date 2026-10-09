@@ -78,14 +78,14 @@ The file limits, the API token, and the order of steps are in [`docs/DEPLOYMENT.
 1. Choose the two stations. The ride shows the line, the direction, and the stops.
 2. When that pair is in the snapshot, the fare, the platform, and the first and last train are on the same screen.
 3. Save the trip on this device, or share a link that carries the two station codes.
-4. The line map and the city map open from the same trip. Help holds text size and the snapshot date.
+4. The line map and the city map open from the same trip. Help holds text size, theme, and the snapshot date.
 5. With the network off, a browser that has loaded the app once still opens that trip.
 
 | Kind | Where | How long |
 | --- | --- | --- |
 | Lines, stations, fares, platforms | The snapshot in this repo | Saved 30 September 2026 |
 | Street map | `public/map-tiles/` | Zoom 9 through 14 |
-| Saved trips, text size | This browser | Until cleared on Help |
+| Saved trips, text size, theme | This browser | Until cleared on Help |
 
 The product scope is [`docs/PRODUCT.md`](docs/PRODUCT.md). The upstream API record is [`docs/DMRC_API.md`](docs/DMRC_API.md).
 

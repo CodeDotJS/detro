@@ -93,6 +93,9 @@ export type Copy = {
   textSmall: string
   textNormal: string
   textLarger: string
+  theme: string
+  themeName: { day: string; night: string; contrast: string }
+  themeSwitch: (name: string) => string
   clearData: string
   cleared: string
   snapshotHelp: (date: string) => string
@@ -228,8 +231,11 @@ export const copy = {
     textSmall: "Small text",
     textNormal: "Normal text",
     textLarger: "Larger text",
+    theme: "Theme",
+    themeName: { day: "Day", night: "Night", contrast: "Contrast" },
+    themeSwitch: (name) => `Theme: ${name}. Switch theme.`,
     clearData: "Clear saved data on this device",
-    cleared: "Saved text size, trips, and Play passport were cleared.",
+    cleared: "Saved text size, theme, trips, and Play passport were cleared.",
     snapshotHelp: (date) => `Station and line information was saved on ${date}.`,
     sources: "Data comes from the Delhi Metro website backend. This app is independent.",
     noBrief: "More detail for this station is not in the saved snapshot yet.",
@@ -362,8 +368,11 @@ export const copy = {
     textSmall: "छोटे अक्षर",
     textNormal: "सामान्य अक्षर",
     textLarger: "बड़े अक्षर",
+    theme: "थीम",
+    themeName: { day: "दिन", night: "रात", contrast: "कंट्रास्ट" },
+    themeSwitch: (name) => `थीम: ${name}। थीम बदलें।`,
     clearData: "इस डिवाइस का सेव डेटा मिटाएँ",
-    cleared: "सेव की गई भाषा, अक्षर आकार और यात्राएँ मिट गईं।",
+    cleared: "सेव की गई भाषा, अक्षर आकार, थीम और यात्राएँ मिट गईं।",
     snapshotHelp: (date) => `स्टेशन और लाइन की जानकारी ${date} को सेव की गई थी।`,
     sources: "डेटा दिल्ली मेट्रो वेबसाइट के बैकएंड से है। यह ऐप स्वतंत्र है।",
     noBrief: "इस स्टेशन का और विवरण सेव की गई सूची में अभी नहीं है।",
