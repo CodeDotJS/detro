@@ -36,7 +36,7 @@ Routes are calculated from station order. A packed journey supplies the fare, pl
 - Journey timestamps use Asia/Kolkata wall time, with no offset.
 - Do not invent stations, fares, platforms, contacts, or coordinates. A station with no saved position stays off the city map.
 - Do not spoof the official site’s `Origin` or `Referer`, copy challenge cookies, or retry HTTP 403.
-- Do not add a Hindi language control. Hindi strings in `src/i18n/copy.ts` exist so the types compile.
+- The interface is English only. Do not add Hindi chrome, theme names, a language control, or Hindi strings in `src/i18n/`. `data/hi/` and the download scripts stay on this machine. The app does not load them.
 - Do not load fonts from a CDN. Vendored font files are allowed.
 - Do not claim live arrivals, live lifts, or official affiliation.
 - Do not push or open a pull request until the user has verified the change locally and said to deploy. A nit that cannot change the site stays local until the next product change. Follow `docs/DEPLOYMENT.md`. Do not add analytics, ads, or a paid service.

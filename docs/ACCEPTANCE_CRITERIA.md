@@ -14,7 +14,7 @@ Milestone 1 is the only gate for the next implementation pass. Later items wait 
 - Missing fare or duration renders as unavailable, not zero.
 - HTTP 500, HTML, invalid JSON, and a blocked request render an error. They do not show a demo journey.
 - Swap exchanges the two stations and keeps their codes.
-- English and Hindi UI chrome both exist. Hindi station names come from `lang=hi` results. Hindi chrome is labeled as not human-reviewed.
+- The interface is English only. Station names come from the English snapshot.
 - Keyboard users can search, select, swap, and show a route.
 - Touch targets on this screen are at least 48×48 CSS pixels, with visible labels.
 - Fixture tests cover a direct `RI`→`KG` shape, a two-leg `RI`→`RCK` shape, a missing fare, and an HTML error body. Fixtures are copied from real sanitized responses.
@@ -26,9 +26,9 @@ Milestone 1 is the only gate for the next implementation pass. Later items wait 
 - Station details mark unverified gates, toilets, and access.
 - Saved trips survive a reload and can be cleared.
 - A shared link restores a trip from station codes.
-- Text size and language persist.
+- Text size and theme persist.
 - Offline mode is described accurately: cached map and saved trips before a verified graph; local routing only after that graph is tested.
-- Opt-in smoke checks, not default CI: one direct journey, one interchange, one branch-sensitive journey, one Airport Express journey, and English plus Hindi, compared with the official site for the same inputs.
+- Opt-in smoke checks, not default CI: one direct journey, one interchange, one branch-sensitive journey, and one Airport Express journey, compared with the official site for the same inputs.
 - Manual notes exist for screen reader, focus, contrast, 200% text, and narrow, large-phone, and desktop widths.
 
 ## Usability script

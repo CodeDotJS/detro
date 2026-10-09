@@ -15,4 +15,4 @@ Target WCAG 2.2 AA. Automated checks do not replace manual keyboard, zoom, contr
 - Support browser zoom and a visible larger-text control. At 200% text, controls stay usable.
 - At narrow widths, the page does not scroll sideways. The map may pan inside its own region.
 - Respect `prefers-reduced-motion`. No essential swipe, hover, long-press, or pinch-only action.
-- The interface is English. Do not add a Hindi language control until Hindi routes are part of the product again.
+- The interface is English only. Do not add Hindi chrome, theme names, or a language control.

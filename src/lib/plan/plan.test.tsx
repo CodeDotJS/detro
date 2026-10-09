@@ -98,9 +98,9 @@ describe("station selection", () => {
 
   it("asks for two different stations before a request", () => {
     const from = { code: "RI", name: "RITHALA" }
-    expect(routeBlockReason(from, null, copy.en)).toBe(copy.en.needBoth)
-    expect(routeBlockReason(from, from, copy.en)).toBe(copy.en.sameStation)
-    expect(routeBlockReason(from, { code: "KG", name: "KASHMERE GATE" }, copy.en)).toBeNull()
+    expect(routeBlockReason(from, null, copy)).toBe(copy.needBoth)
+    expect(routeBlockReason(from, from, copy)).toBe(copy.sameStation)
+    expect(routeBlockReason(from, { code: "KG", name: "KASHMERE GATE" }, copy)).toBeNull()
   })
 })
 
@@ -108,7 +108,7 @@ describe("readable steps", () => {
   it("writes a direct journey with a platform", () => {
     const result = normalizeJourney(routeRiKg, null, "2026-09-30T12:00:00.000Z")
     if (!result.ok) throw new Error("expected journey")
-    expect(journeySteps(result.journey, copy.en)).toEqual([
+    expect(journeySteps(result.journey, copy)).toEqual([
       "Go to RITHALA.",
       "Take the Red Line towards SHAHEED STHAL ( NEW BUS ADDA). Platform: Platform No. 2.",
       "Travel 13 stops.",
@@ -119,7 +119,7 @@ describe("readable steps", () => {
   it("writes the change on a two-leg journey", () => {
     const result = normalizeJourney(routeRiRck, null, "2026-09-30T12:00:00.000Z")
     if (!result.ok) throw new Error("expected journey")
-    const steps = journeySteps(result.journey, copy.en)
+    const steps = journeySteps(result.journey, copy)
     expect(steps).toContain("Change at KASHMERE GATE.")
     expect(steps).toContain(
       "Take the Yellow Line towards MILLENNIUM CITY CENTRE GURUGRAM. Platform: Platform No. 1.",
@@ -134,7 +134,7 @@ describe("readable steps", () => {
       ...result.journey,
       legs: result.journey.legs.map((leg) => ({ ...leg, platform: null })),
     }
-    expect(journeySteps(journey, copy.en).some((step) => step.includes("Platform"))).toBe(false)
+    expect(journeySteps(journey, copy).some((step) => step.includes("Platform"))).toBe(false)
   })
 })
 
@@ -152,7 +152,7 @@ describe("plan screen", () => {
   it("shows the English planning controls", () => {
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="idle"
@@ -176,7 +176,7 @@ describe("plan screen", () => {
   it("shows the selected station line color beside From and To", () => {
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={{
           ...createPlanState(),
@@ -213,7 +213,7 @@ describe("plan screen", () => {
   it("keeps the independent notice and snapshot note on Help", () => {
     const html = renderToStaticMarkup(
       <HelpView
-        copy={copy.en}
+        copy={copy}
         textSize={16}
         snapshotDate="2026-09-30"
         notice={null}
@@ -235,7 +235,7 @@ describe("plan screen", () => {
   it("names a control that removes one saved trip", () => {
     const html = renderToStaticMarkup(
       <SavedView
-        copy={copy.en}
+        copy={copy}
         lines={loadSnapshot().lines}
         lang="en"
         trips={[{ fromCode: "RI", toCode: "KG", fromName: "RITHALA", toName: "KASHMERE GATE" }]}
@@ -255,7 +255,7 @@ describe("plan screen", () => {
   it("keeps saved trips off the plan form", () => {
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="idle"
@@ -271,7 +271,7 @@ describe("plan screen", () => {
 
   it("lists Play between Saved and Help", () => {
     const html = renderToStaticMarkup(
-      <TabBar copy={copy.en} tab="plan" onTab={() => undefined} />,
+      <TabBar copy={copy} tab="plan" onTab={() => undefined} />,
     )
     expect(html.indexOf('href="/city"')).toBeGreaterThan(-1)
     expect(html.indexOf('href="/city"')).toBeLessThan(html.indexOf('href="/saved"'))
@@ -355,14 +355,14 @@ describe("plan screen", () => {
   })
 
   it("names the network status on its own mark", () => {
-    expect(renderToStaticMarkup(<SignalMark copy={copy.en} online={true} />)).toContain("Online")
-    expect(renderToStaticMarkup(<SignalMark copy={copy.en} online={false} />)).toContain("Offline")
+    expect(renderToStaticMarkup(<SignalMark copy={copy} online={true} />)).toContain("Online")
+    expect(renderToStaticMarkup(<SignalMark copy={copy} online={false} />)).toContain("Offline")
   })
 
   it("marks the field filled from the map", () => {
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="idle"
@@ -381,7 +381,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -403,7 +403,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -424,7 +424,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -448,7 +448,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -469,7 +469,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -487,7 +487,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -518,7 +518,7 @@ describe("plan screen", () => {
     if (!result.ok) throw new Error("expected journey")
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="ready"
@@ -540,7 +540,7 @@ describe("plan screen", () => {
     }
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={state}
         phase="idle"
@@ -555,16 +555,16 @@ describe("plan screen", () => {
   it("shows an error without a sample journey", () => {
     const html = renderToStaticMarkup(
       <PlanView
-        copy={copy.en}
+        copy={copy}
         lang="en"
         state={createPlanState()}
         phase="error"
-        message={copy.en.serviceError}
+        message={copy.serviceError}
         journey={null}
         {...handlers}
       />,
     )
-    expect(html).toContain(copy.en.serviceError)
+    expect(html).toContain(copy.serviceError)
     expect(html).not.toContain("Take the")
   })
 })

@@ -12,7 +12,7 @@ The repo had no app code. Use React, TypeScript, Vite, CSS custom properties, Zo
 
 ## Language default
 
-The interface is English only. Hindi route files are not being downloaded, so the app does not offer a Hindi control. Station names come from the English snapshot.
+The interface is English only. Do not add Hindi chrome, theme names, or a language control. Hindi snapshot files may stay on this machine. The app does not load them. Station names come from the English snapshot.
 
 ## Journey request
 
@@ -36,7 +36,7 @@ No secret or environment-specific URL is required yet. The base URL is the docum
 
 ## Visual direction
 
-The route result opens with a colored diagram of the ride, then the timeline: fare, stops, changes, each train’s line color and name, direction, and platform when present. A second option appears when the fewest-changes ride visits different stations from the saved journey. Type is IBM Plex Sans and IBM Plex Sans Devanagari from `@fontsource`. Icons are `lucide-react`. Both are bundled. There is no font or icon CDN. The independent notice, the unreviewed Hindi note, and the snapshot date are on Help, not on the plan screen. Metro Thogoli and the Delhi Metro journey screen were references for scanning a trip. Their branding and ads are not used. Station coordinates are not in the snapshot, so the map is still one line at a time.
+The route result opens with a colored diagram of the ride, then the timeline: fare, stops, changes, each train’s line color and name, direction, and platform when present. A second option appears when the fewest-changes ride visits different stations from the saved journey. Type is IBM Plex Sans from `@fontsource`. Icons are `lucide-react`. Both are bundled. There is no font or icon CDN. The independent notice and the snapshot date are on Help, not on the plan screen. Metro Thogoli and the Delhi Metro journey screen were references for scanning a trip. Their branding and ads are not used. Station coordinates are not in the snapshot, so the map is still one line at a time.
 
 ## Questions not asked
 

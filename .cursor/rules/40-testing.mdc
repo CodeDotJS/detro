@@ -8,7 +8,7 @@ alwaysApply: false
 
 Use Vitest for deterministic tests. Keep real-backend checks opt-in so CI does not depend on DMRC.
 
-Cover same-station input, a direct journey, one interchange, unknown station codes, HTML error bodies, missing fare, and Hindi versus English names.
+Cover same-station input, a direct journey, one interchange, unknown station codes, HTML error bodies, missing fare, and English station names from the snapshot.
 
 A fixture test that passes is not a live integration. Record the command and result before calling a flow verified.
 

@@ -33,9 +33,9 @@ Milestone 1 is in place for local use and fixture tests. A live route still need
 
 ## Phase 3 — Language, text size, save, share
 
-- [x] Hindi dictionaries for the current screens. The app still says they have not been human-reviewed.
-- [x] Language and text size persist on this device.
-- [x] Save and reopen trips locally. Help clears language, text size, and saved trips.
+- [x] English chrome only. No Hindi strings in the app, and no language control.
+- [x] Text size and theme persist on this device.
+- [x] Save and reopen trips locally. Help clears text size, theme, and saved trips.
 - [x] Share and open links that carry station codes only.
 
 ## Phase 4 — Cache and offline
