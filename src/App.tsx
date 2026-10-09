@@ -292,12 +292,12 @@ export function App() {
         setJourney(null)
         setAlternate(null)
         setPhase("error")
-        setMessage(copy[routeLang].noSnapshotRoute)
+        setMessage(copy.noSnapshotRoute)
         return
       }
       publish(next, alternateRide(next, changes))
       setPhase("ready")
-      if (!distance && !navigator.onLine) setMessage(copy[routeLang].offlineRoute)
+      if (!distance && !navigator.onLine) setMessage(copy.offlineRoute)
     })
   }
 
