@@ -19,7 +19,7 @@ import {
   writePlayProgress,
   type PlayProgress,
 } from "./lib/play/progress"
-import { clearTrips, readTripQuery, readTrips, removeTrip, saveTrip, tripQuery, type SavedTrip } from "./lib/plan/trips"
+import { clearTrips, readTripQuery, readTrips, removeTrip, toggleTrip, tripQuery, type SavedTrip } from "./lib/plan/trips"
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
 import { HelpView } from "./ui/HelpView"
 import { MapView } from "./ui/MapView"
@@ -152,9 +152,22 @@ export function App() {
     return () => window.clearTimeout(id)
   }, [tab, savedMark])
 
-  function keepTrip(fromCode: string, toCode: string) {
-    setTrips(saveTrip(localStorage, { fromCode, toCode }))
-    setSavedMark((current) => ({ n: (current?.n ?? 0) + 1, fromCode, toCode }))
+  function flipTrip(fromCode: string, toCode: string): boolean {
+    try {
+      const next = toggleTrip(localStorage, { fromCode, toCode })
+      setTrips(next.trips)
+      if (next.saved) setSavedMark((current) => ({ n: (current?.n ?? 0) + 1, fromCode, toCode }))
+      return next.saved
+    } catch {
+      const kept = trips.some((trip) => trip.fromCode === fromCode && trip.toCode === toCode)
+      if (kept) {
+        setTrips((current) => current.filter((trip) => trip.fromCode !== fromCode || trip.toCode !== toCode))
+        return false
+      }
+      setTrips((current) => [{ fromCode, toCode }, ...current.filter((trip) => trip.fromCode !== fromCode || trip.toCode !== toCode)])
+      setSavedMark((current) => ({ n: (current?.n ?? 0) + 1, fromCode, toCode }))
+      return true
+    }
   }
   const [playProgress, setPlayProgress] = useState(readStoredPlayProgress)
   const [online, setOnline] = useState(() => navigator.onLine)
@@ -537,8 +550,8 @@ export function App() {
       saved={pairSaved(trips, state.from, state.to)}
       onSave={() => {
         if (!state.from || !state.to) return
-        keepTrip(state.from.code, state.to.code)
-        setMessage(copy[lang].tripSaved)
+        const stored = flipTrip(state.from.code, state.to.code)
+        setMessage(stored ? copy[lang].tripSaved : null)
       }}
       onViewMap={viewRouteOnMap}
       onClearRoute={clearRoute}
@@ -627,8 +640,8 @@ export function App() {
         saved={pairSaved(trips, cityFrom, cityTo)}
         onSave={() => {
           if (!cityFrom || !cityTo) return
-          keepTrip(cityFrom.code, cityTo.code)
-          setCityMessage(copy[lang].tripSaved)
+          const stored = flipTrip(cityFrom.code, cityTo.code)
+          setCityMessage(stored ? copy[lang].tripSaved : null)
         }}
         onShare={(shown) => {
           if (!cityFrom || !cityTo) return

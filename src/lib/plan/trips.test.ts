@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { clearTrips, readTripQuery, readTrips, removeTrip, saveTrip, tripQuery, type KeyValueStore } from "./trips"
+import { clearTrips, readTripQuery, readTrips, removeTrip, saveTrip, toggleTrip, tripQuery, type KeyValueStore } from "./trips"
 
 function memory(): KeyValueStore {
   const data = new Map<string, string>()
@@ -35,6 +35,16 @@ describe("saved trips", () => {
     saveTrip(store, { fromCode: "SAKT", toCode: "RI" })
     expect(removeTrip(store, { fromCode: "RI", toCode: "KG" })).toEqual([{ fromCode: "SAKT", toCode: "RI" }])
     expect(readTrips(store)).toEqual([{ fromCode: "SAKT", toCode: "RI" }])
+  })
+
+  it("removes a trip when it is already stored", () => {
+    const store = memory()
+    expect(toggleTrip(store, { fromCode: "RI", toCode: "KG" })).toEqual({
+      trips: [{ fromCode: "RI", toCode: "KG" }],
+      saved: true,
+    })
+    expect(toggleTrip(store, { fromCode: "RI", toCode: "KG" })).toEqual({ trips: [], saved: false })
+    expect(readTrips(store)).toEqual([])
   })
 
   it("clears saved trips", () => {
