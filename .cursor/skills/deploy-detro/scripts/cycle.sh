@@ -70,16 +70,30 @@ case "${cmd}" in
     ;;
   watch-main)
     echo "Waiting for the main CI run" >&2
+    since=$(date -u +%Y-%m-%dT%H:%M:%SZ)
     id=""
-    for _ in 1 2 3 4 5 6 7 8 9 10; do
-      id=$(gh run list --branch main --workflow CI --limit 1 --json databaseId,status --jq '.[0].databaseId // empty')
-      if [ -n "${id}" ]; then
+    status=""
+    created=""
+    for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+      read -r id status created < <(gh run list --branch main --workflow CI --limit 1 --json databaseId,status,createdAt --jq '.[0] | "\(.databaseId) \(.status) \(.createdAt)"')
+      if [ -z "${id}" ]; then
+        sleep 3
+        continue
+      fi
+      if [ "${status}" = "in_progress" ] || [ "${status}" = "queued" ] || [ "${status}" = "waiting" ] || [ "${status}" = "requested" ]; then
+        break
+      fi
+      if [ "${status}" = "completed" ] && [ "${created}" \> "${since}" ]; then
         break
       fi
       sleep 3
     done
     if [ -z "${id}" ]; then
       echo "No CI run on main yet." >&2
+      exit 1
+    fi
+    if [ "${status}" = "completed" ] && [ "${created}" \< "${since}" ]; then
+      echo "No new main CI run after ${since}. Newest is ${id} (${status}, ${created})." >&2
       exit 1
     fi
     gh run watch "${id}"
