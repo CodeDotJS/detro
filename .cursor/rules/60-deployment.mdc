@@ -11,15 +11,7 @@ A nit that cannot change what the site serves does not use this full path. That 
 
 For a product change, check it with `npm run dev` at `http://127.0.0.1:5173`, including a phone-width window.
 
-When the user says to deploy a product change:
-
-1. Branch from `main`.
-2. Commit on that branch. `type(scope): description`. One commit is one change.
-3. Push the branch and open a pull request in this repository.
-4. Wait for the `check` job in the CI workflow. It runs `npm ci`, `npm test`, and `npm run build`, rejects `dist` above 20,000 files or any file over 25 MiB, then uploads a preview. `npm run smoke` is not in the job.
-5. Open the preview at `https://<branch>.detro.pages.dev`. A slash in the branch name becomes a hyphen. Confirm `/`, `/map`, `/city`, `/saved`, `/play`, and `/help` load. If the check fails, stop and report the check and the URL.
-6. Merge into `main` only after that job is green. Branch protection requires the `check` job.
-7. The merge publishes production at `https://detro.pages.dev`. After that upload succeeds, CI deletes the merged feature branch. Do not delete `main`. If the production upload fails, the branch stays.
+When the user says to deploy, follow `.cursor/skills/deploy-detro/SKILL.md`. Opening a pull request does not merge it. The helper waits for `check` and merges only when you call `merge` after the preview walk.
 
 The Pages project `detro` already exists and is Direct Upload. Do not create a second project, do not connect Pages to Git, and do not upload with Wrangler from this machine.
 

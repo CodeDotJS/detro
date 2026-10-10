@@ -39,7 +39,7 @@ Routes are calculated from station order. A packed journey supplies the fare, pl
 - The interface is English only. Do not add Hindi chrome, theme names, a language control, or Hindi strings in `src/i18n/`. `data/hi/` and the download scripts stay on this machine. The app does not load them.
 - Do not load fonts from a CDN. Vendored font files are allowed.
 - Do not claim live arrivals, live lifts, or official affiliation.
-- Do not push or open a pull request until the user has verified the change locally and said to deploy. A nit that cannot change the site stays local until the next product change. Follow `docs/DEPLOYMENT.md`. Do not add analytics, ads, or a paid service.
+- Do not push or open a pull request until the user has verified the change locally and said to deploy. A nit that cannot change the site stays local until the next product change. Follow `docs/DEPLOYMENT.md`. When the user says to deploy, follow `.cursor/skills/deploy-detro/SKILL.md`. Do not add analytics, ads, or a paid service.
 
 ## Local files
 
@@ -47,7 +47,7 @@ These stay on the machine and out of Git. Do not delete them.
 
 - `data/hi/` — Hindi snapshot. The app does not load it.
 - `data/en/routes/`, `data/en/fares/`, `data/en/first-last/` — pair downloads. `python3 src/lib/offline/build_journeys.py` packs them into `data/en/journeys/`.
-- `scripts/`, `detro.archives/`, `curls/`, `prompt.md` — collectors and the original brief.
+- `scripts/`, `detro.archives/`, `curls/`, `prompt.md` — collectors and the original brief. Helpers under `.cursor/skills/` may be committed.
 - `data/download-*` and the unused English dumps listed in `.gitignore`.
 
 The same list is in `.cursor/rules/50-local-files.mdc`.
