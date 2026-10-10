@@ -31,4 +31,6 @@ data/download-*
 
 # Local collectors. The app does not import these.
 scripts/
+!.cursor/skills/**/scripts/
+!.cursor/skills/**/scripts/**
 detro.archives/
