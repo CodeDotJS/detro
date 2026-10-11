@@ -38,7 +38,7 @@ Station details open from search, the map, and journey results. They are not a t
 
 ## Home
 
-The first screen shows “Where do you want to go?”, From, To, swap, “Use my location,” and one primary route button. Location is requested only after that button. Saved trips live under Saved, not on Plan. Least and Fewest still plan the pair you asked for, because the closed list can be four hours old. Alternative is the ride via the one nearest open gate. A blocked interchange is skipped. A closed gate on the way is marked, and the train still passes.
+The first screen shows “Where do you want to go?”, From, To, swap, “Use my location,” and one primary route button. Location is requested only after that button. Saved trips live under Saved, not on Plan. Least and Fewest still plan the pair you asked for, because the closed list is only refreshed three times a day. Alternative is the ride via the one nearest open gate. A blocked interchange is skipped. A closed gate on the way is marked, and the train still passes.
 
 The interface is English. Search matches English station names, aliases, and spelling variants from the English snapshot. Suggestions show the line when membership is known. Similar names stay distinct. A fuzzy match is never selected silently.
 
