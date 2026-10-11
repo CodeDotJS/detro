@@ -196,7 +196,7 @@ Live `GET /api/v2/en/metro_line/{code}` and `GET /api/v2/en/station_by_line_line
 
 That day’s line_list rows were all `"Normal Service"`. Linepage station phrases were `"Station Open"` or `"Station Closed"`: 225 open rows, 61 closed rows, 45 unique station codes (an interchange is listed on each line). `stations_updates` is `""` on a quiet line and an array when there are notes. Notes attach by station code. Rajiv Chowk’s note says the interchange facility is available. New Delhi’s note says the interchange will not be available. A closed station with no interchange sentence is silent.
 
-Gate-closed is not skip-station. The pack keeps closed stations only. A missing code is open. `python3 src/lib/offline/build_status.py` writes `data/en/status.json`. GitHub Actions rebakes that file every four hours. A failed bake keeps the previous file and clock.
+Gate-closed is not skip-station. The pack keeps closed stations only. A missing code is open. `python3 src/lib/offline/build_status.py` writes `data/en/status.json`. GitHub Actions rebakes that file three times a day at 06:00, 14:00, and 20:00 Asia/Kolkata. A failed bake keeps the previous file and clock.
 
 ## Integration limits
 

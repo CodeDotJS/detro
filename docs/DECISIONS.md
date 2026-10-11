@@ -34,7 +34,7 @@ The status bake collector is not the app. It may send the official `Origin` and 
 
 ## Status
 
-Closed gates are a showstopper. Status sits before Play. The pack is baked into the static site every four hours by GitHub Actions. There is no R2, Worker, or Pages Function. Closed means no board and no alight. Trains still pass. Transfer is true only when a note says the interchange facility is available. A “will not be available” interchange note, or a silent closed station, blocks a change. Status names one nearest open station, not a list of gates. Plan keeps Least and Fewest for the asked pair and offers Alternative via that one open substitute. Location is requested only after “Use my location.” Coordinates are not stored.
+Closed gates are a showstopper. Status sits before Play. The pack is baked three times a day at 06:00, 14:00, and 20:00 Asia/Kolkata by GitHub Actions, then merged through a pull request so `check` can run. There is no R2, Worker, or Pages Function. Closed means no board and no alight. Trains still pass. Transfer is true only when a note says the interchange facility is available. A “will not be available” interchange note, or a silent closed station, blocks a change. Status names one nearest open station, not a list of gates. Plan keeps Least and Fewest for the asked pair and offers Alternative via that one open substitute. Location is requested only after “Use my location.” Coordinates are not stored.
 
 ## No env file
 

@@ -1,8 +1,9 @@
 name: Status
 
 on:
+  # Asia/Kolkata wall times: 06:00, 14:00, 20:00. Cron is UTC (IST = UTC+5:30).
   schedule:
-    - cron: "17 */4 * * *"
+    - cron: "30 0,8,14 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -14,23 +15,60 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - name: Pack station status
         run: python3 src/lib/offline/build_status.py
-      - name: Commit the pack
+      - name: Open a pull request for the pack
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          git add data/en/status.json
-          if git diff --cached --quiet; then
+          if git diff --quiet -- data/en/status.json; then
             echo "status pack unchanged"
             exit 0
           fi
+          cp data/en/status.json /tmp/status.json
+          branch="chore/status-bake"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" origin/main
+          cp /tmp/status.json data/en/status.json
+          git add data/en/status.json
+          if git diff --cached --quiet; then
+            echo "status pack unchanged on main"
+            exit 0
+          fi
           git commit -m "$(cat <<'EOF'
           chore(status): bake station closures
 
           EOF
           )"
-          git push
+          git push -u origin "$branch" --force
+          pr=$(gh pr list --head "$branch" --base main --json number --jq '.[0].number // empty')
+          if [ -z "${pr}" ]; then
+            url=$(gh pr create --base main --head "$branch" \
+              --title "chore(status): bake station closures" \
+              --body "$(cat <<'EOF'
+          ## Summary
+          - Refresh `data/en/status.json` from the DMRC bake
+
+          ## Test plan
+          - [ ] Status pack loads after merge
+          - [ ] Closed list matches the bake
+
+          EOF
+          )")
+            pr=$(echo "${url}" | grep -oE '[0-9]+$')
+          fi
+          echo "Waiting for check on PR ${pr}"
+          gh pr checks "${pr}" --watch
+          state=$(gh pr checks "${pr}" 2>/dev/null | awk '$1 == "check" { print $2; found=1 } END { if (!found) exit 1 }')
+          if [ "${state}" != "pass" ]; then
+            echo "check is '${state:-missing}', not pass" >&2
+            exit 1
+          fi
+          gh pr merge "${pr}" --merge
+          echo "Merged PR ${pr}"

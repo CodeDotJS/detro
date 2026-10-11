@@ -18,7 +18,7 @@ Notes attach by station code across lines. If notes disagree, unavailable wins, 
 
 ## Refresh
 
-GitHub Actions fetches `line_list`, then `metro_line/{code}` and `station_by_line_linepage/{code}` for each line, every four hours. `python3 src/lib/offline/build_status.py` writes `data/en/status.json` and commits it. The existing `check` job deploys the static site. There is no R2, Worker, or Pages Function.
+GitHub Actions fetches `line_list`, then `metro_line/{code}` and `station_by_line_linepage/{code}` for each line, three times a day at 06:00, 14:00, and 20:00 Asia/Kolkata (`30 0,8,14 * * *` UTC). `python3 src/lib/offline/build_status.py` writes `data/en/status.json`. The bake opens a pull request on `chore/status-bake`, waits for `check`, and merges to `main` so production uploads. There is no R2, Worker, or Pages Function. GitHub may start a scheduled run a few minutes late under load.
 
 A failed fetch keeps the previous file and clock. Silence is not treated as all-clear.
 
