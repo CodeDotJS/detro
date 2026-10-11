@@ -1,0 +1,473 @@
+{
+  "fetchedAt": "2026-10-10T09:04:19.000",
+  "stations": {
+    "AHRM": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN7"
+      ],
+      "note": "Due to security reasons, Ashram metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "AZU": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN7"
+      ],
+      "note": "Due to security reasons, Azadpur metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Azadpur .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "BIMR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN8",
+        "LN8EXTN"
+      ],
+      "note": "Due to security reasons, Haiderpur Badli Mor metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Haiderpur Badli Mor .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "BRKR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Barakhambha Road metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "CTST": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN6"
+      ],
+      "note": "Due to security reasons, Central Secretariat Metro Station is closed till further instructions.\r\n\r\nHowever, Interchange facility is available at Central Secretariat .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "CWBR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Chawri Bazar metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "DLIG": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6"
+      ],
+      "note": "Due to security reasons, Delhi Gate  metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "GTBR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons,  Guru Tegh Bahadur (G.T.B.) Nagar  metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "HKS": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN8"
+      ],
+      "note": "Due to security reasons, Hauz Khas metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Hauz Khas .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "IDPT": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Indraprastha metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "ILOK": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1",
+        "LN5"
+      ],
+      "note": "Due to security reasons,  Inderlok metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Inderlok .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "INA": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN7"
+      ],
+      "note": "Due to security reasons, DILLI HAAT (INA) metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at DILLI HAAT (INA) .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "ITO": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6"
+      ],
+      "note": "Due to security reasons, ITO metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JAMD": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6"
+      ],
+      "note": "Due to security reasons, Jama Masjid metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JANR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN8"
+      ],
+      "note": "Due to security reasons, Jamia Millia Islamia metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JB": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Jor Bagh metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JFRB": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN7"
+      ],
+      "note": "Due to security reasons, Jafrabad metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JGPA": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6"
+      ],
+      "note": "Due to security reasons, Jangpura metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JGPI": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Jahangirpuri metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JNPH": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6"
+      ],
+      "note": "Due to security reasons, Janpath metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "JW": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Jhandewalan metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "KB": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Karol Bagh  metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "KG": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1",
+        "LN2",
+        "LN6"
+      ],
+      "note": "Due to security reasons, Kashmere Gate metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Kashmere Gate .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "KJKS": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN7"
+      ],
+      "note": "Due to security reasons, Khazuri Khas metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "KM": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6"
+      ],
+      "note": "Due to security reasons, Khan Market metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "LJPN": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN6",
+        "LN7"
+      ],
+      "note": "Due to security reasons, Lajpat Nagar metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at  Lajpat Nagar .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "LKM": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Lok Kalyan Marg metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "MDHS": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3",
+        "LN6"
+      ],
+      "note": "Due to security reasons, Mandi House Metro Station is closed till further instructions.\r\n\r\nHowever, Interchange facility is available at Mandi House .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "MKPR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN7",
+        "LN8",
+        "LN8EXTN"
+      ],
+      "note": "Due to security reasons, Majlis Park metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "MUPR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN7",
+        "LN7EXTN"
+      ],
+      "note": "Due to security reasons, Maujpur - Babarpur metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Maujpur - Babarpur  .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "NDI": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN10"
+      ],
+      "note": "New Delhi metro station has been closed till further instructions.\r\nThe interchange facility at New Delhi Metro station will not be available till further notice.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "NSHP": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1",
+        "LN7"
+      ],
+      "note": "Due to security reasons, Netaji Subhash Place metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Netaji Subhash Place .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "PTCK": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Patel Chowk Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "PTMD": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Supreme Court metro Station is closed till further instructions",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "RCK": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2",
+        "LN3"
+      ],
+      "note": "Due to security reasons, Rajiv Chowk Metro Station is  closed till further instructions.\r\n\r\nHowever, Interchange facility is available at Rajiv Chowk .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "RI": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1"
+      ],
+      "note": "Due to security reasons, Rithala metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "RKAM": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Ramakrishna Ashram Marg metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "RP": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN3"
+      ],
+      "note": "Due to security reasons, Rajendra Place metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "SHD": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1"
+      ],
+      "note": "Due to security reasons, Shahdara metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "SJSU": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN10"
+      ],
+      "note": "Due to security reasons, Shivaji Stadium metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "SLAP": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1"
+      ],
+      "note": "Due to security reasons, Seelampur metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "UDB": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Seva Teerth  metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "VW": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN2"
+      ],
+      "note": "Due to security reasons, Vishwavidyalaya  metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "WC": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN1",
+        "LN7"
+      ],
+      "note": "Due to security reasons, Welcome metro Station is closed till further instructions.\r\nHowever, Interchange facility is available at Welcome  .",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    },
+    "YMVR": {
+      "end": "10-Oct-2026 11:59PM",
+      "lineCodes": [
+        "LN7"
+      ],
+      "note": "Due to security reasons, Yamuna Vihar metro Station is closed till further instructions.",
+      "phrase": "Station Closed",
+      "start": "09-Oct-2026 09:00PM",
+      "title": "Service Update"
+    }
+  }
+}
