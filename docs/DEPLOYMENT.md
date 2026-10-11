@@ -156,6 +156,8 @@ Cloudflare Pages is a Direct Upload project. It does not also build from Git. A 
 
 The workflow needs two GitHub secrets, both free to create: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The token only needs permission to edit this Pages project. Branch protection on `main` requires the test job, so a red check cannot be merged.
 
+The Status bake needs a third secret, `STATUS_BAKE_TOKEN`: a classic personal access token with the `repo` scope. The bake opens a pull request with that token so CI runs and production can upload. The default `GITHUB_TOKEN` cannot start workflows from its own push. Do not print the token and do not commit it.
+
 Sources: [Pages limits](https://developers.cloudflare.com/pages/platform/limits/), [Pages pricing](https://developers.cloudflare.com/pages/functions/pricing/), [Direct Upload with CI](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/).
 
 ## What must not be turned on

@@ -18,13 +18,20 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A personal token so the bake PR triggers CI. GITHUB_TOKEN pushes do not.
+          token: ${{ secrets.STATUS_BAKE_TOKEN }}
       - name: Pack station status
         run: python3 src/lib/offline/build_status.py
       - name: Open a pull request for the pack
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.STATUS_BAKE_TOKEN }}
         run: |
           set -euo pipefail
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "STATUS_BAKE_TOKEN is missing. Add a classic PAT with repo scope as that secret." >&2
+            exit 1
+          fi
           if git diff --quiet -- data/en/status.json; then
             echo "status pack unchanged"
             exit 0
@@ -64,6 +71,12 @@ jobs:
             pr=$(echo "${url}" | grep -oE '[0-9]+$')
           fi
           echo "Waiting for check on PR ${pr}"
+          for _ in $(seq 1 60); do
+            if gh pr checks "${pr}" 2>/dev/null | awk '$1 == "check" { found=1 } END { exit !found }'; then
+              break
+            fi
+            sleep 5
+          done
           gh pr checks "${pr}" --watch
           state=$(gh pr checks "${pr}" 2>/dev/null | awk '$1 == "check" { print $2; found=1 } END { if (!found) exit 1 }')
           if [ "${state}" != "pass" ]; then

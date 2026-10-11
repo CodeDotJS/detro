@@ -18,7 +18,7 @@ Notes attach by station code across lines. If notes disagree, unavailable wins, 
 
 ## Refresh
 
-GitHub Actions fetches `line_list`, then `metro_line/{code}` and `station_by_line_linepage/{code}` for each line, three times a day at 06:00, 14:00, and 20:00 Asia/Kolkata (`30 0,8,14 * * *` UTC). `python3 src/lib/offline/build_status.py` writes `data/en/status.json`. The bake opens a pull request on `chore/status-bake`, waits for `check`, and merges to `main` so production uploads. There is no R2, Worker, or Pages Function. GitHub may start a scheduled run a few minutes late under load.
+GitHub Actions fetches `line_list`, then `metro_line/{code}` and `station_by_line_linepage/{code}` for each line, three times a day at 06:00, 14:00, and 20:00 Asia/Kolkata (`30 0,8,14 * * *` UTC). `python3 src/lib/offline/build_status.py` writes `data/en/status.json`. The bake opens a pull request on `chore/status-bake` with the `STATUS_BAKE_TOKEN` secret (a classic PAT with `repo` scope), waits for `check`, and merges to `main` so production uploads. The default `GITHUB_TOKEN` cannot start CI from its own push. There is no R2, Worker, or Pages Function. GitHub may start a scheduled run a few minutes late under load.
 
 A failed fetch keeps the previous file and clock. Silence is not treated as all-clear.
 
