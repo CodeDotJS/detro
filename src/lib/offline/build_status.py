@@ -31,6 +31,11 @@ def main() -> int:
         fetched_at = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%dT%H:%M:%S.000")
         lines = read_dir(args.from_dir) if args.from_dir else fetch_live()
         pack = pack_status(fetched_at, lines)
+        previous = read_pack(OUT)
+        if previous is not None and previous.get("stations") == pack["stations"]:
+            kept = previous.get("fetchedAt") or "previous stamp"
+            print(f"unchanged {len(pack['stations'])} closed stations (kept {kept})", flush=True)
+            return 0
         OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(json.dumps(pack, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         print(f"wrote {len(pack['stations'])} closed stations at {fetched_at}", flush=True)
@@ -38,6 +43,16 @@ def main() -> int:
     except Exception as error:
         print(f"status bake failed: {error}", file=sys.stderr)
         return 1
+
+
+def read_pack(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
 
 
 def fetch_live() -> list[dict]:
