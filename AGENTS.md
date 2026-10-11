@@ -21,21 +21,22 @@ npm run dev       # http://127.0.0.1:5173
 src/lib/dmrc/       Upstream shapes. Validate with Zod. Do not leak them into the UI.
 src/lib/transit/    Normalized stations, lines, and journeys.
 src/lib/offline/    Saved journey packs and the street-tile set.
+src/lib/status/     Closed-gate pack. Missing codes stay open.
 src/lib/plan/       Plan state, saved trips, selection.
 src/lib/play/       Play games. Questions are built only from saved data.
 src/ui/             Screens. They consume transit types.
-data/en/            English snapshot that ships: lines, stations, briefs, coordinates, journeys, platforms.
+data/en/            English snapshot that ships: lines, stations, briefs, coordinates, journeys, platforms, status.
 public/map-tiles/   Street tiles for the metro area, through zoom 14.
 ```
 
-Routes are calculated from station order. A packed journey supplies the fare, platform, and first and last train when that pair was saved. `python3 src/lib/offline/build_platforms.py` reads the packs and writes `data/en/platforms.json`, one boarding platform per station, line, and direction.
+Routes are calculated from station order. A packed journey supplies the fare, platform, and first and last train when that pair was saved. `python3 src/lib/offline/build_platforms.py` reads the packs and writes `data/en/platforms.json`, one boarding platform per station, line, and direction. `python3 src/lib/offline/build_status.py` writes `data/en/status.json` from live linepage phrases and metro_line notes. Closed gates cannot be boarded or left. Trains still pass. A transfer is allowed only when a note says the interchange facility is available. Plan still shows Least and Fewest for the asked pair, and Alternative via the one nearest open gate.
 
 ## Constraints
 
 - Missing fare, duration, or interchange count stays missing. It is not zero.
 - Journey timestamps use Asia/Kolkata wall time, with no offset.
 - Do not invent stations, fares, platforms, contacts, or coordinates. A station with no saved position stays off the city map.
-- Do not spoof the official site’s `Origin` or `Referer`, copy challenge cookies, or retry HTTP 403.
+- Do not spoof the official site’s `Origin` or `Referer`, copy challenge cookies, or retry HTTP 403. The status bake collector may send those headers, as recorded in `curls/station_status`. The app does not.
 - The interface is English only. Do not add Hindi chrome, theme names, a language control, or Hindi strings in `src/i18n/`. `data/hi/` and the download scripts stay on this machine. The app does not load them.
 - Do not load fonts from a CDN. Vendored font files are allowed.
 - Do not claim live arrivals, live lifts, or official affiliation.
