@@ -1,5 +1,8 @@
 import { normalizeJourney } from "../dmrc/normalize"
+import { openAccess, type StationAccess } from "../status/classify"
 import type { Journey, Lang, Leg } from "./types"
+
+export type AccessFn = (code: string) => StationAccess
 
 export type LineSequence = {
   code: string
@@ -55,12 +58,32 @@ export function resolveJourney(input: {
   to: string
   lang: Lang
   fetchedAt: string
+  access?: AccessFn
 }): Journey | null {
   if (input.savedRoute != null) {
     const normalized = normalizeJourney(input.savedRoute, input.savedFare, input.fetchedAt, input.savedTrains ?? null)
-    if (normalized.ok) return normalized.journey
+    if (normalized.ok && (!input.access || journeyAllowed(normalized.journey, input.access))) {
+      return normalized.journey
+    }
   }
-  return planRoute(input.lines, input.from, input.to, input.lang, input.fetchedAt)
+  return planRoute(input.lines, input.from, input.to, input.lang, input.fetchedAt, input.access)
+}
+
+export function journeyAllowed(journey: Journey, access: AccessFn): boolean {
+  const origin = journey.legs[0]?.stationCodes[0]
+  const dest = journey.legs.at(-1)?.stationCodes.at(-1)
+  if (origin && !access(origin).board) return false
+  if (dest && !access(dest).alight) return false
+  for (const [index, leg] of journey.legs.entries()) {
+    for (const code of leg.stationCodes) {
+      if (code !== origin && code !== dest && !access(code).pass) return false
+    }
+    if (index < journey.legs.length - 1) {
+      const change = leg.stationCodes.at(-1)
+      if (change && !access(change).transfer) return false
+    }
+  }
+  return true
 }
 
 export function planRoute(
@@ -69,8 +92,10 @@ export function planRoute(
   to: string,
   lang: Lang,
   fetchedAt: string,
+  access: AccessFn = () => openAccess,
 ): Journey | null {
   if (from === to) return null
+  if (!access(from).board || !access(to).alight) return null
   const usable = lines.filter((line) => line.show && line.stations.length > 1)
   const byCode = new Map(usable.map((line) => [line.code, line]))
   const indexOnLine = new Map<string, Map<string, number>>()
@@ -127,10 +152,13 @@ export function planRoute(
     for (const nextIndex of [index - 1, index + 1]) {
       const next = line.stations[nextIndex]
       if (!next) continue
+      if (next.code !== to && !access(next.code).pass) continue
+      if (next.code === to && !access(next.code).alight) continue
       relax(queue, dist, prev, current, next.code, current.line, { changes: current.cost.changes, stops: current.cost.stops + 1 }, "ride")
     }
     for (const other of linesAt.get(current.station) ?? []) {
       if (other === current.line) continue
+      if (!access(current.station).transfer) continue
       relax(queue, dist, prev, current, current.station, other, { changes: current.cost.changes + 1, stops: current.cost.stops }, "transfer")
     }
   }

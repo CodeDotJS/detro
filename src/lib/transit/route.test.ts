@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { loadSnapshot } from "../dmrc/snapshot"
 import routeRiKg from "../../../tests/fixtures/dmrc/route-ri-kg.json"
-import { alternateRide, planRoute, resolveJourney, sameRide, type LineSequence } from "./route"
+import { alternateRide, journeyAllowed, planRoute, resolveJourney, sameRide, type LineSequence } from "./route"
 import type { Journey } from "./types"
 
 function ride(codes: string[]): Journey {
@@ -130,5 +130,67 @@ describe("snapshot routing", () => {
   it("returns no route for a station code outside the snapshot", () => {
     const snapshot = loadSnapshot()
     expect(planRoute(snapshot.lines, "RI", "NOPE", "en", snapshot.fetchedAt)).toBeNull()
+  })
+
+  it("refuses to start or end at a closed gate", () => {
+    const lines = [line("L1", "Yellow Line", ["A", "B", "C"])]
+    const closed = (code: string) =>
+      code === "A" || code === "C"
+        ? { board: false, alight: false, transfer: false, pass: true }
+        : { board: true, alight: true, transfer: true, pass: true }
+    expect(planRoute(lines, "A", "C", "en", "2026-10-10", closed)).toBeNull()
+    expect(planRoute(lines, "A", "B", "en", "2026-10-10", closed)).toBeNull()
+    expect(planRoute(lines, "B", "C", "en", "2026-10-10", closed)).toBeNull()
+  })
+
+  it("rides through a closed gate and changes only where interchange is allowed", () => {
+    const lines = [line("L1", "Yellow Line", ["A", "B", "C"]), line("L2", "Blue Line", ["C", "D"])]
+    const silent = (code: string) =>
+      code === "C"
+        ? { board: false, alight: false, transfer: false, pass: true }
+        : { board: true, alight: true, transfer: true, pass: true }
+    expect(planRoute(lines, "A", "D", "en", "2026-10-10", silent)).toBeNull()
+    const openChange = (code: string) =>
+      code === "C"
+        ? { board: false, alight: false, transfer: true, pass: true }
+        : { board: true, alight: true, transfer: true, pass: true }
+    const journey = planRoute(lines, "A", "D", "en", "2026-10-10", openChange)
+    expect(journey?.legs.map((leg) => [leg.startName, leg.endName])).toEqual([
+      ["A", "C"],
+      ["C", "D"],
+    ])
+  })
+
+  it("takes another path when a change is blocked", () => {
+    const lines = [
+      line("L1", "Yellow Line", ["A", "B", "C"]),
+      line("L2", "Blue Line", ["C", "D"]),
+      line("L3", "Violet Line", ["A", "X", "D"]),
+    ]
+    const silent = (code: string) =>
+      code === "C"
+        ? { board: false, alight: false, transfer: false, pass: true }
+        : { board: true, alight: true, transfer: true, pass: true }
+    const journey = planRoute(lines, "A", "D", "en", "2026-10-10", silent)
+    expect(journey?.legs).toHaveLength(1)
+    expect(journey?.legs[0].lineName).toBe("Violet Line")
+  })
+
+  it("drops a saved ride that changes at a closed interchange", () => {
+    const through = ride(["A", "C", "D"])
+    const changed: Journey = {
+      ...through,
+      changes: 1,
+      legs: [
+        { ...through.legs[0], startName: "A", endName: "C", stationCodes: ["A", "C"] },
+        { ...through.legs[0], startName: "C", endName: "D", stationCodes: ["C", "D"] },
+      ],
+    }
+    const silent = (code: string) =>
+      code === "C"
+        ? { board: false, alight: false, transfer: false, pass: true }
+        : { board: true, alight: true, transfer: true, pass: true }
+    expect(journeyAllowed(through, silent)).toBe(true)
+    expect(journeyAllowed(changed, silent)).toBe(false)
   })
 })
