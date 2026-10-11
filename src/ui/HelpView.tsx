@@ -10,6 +10,7 @@ export function HelpView({
   snapshotDate,
   notice,
   journeyAt,
+  statusAt,
   onTextSize,
   onClear,
   onDismissNotice,
@@ -19,6 +20,7 @@ export function HelpView({
   snapshotDate: string
   notice: string | null
   journeyAt: string
+  statusAt: string
   onTextSize: (size: number) => void
   onClear: () => void
   onDismissNotice: () => void
@@ -32,6 +34,7 @@ export function HelpView({
           <li>{copy.howStep1}</li>
           <li>{copy.howStep2}</li>
           <li>{copy.howStep3}</li>
+          <li>{copy.howStep4}</li>
           <li>{playCopy.howTo}</li>
         </ol>
       </section>
@@ -64,6 +67,8 @@ export function HelpView({
         <p>{copy.offlineHelp(snapshotDate)}</p>
         <p>{copy.snapshotNote(snapshotDate)}</p>
         <p>{copy.journeysSaved(journeyAt)}</p>
+        <p>{copy.statusHelp(statusAt)}</p>
+        <p>{copy.locationHelp}</p>
         <p>{copy.offlineLimit}</p>
         <p>{copy.independent}</p>
       </section>
