@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Contrast, Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useTheme } from "../lib/plan/theme-context"
 import type { Copy } from "../i18n/copy"
 import { defaultTheme, isTheme, nextTheme, themeColor, type ThemeName } from "../lib/plan/theme"
 
