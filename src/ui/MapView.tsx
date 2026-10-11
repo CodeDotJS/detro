@@ -20,6 +20,7 @@ export function MapView({
   focusToken,
   onStart,
   onGo,
+  closedCodes = new Set(),
 }: {
   copy: Copy
   lang: Lang
@@ -31,6 +32,7 @@ export function MapView({
   focusToken: number
   onStart: (code: string, name: string) => void
   onGo: (code: string, name: string) => void
+  closedCodes?: Set<string>
 }) {
   const visible = lines.filter((line) => line.show && line.stations.length > 0)
   const [lineCode, setLineCode] = useState(focusLineCode ?? visible[0]?.code ?? "")
@@ -111,7 +113,9 @@ export function MapView({
       </select>
       </div>
       <div className="map-stage">
-      {journey && journey.legs.length > 0 ? <RouteMap copy={copy} journey={journey} lines={lines} lang={lang} /> : null}
+      {journey && journey.legs.length > 0 ? (
+        <RouteMap copy={copy} journey={journey} lines={lines} lang={lang} closedCodes={closedCodes} />
+      ) : null}
       {journey && journey.legs.length > 0 ? (
         <div className="route-on-map">
           <p className="map-route-title">
@@ -119,7 +123,7 @@ export function MapView({
             <span aria-hidden="true"> → </span>
             <span className="place-name">{journey.destinationName}</span>
           </p>
-          <RouteBoard journey={journey} lines={lines} lang={lang} />
+          <RouteBoard journey={journey} lines={lines} lang={lang} closedCodes={closedCodes} />
           <div className="route-lines">
             {journey.legs.map((leg, index) => {
               const match = matchingLine(leg, lines, lang)
@@ -179,17 +183,20 @@ export function MapView({
                   cy="0"
                   r={interchangeCodes.has(station.code) ? 11 : 7}
                   fill={
-                    highlightCodes.has(station.code)
-                      ? line.label.en.color
-                      : selected === station.code
-                        ? "var(--ink)"
-                        : "var(--halo)"
+                    closedCodes.has(station.code)
+                      ? "var(--card)"
+                      : highlightCodes.has(station.code)
+                        ? line.label.en.color
+                        : selected === station.code
+                          ? "var(--ink)"
+                          : "var(--halo)"
                   }
                   stroke="var(--ink)"
                   strokeWidth="3"
                 />
                 <text x="60" y="6" fill="var(--ink)" fontSize="18">
                   {name}
+                  {closedCodes.has(station.code) ? ` · ${copy.gatesClosed}` : ""}
                 </text>
               </g>
             )
@@ -212,7 +219,10 @@ export function MapView({
       ) : null}
       {selectedStation ? (
         <section className="ticket">
-          <h2>{selectedName}</h2>
+          <h2>
+            {selectedName}
+            {closedCodes.has(selectedStation.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
+          </h2>
           {briefState === "missing" ? <p>{copy.noBrief}</p> : null}
           {briefState === "ready" && brief ? <BriefDetails copy={copy} brief={brief} /> : null}
         </section>
@@ -228,6 +238,7 @@ export function MapView({
                 onClick={() => setSelected(station.code)}
               >
                 {name}
+                {closedCodes.has(station.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
                 {highlightCodes.has(station.code) ? <span className="quiet"> {copy.onRoute}</span> : null}
               </button>
             </li>

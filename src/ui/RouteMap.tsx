@@ -8,11 +8,13 @@ export function RouteMap({
   journey,
   lines,
   lang,
+  closedCodes = new Set(),
 }: {
   copy: Copy
   journey: Journey
   lines: LineSequence[]
   lang: Lang
+  closedCodes?: Set<string>
 }) {
   const stops = routeStops(journey, lines, lang)
   if (stops.length === 0) return null
@@ -28,6 +30,7 @@ export function RouteMap({
             </span>
             <span className="route-stop">
               {stop.name}
+              {stop.code && closedCodes.has(stop.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
               {stop.change ? <span className="route-change">{copy.changeHere}</span> : null}
             </span>
           </li>
