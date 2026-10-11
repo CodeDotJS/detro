@@ -30,6 +30,12 @@ Show `platform_name` from the journey leg when it is non-empty. Search names com
 
 Requests that presented the official site as `Origin` received JSON. Other origins received a Cloudflare 403 or a failed browser fetch. The app will call the API as itself. It will not pretend to be `delhimetrorail.com`. If that call is blocked, fixtures and an honest error are the milestone 1 result.
 
+The status bake collector is not the app. It may send the official `Origin` and `Referer` recorded in `curls/station_status`, because a request without them is a 403. It does not retry a 403. A failed bake keeps the last `data/en/status.json`. Silence is not treated as all-clear.
+
+## Status
+
+Closed gates are a showstopper. Status sits before Play. The pack is baked into the static site every four hours by GitHub Actions. There is no R2, Worker, or Pages Function. Closed means no board and no alight. Trains still pass. Transfer is true only when a note says the interchange facility is available. A “will not be available” interchange note, or a silent closed station, blocks a change. Status names one nearest open station, not a list of gates. Plan keeps Least and Fewest for the asked pair and offers Alternative via that one open substitute. Location is requested only after “Use my location.” Coordinates are not stored.
+
 ## No env file
 
 No secret or environment-specific URL is required yet. The base URL is the documented backend host. `.env.example` stays absent until a real setting exists.

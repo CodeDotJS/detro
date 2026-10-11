@@ -4,7 +4,7 @@ import { pathForTab } from "../lib/nav"
 import type { Copy } from "../i18n/copy"
 import { playCopy } from "../i18n/play"
 
-export type Tab = "plan" | "map" | "city" | "saved" | "play" | "help"
+export type Tab = "plan" | "map" | "city" | "saved" | "status" | "play" | "help"
 
 export function TabBar({
   copy,
@@ -32,6 +32,7 @@ export function TabBar({
     { id: "map", label: copy.map },
     { id: "city", label: copy.cityMap },
     { id: "saved", label: copy.saved },
+    { id: "status", label: copy.status },
     { id: "play", label: playCopy.tab },
     { id: "help", label: copy.help },
   ]
@@ -113,6 +114,14 @@ function TabIcon({ name, landing = false }: { name: Tab; landing?: boolean }) {
           strokeWidth="2"
           strokeLinejoin="round"
         />
+      </svg>
+    )
+  }
+  if (name === "status") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="tab-icon">
+        <rect x="4" y="5" width="16" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M8 10h8M8 14h5" fill="none" stroke="currentColor" strokeWidth="2" />
       </svg>
     )
   }

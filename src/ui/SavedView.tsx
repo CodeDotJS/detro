@@ -2,7 +2,7 @@ import type { CSSProperties } from "react"
 import { ArrowRight } from "lucide-react"
 import type { Copy } from "../i18n/copy"
 import { legColor } from "../lib/transit/legStyle"
-import { planRoute, type LineSequence } from "../lib/transit/route"
+import { planRoute, type AccessFn, type LineSequence } from "../lib/transit/route"
 import type { Journey, Lang } from "../lib/transit/types"
 
 type Trip = {
@@ -20,6 +20,7 @@ export function SavedView({
   landed = null,
   onOpenTrip,
   onRemoveTrip,
+  access,
 }: {
   copy: Copy
   trips: Trip[]
@@ -28,6 +29,7 @@ export function SavedView({
   landed?: { fromCode: string; toCode: string } | null
   onOpenTrip: (fromCode: string, toCode: string) => void
   onRemoveTrip: (fromCode: string, toCode: string) => void
+  access?: AccessFn
 }) {
   return (
     <main className="sheet saved-page">
@@ -47,7 +49,7 @@ export function SavedView({
         <ul className="saved-list">
           {trips.map((trip) => {
             const label = `${trip.fromName} → ${trip.toName}`
-            const journey = planRoute(lines, trip.fromCode, trip.toCode, lang, "")
+            const journey = planRoute(lines, trip.fromCode, trip.toCode, lang, "", access)
             const fresh = landed?.fromCode === trip.fromCode && landed.toCode === trip.toCode
             return (
               <li key={`${trip.fromCode}-${trip.toCode}`} className={fresh ? "saved-card is-fresh" : "saved-card"}>

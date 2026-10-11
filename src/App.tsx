@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react"
-import { useTheme } from "next-themes"
+import { useTheme } from "./lib/plan/theme-context"
 import { copy } from "./i18n/copy"
 import { createDebouncedSearch, type DebouncedSearch } from "./lib/dmrc/debounce"
 import { DmrcError } from "./lib/dmrc/errors"
@@ -8,7 +8,7 @@ import { SAVED_JOURNEY_AT } from "./lib/offline/source"
 import { journeySteps } from "./lib/transit/present"
 import { bestLineForCodes, codesOnMap, journeyStationCodes } from "./lib/transit/highlight"
 import { savedJourneys } from "./lib/offline/saved"
-import { alternateRide, planRoute, sameRide } from "./lib/transit/route"
+import { alternateRide, journeyAllowed, planRoute, sameRide } from "./lib/transit/route"
 import { startLineCode } from "./lib/transit/routeMap"
 import { readSelection, writeSelection } from "./lib/plan/selection"
 import { defaultTheme, themeStorageKey } from "./lib/plan/theme"
@@ -23,22 +23,33 @@ import {
 } from "./lib/play/progress"
 import { clearTrips, readTripQuery, readTrips, removeTrip, toggleTrip, tripQuery, type SavedTrip } from "./lib/plan/trips"
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
+import coordinatesFile from "../data/en/coordinates.json"
+import { accessByCode } from "./lib/status/pack"
+import { loadStatus, statusClock } from "./lib/status/load"
+import { locationCopy, readLocation, rememberedLocation, resetLocationMemory, type LocationResult } from "./lib/status/location"
+import { nearestBoardable, nearestStation, type Coordinate } from "./lib/status/nearest"
+import { allowSelectedEnds, substituteOpen } from "./lib/status/substitute"
 import { HelpView } from "./ui/HelpView"
 import { MapView } from "./ui/MapView"
-import { PlanView } from "./ui/PlanView"
+import { PlanView, type BypassSwap, type GateOffer } from "./ui/PlanView"
 import { PlayView } from "./ui/PlayView"
 import { SavedView } from "./ui/SavedView"
+import { StatusView } from "./ui/StatusView"
 import { CityMap } from "./ui/CityMap"
 import { pathForTab, tabFromPath } from "./lib/nav"
 import { SignalMark, TabBar, type Tab } from "./ui/TabBar"
 import { ThemeChrome, ThemeCycle } from "./ui/ThemeCycle"
 
 const snapshot = loadSnapshot()
+const statusPack = loadStatus()
 const snapshotDate = snapshot.fetchedAt.slice(0, 10)
 const interchangeCodes = new Set(
   snapshot.stations.filter((station) => station.lines.en.length > 1).map((station) => station.code),
 )
 const knownStationCodes = new Set(snapshot.lines.flatMap((line) => line.stations.map((station) => station.code)))
+const coordinates = coordinatesFile.stations as Record<string, Coordinate>
+const closedCodes = new Set(Object.keys(statusPack.stations))
+const accessOf = (code: string) => accessByCode(statusPack, code)
 
 function pageMeta(tab: Tab): { title: string; description: string } {
   if (tab === "map") {
@@ -57,6 +68,12 @@ function pageMeta(tab: Tab): { title: string; description: string } {
     return {
       title: "Saved trips · DETRO",
       description: "Open a saved Delhi Metro trip in DETRO. Trips stay on this phone. Free, ad-free, and independent of DMRC.",
+    }
+  }
+  if (tab === "status") {
+    return {
+      title: "Status · DETRO",
+      description: "See which Delhi Metro gates are closed in DETRO. Trains may still run through. Free, ad-free, and independent of DMRC.",
     }
   }
   if (tab === "play") {
@@ -174,9 +191,22 @@ export function App() {
   }
   const [playProgress, setPlayProgress] = useState(readStoredPlayProgress)
   const [online, setOnline] = useState(() => navigator.onLine)
+  const [here, setHere] = useState<Coordinate | null>(() => rememberedLocation())
+  const [locating, setLocating] = useState(false)
+  const [locateNote, setLocateNote] = useState<string | null>(null)
+  const [bypass, setBypass] = useState<Journey | null>(null)
+  const [bypassVia, setBypassVia] = useState<string | null>(null)
+  const [bypassSwap, setBypassSwap] = useState<BypassSwap | null>(null)
+  const [preferBypass, setPreferBypass] = useState(false)
+  const [gateOffer, setGateOffer] = useState<{
+    from: { code: string; name: string }
+    to: { code: string; name: string }
+    closed: GateOffer["closed"]
+  } | null>(null)
   const { setTheme } = useTheme()
   const searchRef = useRef<DebouncedSearch<Suggestion> | null>(null)
   const requestId = useRef(0)
+  const locateWait = useRef<Promise<LocationResult> | null>(null)
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -230,10 +260,10 @@ export function App() {
       if (!fromName || !toName) return
       dispatch({ type: "set-station", field: "from", pick: { code: shared.fromCode, name: fromName } })
       dispatch({ type: "set-station", field: "to", pick: { code: shared.toCode, name: toName } })
-      showRoute(shared.fromCode, shared.toCode, routeLang)
+      offerOrShow({ code: shared.fromCode, name: fromName }, { code: shared.toCode, name: toName })
       return
     }
-    if (state.from && state.to) showRoute(state.from.code, state.to.code, routeLang)
+    if (state.from && state.to) offerOrShow(state.from, state.to)
     // Restore a shared link, or the stations saved on this device, once.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -251,6 +281,10 @@ export function App() {
     setAlternate(null)
     setPhase("idle")
     setMessage(null)
+    setBypass(null)
+    setBypassVia(null)
+    setBypassSwap(null)
+    setGateOffer(null)
   }
 
   function publish(next: Journey | null, other: Journey | null) {
@@ -278,26 +312,212 @@ export function App() {
     })
   }
 
+  function stationLabel(code: string): string {
+    return namesFor(snapshot.stations, lang).get(code) ?? code
+  }
+
+  function nearestOpenName(code: string): string | null {
+    const point = coordinates[code]
+    if (!point) return null
+    const next = nearestBoardable(point, statusPack, coordinates, code)
+    return next ? stationLabel(next.code) : null
+  }
+
+  function closedMessage(fromCode: string, toCode: string): string | null {
+    if (!accessOf(fromCode).board) return copy.closedStart(stationLabel(fromCode), nearestOpenName(fromCode))
+    if (!accessOf(toCode).alight) return copy.closedEnd(stationLabel(toCode), nearestOpenName(toCode))
+    return null
+  }
+
+  function closedGate(from: { code: string; name: string }, to: { code: string; name: string }) {
+    const swap = substituteOpen(from.code, to.code, statusPack, coordinates, accessOf)
+    if (!swap) return null
+    const closed: GateOffer["closed"] = []
+    if (swap.replacedFrom) {
+      const row = statusPack.stations[from.code]
+      closed.push({
+        name: from.name,
+        openName: stationLabel(swap.from),
+        note: row?.note ?? null,
+        phrase: row?.phrase ?? null,
+        title: row?.title ?? null,
+      })
+    }
+    if (swap.replacedTo) {
+      const row = statusPack.stations[to.code]
+      closed.push({
+        name: to.name,
+        openName: stationLabel(swap.to),
+        note: row?.note ?? null,
+        phrase: row?.phrase ?? null,
+        title: row?.title ?? null,
+      })
+    }
+    return closed.length > 0 ? { from, to, closed } : null
+  }
+
+  function offerOrShow(from: { code: string; name: string }, to: { code: string; name: string }) {
+    const offer = closedGate(from, to)
+    if (offer) {
+      requestId.current += 1
+      setJourney(null)
+      setAlternate(null)
+      setPhase("idle")
+      setMessage(null)
+      setBypass(null)
+      setBypassVia(null)
+      setBypassSwap(null)
+      setGateOffer(offer)
+      return true
+    }
+    setGateOffer(null)
+    setPreferBypass(false)
+    showRoute(from.code, to.code, lang)
+    return false
+  }
+
+  function acceptGate() {
+    if (!gateOffer) return
+    const { from, to } = gateOffer
+    setGateOffer(null)
+    setPreferBypass(true)
+    showRoute(from.code, to.code, lang)
+  }
+
+  function keepGate() {
+    if (!gateOffer) return
+    const { from, to } = gateOffer
+    setGateOffer(null)
+    setPreferBypass(false)
+    showRoute(from.code, to.code, lang)
+  }
+
+  function readHere(then: (point: Coordinate) => void, onFail: (text: string) => void) {
+    const known = here ?? rememberedLocation()
+    if (known) {
+      setHere(known)
+      setLocateNote(null)
+      then(known)
+      return
+    }
+    if (locateWait.current) {
+      setLocating(true)
+      void locateWait.current.then((result) => finishHere(result, then, onFail))
+      return
+    }
+    const pending = readLocation(navigator.geolocation, window.isSecureContext)
+    locateWait.current = pending
+    setLocating(true)
+    void pending.then((result) => {
+      locateWait.current = null
+      finishHere(result, then, onFail)
+    })
+  }
+
+  function finishHere(
+    result: LocationResult,
+    then: (point: Coordinate) => void,
+    onFail: (text: string) => void,
+  ) {
+    setLocating(false)
+    if (!result.ok) {
+      onFail(locationCopy(result.reason, copy))
+      return
+    }
+    const point = { lat: result.lat, lng: result.lng }
+    setHere(point)
+    setLocateNote(null)
+    then(point)
+  }
+
+  function locateOnPlan() {
+    readHere(
+      (point) => {
+        const stand = nearestStation(point, coordinates)
+        if (!stand) {
+          setMessage(copy.locationNone)
+          return
+        }
+        const name = stationLabel(stand.code)
+        dispatch({ type: "set-station", field: "from", pick: { code: stand.code, name } })
+        if (!accessOf(stand.code).board) {
+          setMessage(copy.closedStart(name, nearestOpenName(stand.code)))
+          return
+        }
+        setMessage(copy.locationNear(name))
+      },
+      (text) => setMessage(text),
+    )
+  }
+
   function showRoute(fromCode: string, toCode: string, routeLang: Lang) {
     const id = ++requestId.current
     setMapJourney(null)
     setPhase("loading")
     setMessage(null)
+    setBypass(null)
+    setBypassVia(null)
+    setBypassSwap(null)
     const names = namesFor(snapshot.stations, "en")
-    const calculated = () => planRoute(snapshot.lines, fromCode, toCode, routeLang, snapshot.fetchedAt)
-    void savedJourneys(fromCode, toCode, names, snapshot.fetchedAt).then(({ distance, changes }) => {
+    const askedAccess = allowSelectedEnds(fromCode, toCode, accessOf)
+    const swap = substituteOpen(fromCode, toCode, statusPack, coordinates, accessOf)
+    const calculated = (start: string, end: string, access = accessOf) =>
+      planRoute(snapshot.lines, start, end, routeLang, snapshot.fetchedAt, access)
+    void Promise.all([
+      savedJourneys(fromCode, toCode, names, snapshot.fetchedAt),
+      swap ? savedJourneys(swap.from, swap.to, names, snapshot.fetchedAt) : Promise.resolve({ distance: null, changes: null }),
+    ]).then(([asked, alt]) => {
       if (id !== requestId.current) return
-      const next = distance ?? calculated()
-      if (!next) {
+      const askedKept = asked.distance && journeyAllowed(asked.distance, askedAccess) ? asked.distance : null
+      const askedRide = askedKept ?? calculated(fromCode, toCode, askedAccess)
+      const askedOther = asked.changes && journeyAllowed(asked.changes, askedAccess) ? asked.changes : null
+      let bypassRide: Journey | null = null
+      if (swap) {
+        const altKept = alt.distance && journeyAllowed(alt.distance, accessOf) ? alt.distance : null
+        bypassRide = altKept ?? calculated(swap.from, swap.to, accessOf)
+        if (bypassRide && askedRide && sameRide(askedRide, bypassRide)) bypassRide = null
+      }
+      if (!askedRide && !bypassRide) {
         setJourney(null)
         setAlternate(null)
+        setBypass(null)
+        setBypassSwap(null)
         setPhase("error")
         setMessage(copy.noSnapshotRoute)
         return
       }
-      publish(next, alternateRide(next, changes))
+      const swapNote: BypassSwap | null = swap
+        ? {
+            askedFrom: stationLabel(fromCode),
+            askedTo: stationLabel(toCode),
+            rideFrom: stationLabel(swap.from),
+            rideTo: stationLabel(swap.to),
+            replacedFrom: swap.replacedFrom,
+            replacedTo: swap.replacedTo,
+          }
+        : null
+      if (askedRide) {
+        publish(askedRide, alternateRide(askedRide, askedOther))
+        setBypass(bypassRide)
+        setBypassVia(
+          swap
+            ? copy.alternativeVia(
+                swap.replacedFrom ? stationLabel(swap.from) : null,
+                swap.replacedTo ? stationLabel(swap.to) : null,
+              )
+            : null,
+        )
+        setBypassSwap(bypassRide ? swapNote : null)
+      } else {
+        publish(bypassRide, null)
+        setBypass(null)
+        setBypassVia(null)
+        setBypassSwap(null)
+        if (swap?.replacedFrom) setMessage(copy.closedStart(stationLabel(fromCode), stationLabel(swap.from)))
+        else if (swap?.replacedTo) setMessage(copy.closedEnd(stationLabel(toCode), stationLabel(swap.to)))
+      }
       setPhase("ready")
-      if (!distance && !navigator.onLine) setMessage(copy.offlineRoute)
+      if (!askedKept && !navigator.onLine) setMessage(copy.offlineRoute)
     })
   }
 
@@ -333,11 +553,14 @@ export function App() {
       requestId.current += 1
       setJourney(null)
       setAlternate(null)
+      setBypass(null)
+      setBypassVia(null)
+      setBypassSwap(null)
       setPhase("error")
       setMessage(reason ?? copy.needBoth)
       return
     }
-    showRoute(from.code, to.code, lang)
+    offerOrShow(from, to)
   }
 
   function openTab(next: Tab) {
@@ -355,7 +578,7 @@ export function App() {
     dispatch({ type: "set-station", field: "from", pick: { code: fromCode, name: fromName } })
     dispatch({ type: "set-station", field: "to", pick: { code: toCode, name: toName } })
     openTab("plan")
-    showRoute(fromCode, toCode, lang)
+    offerOrShow({ code: fromCode, name: fromName }, { code: toCode, name: toName })
   }
 
   function placeStation(field: "from" | "to", code: string, name: string) {
@@ -365,8 +588,7 @@ export function App() {
     const from = field === "from" ? { code, name } : state.from
     const to = field === "to" ? { code, name } : state.to
     if (from && to && from.code !== to.code) {
-      showRoute(from.code, to.code, lang)
-      setMessage(copy.placedRoute(from.name, to.name))
+      if (!offerOrShow(from, to)) setMessage(copy.placedRoute(from.name, to.name))
       return
     }
     clearResult()
@@ -389,19 +611,27 @@ export function App() {
     setCityPhase("loading")
     setCityMessage(null)
     const names = namesFor(snapshot.stations, "en")
-    const calculated = () => planRoute(snapshot.lines, fromCode, toCode, lang, snapshot.fetchedAt)
+    const blocked = closedMessage(fromCode, toCode)
+    if (blocked) {
+      setCityPhase("error")
+      setCityMessage(blocked)
+      return
+    }
+    const calculated = () => planRoute(snapshot.lines, fromCode, toCode, lang, snapshot.fetchedAt, accessOf)
     void savedJourneys(fromCode, toCode, names, snapshot.fetchedAt).then(({ distance, changes }) => {
       if (id !== cityRequest.current) return
-      const next = distance ?? calculated()
+      const kept = distance && journeyAllowed(distance, accessOf) ? distance : null
+      const next = kept ?? calculated()
       if (!next) {
         setCityPhase("error")
         setCityMessage(copy.noSnapshotRoute)
         return
       }
+      const other = changes && journeyAllowed(changes, accessOf) ? changes : null
       setCityJourney(next)
-      setCityAlternate(changes && !sameRide(next, changes) ? changes : null)
+      setCityAlternate(other && !sameRide(next, other) ? other : null)
       setCityPhase("ready")
-      if (!distance && !navigator.onLine) setCityMessage(copy.offlineRoute)
+      if (!kept && !navigator.onLine) setCityMessage(copy.offlineRoute)
     })
   }
 
@@ -551,7 +781,7 @@ export function App() {
         setPlacedField(null)
         if (window.location.search) history.replaceState(null, "", window.location.pathname)
         if (nextFrom && nextTo && nextFrom.code !== nextTo.code) {
-          showRoute(nextFrom.code, nextTo.code, lang)
+          offerOrShow(nextFrom, nextTo)
           return
         }
         clearResult()
@@ -567,6 +797,16 @@ export function App() {
       onClearRoute={clearRoute}
       onDismissMessage={() => setMessage(null)}
       lines={snapshot.lines}
+      closedCodes={closedCodes}
+      onLocate={locateOnPlan}
+      locating={locating}
+      bypass={bypass}
+      bypassVia={bypassVia}
+      bypassSwap={bypassSwap}
+      preferBypass={preferBypass}
+      gateOffer={gateOffer ? { closed: gateOffer.closed } : null}
+      onAcceptGate={acceptGate}
+      onKeepGate={keepGate}
       onShare={(shown) => {
         if (!state.from || !state.to) return
         const url = `${window.location.origin}${pathForTab("plan")}${tripQuery(state.from.code, state.to.code)}`
@@ -590,12 +830,38 @@ export function App() {
           toName: namesFor(snapshot.stations, lang).get(trip.toCode) ?? trip.toCode,
         }))}
         onOpenTrip={openTrip}
+        access={accessOf}
         onRemoveTrip={(fromCode, toCode) => {
           try {
             setTrips(removeTrip(localStorage, { fromCode, toCode }))
           } catch {
             setTrips((current) => current.filter((trip) => trip.fromCode !== fromCode || trip.toCode !== toCode))
           }
+        }}
+      />
+    ) : null}
+    {tab === "status" ? (
+      <StatusView
+        copy={copy}
+        pack={statusPack}
+        names={namesFor(snapshot.stations, lang)}
+        stations={snapshot.stations}
+        lines={snapshot.lines}
+        coordinates={coordinates}
+        here={here}
+        locating={locating}
+        locateNote={locateNote}
+        onLocate={() =>
+          readHere(
+            () => undefined,
+            (text) => setLocateNote(text),
+          )
+        }
+        onPlan={(from, to) => openTrip(from.code, to.code)}
+        onClear={() => {
+          resetLocationMemory()
+          setHere(null)
+          setLocateNote(null)
         }}
       />
     ) : null}
@@ -626,6 +892,7 @@ export function App() {
         focusToken={mapFocus.token}
         onStart={(code, name) => placeStation("from", code, name)}
         onGo={(code, name) => placeStation("to", code, name)}
+        closedCodes={closedCodes}
       />
     ) : null}
     {tab === "city" ? (
@@ -653,6 +920,7 @@ export function App() {
           const stored = flipTrip(cityFrom.code, cityTo.code)
           setCityMessage(stored ? copy.tripSaved : null)
         }}
+        closedCodes={closedCodes}
         onShare={(shown) => {
           if (!cityFrom || !cityTo) return
           const url = `${window.location.origin}${pathForTab("plan")}${tripQuery(cityFrom.code, cityTo.code)}`
@@ -670,6 +938,7 @@ export function App() {
         snapshotDate={snapshotDate}
         notice={helpNotice}
         journeyAt={SAVED_JOURNEY_AT.replace("T", " ").slice(0, 16)}
+        statusAt={statusClock(statusPack.fetchedAt)}
         onTextSize={setTextSize}
         onClear={clearSavedData}
         onDismissNotice={() => setHelpNotice(null)}

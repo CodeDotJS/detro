@@ -15,6 +15,19 @@ export type Copy = {
   snapshotNote: (date: string) => string
   leastDistance: string
   fewestChanges: string
+  alternative: string
+  alternativeVia: (from: string | null, to: string | null) => string
+  alternativeAsked: (from: string, to: string) => string
+  alternativeBegin: (open: string, closed: string) => string
+  alternativeGetOff: (open: string, closed: string) => string
+  planClosedTitle: string
+  planClosedStation: (name: string) => string
+  planClosedUse: (name: string) => string
+  planClosedConfirm: string
+  planClosedKeep: string
+  insteadOf: (name: string) => string
+  beginHere: string
+  getOffHere: string
   routeOptions: string
   fareLabel: string
   stopsLabel: string
@@ -85,6 +98,7 @@ export type Copy = {
   howStep1: string
   howStep2: string
   howStep3: string
+  howStep4: string
   textSize: string
   textSmall: string
   textNormal: string
@@ -130,6 +144,65 @@ export type Copy = {
   networkSaved: (date: string) => string
   journeysSaved: (when: string) => string
   offlineLimit: string
+  status: string
+  statusLead: string
+  statusFresh: (when: string) => string
+  statusEmpty: string
+  statusCount: (count: number) => string
+  gatesClosed: string
+  statusPass: string
+  statusChangeYes: string
+  statusChangeNo: string
+  statusNearest: (name: string, km: number) => string
+  statusNearestLabel: string
+  statusPassShort: string
+  statusNoBoard: string
+  statusNoLeave: string
+  statusNoteLabel: string
+  statusKm: (km: number) => string
+  useLocation: string
+  locating: string
+  locationDenied: string
+  locationUnavailable: string
+  locationInsecure: string
+  locationMissing: string
+  locationTimeout: string
+  locationNear: (name: string) => string
+  locationNone: string
+  closedStart: (name: string, near: string | null) => string
+  closedEnd: (name: string, near: string | null) => string
+  statusHelp: (when: string) => string
+  locationHelp: string
+  findClosed: string
+  statusPick: string
+  statusCanChange: string
+  statusNoChange: string
+  statusAll: string
+  statusNone: string
+  statusChangeGroup: string
+  statusStayGroup: string
+  statusNearYou: string
+  statusOpen: string
+  statusNearOpen: (name: string) => string
+  statusNearShut: (closed: string, open: string) => string
+  statusNearShutOnly: (closed: string) => string
+  statusGo: string
+  statusHere: string
+  statusShowRoute: string
+  statusClosedStart: (name: string) => string
+  statusClosedDest: (name: string) => string
+  statusGetOff: string
+  statusNeedStart: string
+  statusChangeStop: string
+  statusReady: string
+  statusFoot: (count: number, when: string) => string
+  statusClosedLabel: string
+  statusOpenLabel: string
+  statusCheckedLabel: string
+  statusLineClosed: (count: number) => string
+  gateBefore: (name: string, line: string | null, km: number | null) => string
+  gateAfter: (name: string, line: string | null, km: number | null) => string
+  gateNear: (name: string, km: number | null) => string
 }
 
 export const copy = {
@@ -150,6 +223,20 @@ export const copy = {
     `Stations and routes use a saved snapshot (${date}). This is not a live planner.`,
   leastDistance: "Least distance",
   fewestChanges: "Fewest changes",
+  alternative: "Alternative",
+  alternativeVia: (from, to) =>
+    from && to ? `Start at ${from}. Get off at ${to}` : from ? `Start at ${from}` : to ? `Get off at ${to}` : "",
+  alternativeAsked: (from, to) => `You asked for ${from} → ${to}`,
+  alternativeBegin: (open, closed) => `${closed} is closed. Begin at ${open} instead.`,
+  alternativeGetOff: (open, closed) => `${closed} is closed. Get off at ${open} instead.`,
+  planClosedTitle: "Closed gates",
+  planClosedStation: (name) => `${name} is closed.`,
+  planClosedUse: (name) => `Use ${name}, closer to where you asked?`,
+  planClosedConfirm: "Suggest this route",
+  planClosedKeep: "Keep my stations",
+  insteadOf: (name) => `instead of ${name}`,
+  beginHere: "Begin here",
+  getOffHere: "Get off here",
   routeOptions: "Route options",
   fareLabel: "Fare",
   stopsLabel: "Stops",
@@ -220,6 +307,7 @@ export const copy = {
   howStep1: "Choose where you start and where you are going.",
   howStep2: "Read which train to take and where to change.",
   howStep3: "Open the map to look at a line or pick a station.",
+  howStep4: "Open Status for the closed list. On Plan, Alternative is the ride via the nearest open gate.",
   textSize: "Text size",
   textSmall: "Small text",
   textNormal: "Normal text",
@@ -260,10 +348,77 @@ export const copy = {
   chooseOnMap: "Choose on the map",
   routeDetails: "Route details",
   onRoute: "On this route",
-  offlineHelp: (date) => `Search, both maps, fares, saved journeys, and Play use the ${date} snapshot. They still work when the signal is cut.`,
+  offlineHelp: (date) => `Search, both maps, fares, saved journeys, Status, and Play use the ${date} snapshot. They still work when the signal is cut.`,
   offlineRoute: "You are offline, and this pair was not in the saved journeys. The route is calculated from the station lists. Fare and timing are unavailable.",
   freshnessTitle: "Saved information",
   networkSaved: (date) => `Lines and stations were saved on ${date}.`,
   journeysSaved: (when) => `Downloaded journeys use the Delhi Metro planner result for ${when}, not a live departure.`,
-  offlineLimit: "Offline, search, both maps, saved journeys, and all four games still work, including the fare, platform, and first and last train. A pair that was never saved is calculated from the station lists, and then the fare and timing stay unavailable.",
+  offlineLimit: "Offline, search, both maps, saved journeys, Status, and all four games still work, including the fare, platform, and first and last train. A pair that was never saved is calculated from the station lists, and then the fare and timing stay unavailable.",
+  status: "Status",
+  statusLead: "Closed gates, and one nearest open station.",
+  statusFresh: (when) => `Last check ${when} Asia/Kolkata.`,
+  statusEmpty: "No closed stations in that check.",
+  statusCount: (count) => (count === 1 ? "1 station has closed gates" : `${count} stations have closed gates`),
+  gatesClosed: "Closed",
+  statusPass: "Trains still pass. You cannot board or leave here.",
+  statusChangeYes: "You can change trains here.",
+  statusChangeNo: "You cannot change trains here.",
+  statusNearest: (name, km) => `Nearest open station: ${name} (${km.toFixed(1)} km).`,
+  statusNearestLabel: "Nearest open",
+  statusPassShort: "Trains pass",
+  statusNoBoard: "No board",
+  statusNoLeave: "No leave",
+  statusNoteLabel: "Note",
+  statusKm: (km) => `${km.toFixed(1)} km`,
+  useLocation: "Use my location",
+  locating: "Finding your station…",
+  locationDenied: "This browser blocked the location. Allow it for this site, or pick a station by name.",
+  locationUnavailable: "This browser cannot share a location.",
+  locationInsecure: "This page is not on a secure address, so the browser will not share a location.",
+  locationMissing: "Your position could not be found. Pick a station by name.",
+  locationTimeout: "This browser could not find you. Type the station you are at, then pick where you are going.",
+  locationNear: (name) => `Nearest station: ${name}.`,
+  locationNone: "No station with a saved position could be named.",
+  closedStart: (name, near) => (near ? `${name} is closed. Start at ${near}.` : `${name} is closed. Choose another start.`),
+  closedEnd: (name, near) => (near ? `${name} is closed. Get off at ${near}.` : `${name} is closed. Choose another destination.`),
+  statusHelp: (when) =>
+    when
+      ? `Station closures were last packed on ${when}. A failed check keeps the previous list. Silence is not treated as all-clear.`
+      : "Station closures use the last packed list. A failed check keeps that list. Silence is not treated as all-clear.",
+  locationHelp: "Use my location only after you tap it. If the browser cannot find you, type the station you are at. The position is not stored.",
+  findClosed: "Look up a station",
+  statusPick: "Tap a closed station, or use your location.",
+  statusCanChange: "Change",
+  statusNoChange: "No change",
+  statusAll: "All",
+  statusNone: "No closed station matches that name.",
+  statusChangeGroup: "You can still change trains here",
+  statusStayGroup: "Gates closed — stay on the train",
+  statusNearYou: "Nearest to you",
+  statusOpen: "Open",
+  statusNearOpen: (name) => `${name} is open. You can start here.`,
+  statusNearShut: (closed, open) => `${closed} is closed. Use ${open}.`,
+  statusNearShutOnly: (closed) => `${closed} is closed. Look up another station by name.`,
+  statusGo: "I want to go to",
+  statusHere: "I'm at",
+  statusShowRoute: "Show this route",
+  statusClosedStart: (name) => `${name} is closed. Start at an open station.`,
+  statusClosedDest: (name) => `${name} is closed. Get off at an open station.`,
+  statusGetOff: "Get off here",
+  statusNeedStart: "First choose where you start.",
+  statusChangeStop: "Change",
+  statusReady: "Both gates are open.",
+  statusFoot: (count, when) =>
+    when ? `${count === 1 ? "1 station closed" : `${count} stations closed`} · ${when}` : `${count === 1 ? "1 station closed" : `${count} stations closed`}`,
+  statusClosedLabel: "closed",
+  statusOpenLabel: "open",
+  statusCheckedLabel: "checked",
+  statusLineClosed: (count) => (count === 1 ? "1 closed" : `${count} closed`),
+  gateBefore: (name, line, km) => `Before${line ? ` on the ${line}` : ""}: ${name}${kmText(km)}`,
+  gateAfter: (name, line, km) => `After${line ? ` on the ${line}` : ""}: ${name}${kmText(km)}`,
+  gateNear: (name, km) => `Closest open gate: ${name}${kmText(km)}`,
 } satisfies Copy
+
+function kmText(km: number | null) {
+  return km == null ? "" : ` · ${km.toFixed(1)} km`
+}

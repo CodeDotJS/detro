@@ -218,6 +218,7 @@ describe("plan screen", () => {
         snapshotDate="2026-09-30"
         notice={null}
         journeyAt="2026-09-30T12:00:00.000"
+        statusAt="2026-10-10 08:00:00"
         onTextSize={() => undefined}
         onClear={() => undefined}
         onDismissNotice={() => undefined}
@@ -226,6 +227,7 @@ describe("plan screen", () => {
     expect(html).toContain("Not an official DMRC app")
     expect(html).not.toContain("हिन्दी")
     expect(html).toContain("not a live planner")
+    expect(html).toContain("Open Status for the closed list. On Plan, Alternative is the ride via the nearest open gate.")
     expect(html).toContain("Open Play to name the next stop, find where to change, pick the right platform")
     expect(html).toContain("Theme")
     expect(html).toContain("Day")
@@ -269,14 +271,16 @@ describe("plan screen", () => {
     expect(html).not.toContain("Save a trip from Plan")
   })
 
-  it("lists Play between Saved and Help", () => {
+  it("lists Status between Saved and Play", () => {
     const html = renderToStaticMarkup(
       <TabBar copy={copy} tab="plan" onTab={() => undefined} />,
     )
     expect(html.indexOf('href="/city"')).toBeGreaterThan(-1)
     expect(html.indexOf('href="/city"')).toBeLessThan(html.indexOf('href="/saved"'))
-    expect(html.indexOf('href="/saved"')).toBeLessThan(html.indexOf('href="/play"'))
+    expect(html.indexOf('href="/saved"')).toBeLessThan(html.indexOf('href="/status"'))
+    expect(html.indexOf('href="/status"')).toBeLessThan(html.indexOf('href="/play"'))
     expect(html.indexOf('href="/play"')).toBeLessThan(html.indexOf('href="/help"'))
+    expect(html).toContain("Status")
     expect(html).toContain("Play")
     expect(html).not.toContain("Online")
   })
@@ -464,6 +468,45 @@ describe("plan screen", () => {
     expect(html).toContain("About 44 minutes")
   })
 
+  it("offers Alternative beside Least and Fewest when a closed gate has one open substitute", () => {
+    const result = normalizeJourney(routeRiKg, null, "2026-09-30T12:00:00.000Z")
+    if (!result.ok) throw new Error("expected journey")
+    const html = renderToStaticMarkup(
+      <PlanView
+        copy={copy}
+        lang="en"
+        state={createPlanState()}
+        phase="ready"
+        message={null}
+        journey={result.journey}
+        alternate={{ ...result.journey, criterion: "fewest-changes", changes: 1, durationMinutes: 44 }}
+        bypass={{ ...result.journey, originName: "PATEL CHOWK" }}
+        bypassVia="Start at PATEL CHOWK"
+        bypassSwap={{
+          askedFrom: "RAJIV CHOWK",
+          askedTo: "KASHMERE GATE",
+          rideFrom: "PATEL CHOWK",
+          rideTo: "KASHMERE GATE",
+          replacedFrom: true,
+          replacedTo: false,
+        }}
+        {...handlers}
+      />,
+    )
+    expect(html).toContain("Least distance")
+    expect(html).toContain("Fewest changes")
+    expect(html).toContain("Alternative")
+    expect(html).toContain("Start at PATEL CHOWK")
+    expect(html).toContain("You asked for RAJIV CHOWK")
+    expect(html).toContain("RAJIV CHOWK is closed. Begin at PATEL CHOWK instead.")
+    expect(html).toContain("Begin here")
+    expect(html).toContain('aria-pressed="true"')
+    expect(html).toMatch(/aria-pressed="true"[^>]*>[\s\S]*Alternative/)
+    expect(html).toContain("is-three")
+    expect(html).not.toContain("Before on the")
+    expect(html).not.toContain("After on the")
+  })
+
   it("shows where to change on a two-line journey", () => {
     const result = normalizeJourney(routeRiRck, null, "2026-09-30T12:00:00.000Z")
     if (!result.ok) throw new Error("expected journey")
@@ -566,5 +609,42 @@ describe("plan screen", () => {
     )
     expect(html).toContain(copy.serviceError)
     expect(html).not.toContain("Take the")
+  })
+
+  it("asks before substituting a closed station", () => {
+    const html = renderToStaticMarkup(
+      <PlanView
+        copy={copy}
+        lang="en"
+        state={createPlanState()}
+        phase="idle"
+        message={null}
+        journey={null}
+        gateOffer={{
+          closed: [
+            {
+              name: "JANPATH",
+              openName: "CHANDNI CHOWK",
+              note: "Due to security reasons, Janpath metro Station is closed till further instructions.",
+              phrase: "Station Closed",
+              title: "Service Update",
+            },
+          ],
+        }}
+        onAcceptGate={() => undefined}
+        onKeepGate={() => undefined}
+        {...handlers}
+      />,
+    )
+    expect(html).toContain('role="dialog"')
+    expect(html).toContain("Closed gates")
+    expect(html).toContain("JANPATH")
+    expect(html).toContain("Closed")
+    expect(html).toContain("Service Update")
+    expect(html).toContain("Due to security reasons, Janpath metro Station is closed till further instructions.")
+    expect(html).toContain("Use CHANDNI CHOWK, closer to where you asked?")
+    expect(html).toContain("Suggest this route")
+    expect(html).toContain("Keep my stations")
+    expect(html).not.toContain("No board")
   })
 })

@@ -111,6 +111,7 @@ export function CityMap({
   onSave,
   saved = false,
   onShare,
+  closedCodes = new Set(),
 }: {
   copy: Copy
   lines: LineSequence[]
@@ -132,6 +133,7 @@ export function CityMap({
   onSave: () => void
   saved?: boolean
   onShare: (journey: Journey) => void
+  closedCodes?: Set<string>
 }) {
   const stations = useMemo(() => stationsFor(lines, lang), [lines, lang])
   const visibleLines = useMemo(() => lines.filter((line) => line.show), [lines])
@@ -238,7 +240,13 @@ export function CityMap({
         title: station.name,
         zIndexOffset: marked ? 600 : 0,
         icon: L.divIcon({
-          className: marked ? "city-marker city-marker-route" : "city-marker",
+          className: [
+            "city-marker",
+            marked ? "city-marker-route" : "",
+            closedCodes.has(station.code) ? "city-marker-closed" : "",
+          ]
+            .filter(Boolean)
+            .join(" "),
           html: `<span style="background:${station.color};width:${size}px;height:${size}px"></span>`,
           iconSize: [size, size],
           iconAnchor: [size / 2, size / 2],
@@ -302,7 +310,7 @@ export function CityMap({
       observer.disconnect()
       map.remove()
     }
-  }, [stations, visibleLines, lines, lang, shown, routeKey, filter, from, to])
+  }, [stations, visibleLines, lines, lang, shown, routeKey, filter, from, to, closedCodes])
 
   return (
     <main className={routeOpen ? "city-page city-split" : "city-page"}>
@@ -343,7 +351,10 @@ export function CityMap({
       <div className="city-sheets">
         {chosen ? (
           <article className="city-card">
-            <p className="city-ride-title">{chosen.name}</p>
+            <p className="city-ride-title">
+              {chosen.name}
+              {closedCodes.has(chosen.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
+            </p>
             <p className="quiet">{chosen.lineNames.join(" · ")}</p>
             <div className="station-actions">
               <button
