@@ -8,6 +8,7 @@ import {
   DoorOpen,
   IndianRupee,
   List,
+  LocateFixed,
   Map,
   Share2,
   X,
@@ -51,6 +52,35 @@ type Props = {
   onClearRoute?: () => void
   onDismissMessage?: () => void
   lines?: LineSequence[]
+  closedCodes?: Set<string>
+  onLocate?: () => void
+  locating?: boolean
+  bypass?: Journey | null
+  bypassVia?: string | null
+  bypassSwap?: BypassSwap | null
+  preferBypass?: boolean
+  gateOffer?: GateOffer | null
+  onAcceptGate?: () => void
+  onKeepGate?: () => void
+}
+
+export type BypassSwap = {
+  askedFrom: string
+  askedTo: string
+  rideFrom: string
+  rideTo: string
+  replacedFrom: boolean
+  replacedTo: boolean
+}
+
+export type GateOffer = {
+  closed: Array<{
+    name: string
+    openName: string
+    note: string | null
+    phrase: string | null
+    title: string | null
+  }>
 }
 
 export function PlanView({
@@ -75,8 +105,18 @@ export function PlanView({
   onClearRoute,
   onDismissMessage = () => undefined,
   lines = [],
+  closedCodes = new Set(),
+  onLocate,
+  locating = false,
+  bypass = null,
+  bypassVia = null,
+  bypassSwap = null,
+  preferBypass,
+  gateOffer = null,
+  onAcceptGate,
+  onKeepGate,
 }: Props) {
-  const [picked, setPicked] = useState<"primary" | "alternate">("primary")
+  const [picked, setPicked] = useState<"primary" | "alternate" | "bypass">(bypass ? "bypass" : "primary")
   const [swapTurn, setSwapTurn] = useState(0)
   const swapMove = useRef<{ fields: SwapDelta | null; dots: SwapDelta | null } | null>(null)
   useLayoutEffect(() => {
@@ -91,9 +131,9 @@ export function PlanView({
     )
   }, [swapTurn])
   useEffect(() => {
-    setPicked("primary")
-  }, [journey, alternate])
-  const shown = picked === "alternate" && alternate ? alternate : journey
+    setPicked(bypass && preferBypass !== false ? "bypass" : "primary")
+  }, [journey, alternate, bypass, preferBypass])
+  const shown = picked === "bypass" && bypass ? bypass : picked === "alternate" && alternate ? alternate : journey
   useEffect(() => {
     if (!placedField) return
     document.querySelector(".notice")?.scrollIntoView({ block: "start" })
@@ -107,20 +147,45 @@ export function PlanView({
   const result =
     shown && phase !== "error" ? (
       <div className="result" aria-live="polite">
-        {alternate && journey ? (
-          <div className="choices" role="group" aria-label={copy.routeOptions}>
+        {bypassSwap && picked === "bypass" ? (
+          <aside className="bypass-swap">
+            <p className="bypass-asked">{copy.alternativeAsked(bypassSwap.askedFrom, bypassSwap.askedTo)}</p>
+            {bypassSwap.replacedFrom ? (
+              <p>
+                <span className="status-mark">{copy.gatesClosed}</span> {copy.alternativeBegin(bypassSwap.rideFrom, bypassSwap.askedFrom)}
+              </p>
+            ) : null}
+            {bypassSwap.replacedTo ? (
+              <p>
+                <span className="status-mark">{copy.gatesClosed}</span> {copy.alternativeGetOff(bypassSwap.rideTo, bypassSwap.askedTo)}
+              </p>
+            ) : null}
+          </aside>
+        ) : null}
+        {journey && (alternate || bypass) ? (
+          <div className={bypass && alternate ? "choices is-three" : "choices"} role="group" aria-label={copy.routeOptions}>
             <Choice
               pressed={picked === "primary"}
               label={journey.criterion === "fewest-changes" ? copy.fewestChanges : copy.leastDistance}
               detail={choiceDetail(journey, copy)}
               onPick={() => setPicked("primary")}
             />
-            <Choice
-              pressed={picked === "alternate"}
-              label={alternate.criterion === "fewest-changes" ? copy.fewestChanges : copy.leastDistance}
-              detail={choiceDetail(alternate, copy)}
-              onPick={() => setPicked("alternate")}
-            />
+            {alternate ? (
+              <Choice
+                pressed={picked === "alternate"}
+                label={alternate.criterion === "fewest-changes" ? copy.fewestChanges : copy.leastDistance}
+                detail={choiceDetail(alternate, copy)}
+                onPick={() => setPicked("alternate")}
+              />
+            ) : null}
+            {bypass ? (
+              <Choice
+                pressed={picked === "bypass"}
+                label={copy.alternative}
+                detail={bypassVia || choiceDetail(bypass, copy)}
+                onPick={() => setPicked("bypass")}
+              />
+            ) : null}
           </div>
         ) : null}
         <div className="zoom-row">
@@ -138,12 +203,23 @@ export function PlanView({
             {copy.clearRoute}
           </button>
         </div>
-        <JourneyCard copy={copy} journey={shown} lines={lines} lang={lang} />
+        <JourneyCard
+          copy={copy}
+          journey={shown}
+          lines={lines}
+          lang={lang}
+          closedCodes={closedCodes}
+          criterionLabel={picked === "bypass" ? copy.alternative : undefined}
+          swap={picked === "bypass" ? bypassSwap : null}
+        />
       </div>
     ) : null
 
   return (
     <main className="sheet split">
+      {gateOffer && onAcceptGate && onKeepGate ? (
+        <GateDialog copy={copy} offer={gateOffer} onConfirm={onAcceptGate} onKeep={onKeepGate} />
+      ) : null}
       <div className="pane">
       {message ? <Notice message={message} closeLabel={copy.close} onClose={onDismissMessage} /> : null}
       <form className="planner" onSubmit={submit}>
@@ -160,7 +236,14 @@ export function PlanView({
           onFocus={onFocus}
           onSelect={onSelect}
           onHighlight={onHighlight}
+          closedCodes={closedCodes}
         />
+        {onLocate ? (
+          <button type="button" className="locate" onClick={onLocate} aria-busy={locating}>
+            <LocateFixed aria-hidden="true" size={18} strokeWidth={2} />
+            {locating ? copy.locating : copy.useLocation}
+          </button>
+        ) : null}
         <div className="swap-row">
           <button
             type="button"
@@ -192,6 +275,7 @@ export function PlanView({
           onFocus={onFocus}
           onSelect={onSelect}
           onHighlight={onHighlight}
+          closedCodes={closedCodes}
         />
         <button type="submit" className="primary" disabled={phase === "loading"}>
           {phase === "loading" ? copy.loadingRoute : copy.showRoute}
@@ -203,6 +287,65 @@ export function PlanView({
       </div>
       <Landmarks copy={copy} />
     </main>
+  )
+}
+
+function GateDialog({
+  copy,
+  offer,
+  onConfirm,
+  onKeep,
+}: {
+  copy: Copy
+  offer: GateOffer
+  onConfirm: () => void
+  onKeep: () => void
+}) {
+  const box = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    box.current?.querySelector("button")?.focus()
+    function onKey(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") onKeep()
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [onKeep])
+
+  return (
+    <div className="gate-layer">
+      <button type="button" className="gate-dismiss" aria-label={copy.planClosedKeep} onClick={onKeep} />
+      <div ref={box} className="gate-dialog" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+        <p className="status-kicker" id="gate-title">
+          {copy.planClosedTitle}
+        </p>
+        {offer.closed.map((stop) => {
+          const extraPhrase = stop.phrase && stop.phrase !== "Station Closed" ? stop.phrase : null
+          return (
+            <section key={stop.name} className="gate-closed">
+              <p className="gate-closed-name">
+                <span>{stop.name}</span>
+                <span className="status-mark">{copy.gatesClosed}</span>
+              </p>
+              {stop.title ? <p className="status-kicker">{stop.title}</p> : null}
+              {extraPhrase ? <p>{extraPhrase}</p> : null}
+              {stop.note ? <p>{stop.note}</p> : null}
+              <p className="gate-open">
+                <span>{copy.planClosedUse(stop.openName)}</span>
+                <span className="status-mark is-open">{copy.statusOpen}</span>
+              </p>
+            </section>
+          )
+        })}
+        <div className="status-acts">
+          <button type="button" className="primary" onClick={onConfirm}>
+            {copy.planClosedConfirm}
+          </button>
+          <button type="button" className="status-act" onClick={onKeep}>
+            {copy.planClosedKeep}
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -321,6 +464,7 @@ function StationField({
   onFocus,
   onSelect,
   onHighlight,
+  closedCodes = new Set(),
 }: {
   field: Field
   placed?: boolean
@@ -332,6 +476,7 @@ function StationField({
   onFocus: (field: Field) => void
   onSelect: (field: Field, code: string) => void
   onHighlight: (index: number) => void
+  closedCodes?: Set<string>
 }) {
   const active = state.activeField === field
   const listId = `${field}-suggestions`
@@ -404,6 +549,7 @@ function StationField({
                 <span className="station-name">
                   {station.name}
                   <span className="station-code">{station.code}</span>
+                  {closedCodes.has(station.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
                 </span>
                 {station.lines.length > 0 ? (
                   <span className="line-row">
@@ -437,8 +583,16 @@ function Clock() {
   )
 }
 
-export function TripMeta({ copy, journey }: { copy: Copy; journey: Journey }) {
-  const label = journey.criterion === "fewest-changes" ? copy.fewestChanges : copy.leastDistance
+export function TripMeta({
+  copy,
+  journey,
+  criterionLabel,
+}: {
+  copy: Copy
+  journey: Journey
+  criterionLabel?: string
+}) {
+  const label = criterionLabel ?? (journey.criterion === "fewest-changes" ? copy.fewestChanges : copy.leastDistance)
   return (
     <p className="criterion">
       <span className="criterion-kind">{label}</span>
@@ -460,15 +614,28 @@ export function JourneyCard({
   journey,
   lines,
   lang,
+  closedCodes = new Set(),
+  criterionLabel,
+  swap = null,
 }: {
   copy: Copy
   journey: Journey
   lines: LineSequence[]
   lang: Lang
+  closedCodes?: Set<string>
+  criterionLabel?: string
+  swap?: BypassSwap | null
 }) {
   return (
     <article className="itinerary">
-      <RouteBoard journey={journey} lines={lines} lang={lang} />
+      <RouteBoard
+        journey={journey}
+        lines={lines}
+        lang={lang}
+        closedCodes={closedCodes}
+        startNote={swap ? copy.beginHere : undefined}
+        endNote={swap ? copy.getOffHere : undefined}
+      />
       <h2>
         <span className="sr-only">{copy.from} </span>
         <span className="place-name">{journey.originName}</span>
@@ -476,7 +643,19 @@ export function JourneyCard({
         <span className="sr-only"> {copy.to} </span>
         <span className="place-name">{journey.destinationName}</span>
       </h2>
-      <TripMeta copy={copy} journey={journey} />
+      {swap ? (
+        <p className="bypass-ends">
+          <span>
+            {copy.beginHere}: {journey.originName}
+            {swap.replacedFrom ? ` ${copy.insteadOf(swap.askedFrom)}` : ""}
+          </span>
+          <span>
+            {copy.getOffHere}: {journey.destinationName}
+            {swap.replacedTo ? ` ${copy.insteadOf(swap.askedTo)}` : ""}
+          </span>
+        </p>
+      ) : null}
+      <TripMeta copy={copy} journey={journey} criterionLabel={criterionLabel} />
       <JourneyStats copy={copy} journey={journey} />
       <ol className="timeline">
         {journey.legs.map((leg, index) => {
@@ -484,7 +663,13 @@ export function JourneyCard({
           const next = journey.legs[index + 1]
           return (
             <li key={`${leg.lineName}-${leg.startName}-${index}`} className="ride" style={{ "--leg": color } as CSSProperties}>
-              <p className="stop-name">{leg.startName}</p>
+              <p className="stop-name">
+                {leg.startName}
+                {index === 0 && swap ? <span className="status-mark is-open">{copy.beginHere}</span> : null}
+                {leg.stationCodes[0] && closedCodes.has(leg.stationCodes[0]) ? (
+                  <span className="status-mark">{copy.gatesClosed}</span>
+                ) : null}
+              </p>
               <div className="ride-facts">
                 <span className="line-pill" style={{ background: color, color: inkOn(color) }}>
                   {leg.lineName}
@@ -513,9 +698,15 @@ export function JourneyCard({
                     <ChevronDown className="stops-chevron" aria-hidden="true" size={18} strokeWidth={2} />
                   </summary>
                   <ol className="between">
-                    {leg.intermediateNames.map((name, stopIndex) => (
-                      <li key={`${name}-${stopIndex}`}>{name}</li>
-                    ))}
+                    {leg.intermediateNames.map((name, stopIndex) => {
+                      const code = leg.stationCodes[stopIndex + 1]
+                      return (
+                        <li key={`${name}-${stopIndex}`}>
+                          {name}
+                          {code && closedCodes.has(code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
+                        </li>
+                      )
+                    })}
                   </ol>
                 </details>
               ) : null}
@@ -525,7 +716,13 @@ export function JourneyCard({
                   {copy.changeFor(next.lineName)}
                 </p>
               ) : (
-                <p className="stop-name arrive">{leg.endName}</p>
+                <p className="stop-name arrive">
+                  {leg.endName}
+                  {swap ? <span className="status-mark is-open">{copy.getOffHere}</span> : null}
+                  {leg.stationCodes.at(-1) && closedCodes.has(leg.stationCodes.at(-1)!) ? (
+                    <span className="status-mark">{copy.gatesClosed}</span>
+                  ) : null}
+                </p>
               )}
             </li>
           )
