@@ -55,13 +55,14 @@ export function historyRangeOptions(history: StatusHistory, today = todayStamp()
   return options
 }
 
-export function formatHistoryDate(stamp: string): string {
+export function formatHistoryDate(stamp: string, withYear = false): string {
   const date = parseStamp(stamp)
   if (!date) return stamp
   return new Intl.DateTimeFormat("en-GB", {
     timeZone: "UTC",
     day: "numeric",
     month: "short",
+    ...(withYear ? { year: "numeric" as const } : {}),
   }).format(date)
 }
 

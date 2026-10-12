@@ -189,6 +189,8 @@ describe("status board", () => {
     expect(html).toContain("PATEL CHOWK")
     expect(html).toContain("Start here")
     expect(html).toContain("Go here")
+    expect(html).toContain("status-look-clear")
+    expect(html).toContain("Clear station")
   })
 
   it("names the nearest Delhi Metro station from a city outside Delhi", () => {

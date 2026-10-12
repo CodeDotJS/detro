@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest"
-import { chartSeries, filterHistory, historyRangeOptions, historyYears, readHistory } from "./history"
+import {
+  chartSeries,
+  filterHistory,
+  formatHistoryDate,
+  historyRangeOptions,
+  historyYears,
+  readHistory,
+} from "./history"
 
 const history = readHistory({
   days: [
@@ -38,6 +45,11 @@ describe("status history", () => {
       { date: "2026-10-05", count: 1 },
       { date: "2026-10-12", count: 2 },
     ])
+  })
+
+  it("formats chart dates short and dialog dates with the year", () => {
+    expect(formatHistoryDate("2026-10-10")).toBe("10 Oct")
+    expect(formatHistoryDate("2026-10-10", true)).toBe("10 Oct 2026")
   })
 
   it("lists years newest first", () => {

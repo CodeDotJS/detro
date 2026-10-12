@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties, type KeyboardEvent } from "react"
+import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
 import { ArrowRight, LocateFixed, X } from "lucide-react"
 import type { Copy } from "../i18n/copy"
 import { lineIndexFor, searchCatalog, type CatalogStation } from "../lib/dmrc/snapshot"
@@ -10,6 +10,7 @@ import type { StatusPack } from "../lib/status/pack"
 import type { LineSequence } from "../lib/transit/route"
 import type { Suggestion } from "../lib/transit/types"
 import { StatusHistoryPanel, StatusServiceUpdate } from "./StatusHistory"
+import { useSuggestionPlacement } from "./useSuggestionPlacement"
 
 type Stop = { code: string; name: string }
 
@@ -125,9 +126,7 @@ export function StatusView({
     setDest(next ?? stop)
   }
 
-  function clearAll() {
-    setFrom(null)
-    setDest(null)
+  function clearShown() {
     setLooked(null)
     setQuery("")
     setSearchOpen(false)
@@ -135,6 +134,12 @@ export function StatusView({
     setOpenLine(null)
     setFocus(null)
     onClear()
+  }
+
+  function clearAll() {
+    setFrom(null)
+    setDest(null)
+    clearShown()
   }
 
   return (
@@ -202,7 +207,17 @@ export function StatusView({
                     </span>
                   </p>
                 </div>
-                {stand && shown.code === stand.code ? <span className="status-km">{copy.statusKm(stand.km)}</span> : null}
+                <div className="status-look-tools">
+                  {stand && shown.code === stand.code ? <span className="status-km">{copy.statusKm(stand.km)}</span> : null}
+                  <button
+                    type="button"
+                    className="status-look-clear"
+                    onClick={clearShown}
+                    aria-label={copy.statusClearStation}
+                  >
+                    <X aria-hidden="true" size={16} strokeWidth={2} />
+                  </button>
+                </div>
               </div>
               {shownPack ? (
                 <OfficialCopy
@@ -260,7 +275,7 @@ export function StatusView({
                   {copy.statusShowRoute}
                 </button>
               ) : null}
-              <button type="button" onClick={clearAll}>
+              <button type="button" className="ghost" onClick={clearAll}>
                 <X aria-hidden="true" size={18} strokeWidth={2} />
                 {copy.clearRoute}
               </button>
@@ -354,8 +369,11 @@ function StatusSearch({
   onHighlight: (index: number) => void
   onSelect: (station: Suggestion) => void
 }) {
+  const inputRef = useRef<HTMLInputElement>(null)
   const listId = "status-suggestions"
   const shown = open && (suggestions.length > 0 || query.trim().length > 0)
+  const listOpen = shown && suggestions.length > 0
+  const place = useSuggestionPlacement(listOpen, inputRef)
 
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (!open) return
@@ -373,25 +391,34 @@ function StatusSearch({
     }
   }
 
+  const fieldClass = ["field", listOpen ? (place === "above" ? "is-list-above" : "is-list-below") : ""]
+    .filter(Boolean)
+    .join(" ")
+
   return (
-    <div className="field">
+    <div className={fieldClass}>
       <label htmlFor="status-find">{copy.findClosed}</label>
       <input
+        ref={inputRef}
         id="status-find"
         role="combobox"
         autoComplete="off"
         aria-autocomplete="list"
-        aria-expanded={open && suggestions.length > 0}
+        aria-expanded={listOpen}
         aria-controls={listId}
         aria-activedescendant={highlight >= 0 ? `status-option-${highlight}` : undefined}
         value={query}
         placeholder={copy.searchStation}
-        onFocus={onFocus}
+        onFocus={(event) => {
+          onFocus()
+          const input = event.currentTarget
+          requestAnimationFrame(() => input.select())
+        }}
         onChange={(event) => onType(event.target.value)}
         onKeyDown={onKeyDown}
       />
       {shown && suggestions.length === 0 ? <p className="hint">{copy.noResults}</p> : null}
-      {shown && suggestions.length > 0 ? (
+      {listOpen ? (
         <ul id={listId} role="listbox">
           {suggestions.map((station, index) => (
             <li key={station.code} role="presentation">
