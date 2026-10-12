@@ -1,12 +1,12 @@
 # Architecture
 
-Milestone 1 lives in `src/`. Map, Help, and offline routing are still later phases.
+Milestone 1 lives in `src/`. Lines, Help, and offline routing are still later phases.
 
 ## App
 
 - Vite + React + TypeScript.
 - Plain CSS custom properties. No component library. Fonts are vendored (`@fontsource`) and bundled. No font CDN.
-- Three destinations later: Plan, Map, Help. Milestone 1 is Plan only, so it does not need a router.
+- Destinations: Plan, Status, Saved, City, Play, Lines, and Help. Milestone 1 notes below may still describe an earlier Plan-only cut.
 - The language choice is stored locally. Text size is a later phase. Dictionaries hold UI chrome. Station and line names come from the API response for `en` or `hi`.
 
 ## Data flow

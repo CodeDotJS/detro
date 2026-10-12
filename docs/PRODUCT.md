@@ -10,7 +10,7 @@ Tell the rider where to start, which train to take, where to change, and where t
 
 The first screen asks where you are going. A result opens with a colored diagram of that ride, then the timeline. When the saved journey and the fewest-changes ride visit different stations, both are offered. Each ride has the line name on that line’s color, the direction, the platform when the payload includes one, and the stops in between. A change is its own line of text. Fare, stop count, and changes sit above the timeline. Missing fare or time stays missing.
 
-The interface is English. The page starts in Day. Night and Contrast are a cycle on Help and next to the online mark. Line colours stay the DMRC hues. Type is vendored IBM Plex Sans. Icons are from Lucide, bundled with the app. Nothing is loaded from a font or icon CDN. The independent-app notice and the snapshot date live on Help. The line map is one line at a time. The city map draws stations that have a saved latitude and longitude.
+The interface is English. The page starts in Day. Night and Contrast are a cycle on Help and next to the online mark. Line colours stay the DMRC hues. Type is vendored IBM Plex Sans. Icons are from Lucide, bundled with the app. Nothing is loaded from a font or icon CDN. The independent-app notice and the snapshot date live on Help. Lines shows one line at a time. The city map draws stations that have a saved latitude and longitude.
 
 ## People
 
@@ -19,22 +19,22 @@ A child with an adult, an older adult, a first-time visitor, and someone unfamil
 ## Destinations
 
 1. **Plan a trip** — origin, destination, swap, and “Show my route.” On a wide screen the route sits beside the form.
-2. **Map** — one line at a time, with a sentence that says to pick a line and then a station. Start here and Go here sit with the chosen station. On a wide screen the line diagram sits beside the list.
-3. **City** — stations with a saved coordinate on street tiles. The ride is drawn between the ends that have positions.
-4. **Saved** — trips stored on this device. Open one to see the ride, or remove it.
-5. **Status** — closed-gate counts and the last check time, then each line with its closed stations on that line. Use my location names the nearest Delhi Metro station from that fix, with the distance, Start here, and Go here. A closed gate names one nearest open station. This is not a live arrival board.
-6. **Play** — four games, each a round of eight questions with three tokens, Express points for three in a row, and +5 for answering before the doors close. Answers move on by themselves; a tap skips the wait. Every answer comes from saved data, and a question that could have two right answers is not asked.
+2. **Status** — closed-gate counts and the last check time, then each line with its closed stations on that line. Use my location names the nearest Delhi Metro station from that fix, with the distance, Start here, and Go here. A closed gate names one nearest open station. This is not a live arrival board.
+3. **Saved** — trips stored on this device. Open one to see the ride, or remove it.
+4. **City** — stations with a saved coordinate on street tiles. The ride is drawn between the ends that have positions.
+5. **Play** — four games, each a round of eight questions with three tokens, Express points for three in a row, and +5 for answering before the doors close. Answers move on by themselves; a tap skips the wait. Every answer comes from saved data, and a question that could have two right answers is not asked.
    - **Change here** — a trip from one starting station to a destination, the line and direction you board, and four interchanges. The question names both stations. The answer is where the saved route changes. Trips where the shortest and the fewest-changes routes change at different stations are skipped, and no wrong option is served by a later line on the trip. The answer shows every leg with its direction, platform, and stops.
    - **Platform** — the station you are at and the station you are going to, then that station’s real platforms as the choices. The question names both stations. The answer comes from `data/en/platforms.json`, which `python3 src/lib/offline/build_platforms.py` builds from the journey packs. A destination that two platforms reach directly is skipped. The answer shows every platform at the station.
    - **Faster or cheaper** — two saved trips from one station: which takes longer, or which costs more on a weekday. Each choice names the station you leave and the station you reach. The gap in minutes narrows as the round goes on, and fares never tie.
    - **Next stop** — ride up to eight stops on a real line and name each next stop from four stations. The track shows the stop the train just left and the terminus it is heading to, and the station behind the train is never an option, so only one choice is next. Wrong options come from the saved network: the stop after next, the next stop on a line that meets here, or a station close by on the map. Three tokens a ride, Express points for three in a row, +5 for answering before the doors close, and an occasional interchange bonus. A completed ride ends with a fare guess when the pack has that pair; the choices are real weekday fares from the same origin. Right answers stamp stations in a passport per line, and the stamped total sets a rank; misses come back in later rides. The end card states the line’s length and ends, and, when the pair was saved, the trip’s minutes and fare.
    - Platforms and interchanges answered right count as learned, misses come back sooner, and rounds lean towards stations in Saved trips. Progress stays in the passport.
    - Play works offline. Platform and Next stop need only the app. Change here and Faster or cheaper start from stations whose journey pack is already saved; the Play page says how many are saved while the rest download. Next stop chooses the line.
+6. **Lines** — one line at a time: pick a line, then a station for its brief. On a wide screen the line chart sits beside the station detail.
 7. **Help** — how to use the app, verified contacts, text size, Day/Night/Contrast, offline status, privacy, and sources.
 
-Plan, Map, City, Saved, Status, Play, and Help live in a top bar. The bar does not cover the page.
+Plan, Status, Saved, City, Play, Lines, and Help live in a top bar. The bar does not cover the page.
 
-Station details open from search, the map, and journey results. They are not a top-level destination.
+Station details open from search, Lines, and journey results. They are not a top-level destination.
 
 ## Home
 
@@ -50,9 +50,9 @@ Offer Fewest changes when that ride visits different stations. When an end is ma
 
 Secondary actions: edit, save locally, share by station code, copy text, and view on the map.
 
-## Map and stations
+## Lines and stations
 
-The schematic uses the same network data as local routing, once that data exists. Until then, the map is not a routing source. Station pages show lines, and facilities only when a response includes them. Missing items are omitted or marked “Not verified.”
+The line browser uses the same network data as local routing. Station pages show lines, and facilities only when a response includes them. Missing items are omitted or marked “Not verified.”
 
 ## Help and privacy
 
