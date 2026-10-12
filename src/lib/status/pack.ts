@@ -9,9 +9,17 @@ export type StatusStation = {
   lineCodes: string[]
 }
 
+export type ServiceUpdate = {
+  title: string
+  text: string
+  dated: string | null
+  fetchedAt: string
+}
+
 export type StatusPack = {
   fetchedAt: string
   stations: Record<string, StatusStation>
+  serviceUpdate?: ServiceUpdate | null
 }
 
 export type StatusLineInput = {
