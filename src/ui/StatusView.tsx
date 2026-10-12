@@ -5,15 +5,18 @@ import { lineIndexFor, searchCatalog, type CatalogStation } from "../lib/dmrc/sn
 import { statusClock } from "../lib/status/load"
 import { nearestOpen } from "../lib/status/gates"
 import { nearestStation, type Coordinate } from "../lib/status/nearest"
+import type { StatusHistory } from "../lib/status/history"
 import type { StatusPack } from "../lib/status/pack"
 import type { LineSequence } from "../lib/transit/route"
 import type { Suggestion } from "../lib/transit/types"
+import { StatusHistoryPanel, StatusServiceUpdate } from "./StatusHistory"
 
 type Stop = { code: string; name: string }
 
 export function StatusView({
   copy,
   pack,
+  history,
   names,
   stations,
   lines,
@@ -29,6 +32,7 @@ export function StatusView({
 }: {
   copy: Copy
   pack: StatusPack
+  history: StatusHistory
   names: Map<string, string>
   stations: CatalogStation[]
   lines: LineSequence[]
@@ -134,7 +138,8 @@ export function StatusView({
   }
 
   return (
-    <main className="sheet split status-split">
+    <main className="sheet status-page">
+      <div className="status-top split status-split">
       <div className="pane">
         <section className="status-trip">
           <p className="status-kicker">{copy.status}</p>
@@ -308,6 +313,19 @@ export function StatusView({
             })}
           </ul>
         </section>
+      </div>
+      </div>
+      <div className="status-below">
+        <StatusHistoryPanel copy={copy} history={history} lineByCode={lineIndexFor(stations, "en")} />
+        {pack.serviceUpdate ? (
+          <StatusServiceUpdate
+            copy={copy}
+            title={pack.serviceUpdate.title}
+            text={pack.serviceUpdate.text}
+            dated={pack.serviceUpdate.dated}
+            fetchedAt={pack.serviceUpdate.fetchedAt}
+          />
+        ) : null}
       </div>
     </main>
   )
