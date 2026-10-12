@@ -1,74 +1,10 @@
 {
-  "fetchedAt": "2026-10-12T08:10:01.000",
+  "fetchedAt": "2026-10-12T23:23:29.000",
   "serviceUpdate": {
     "dated": "12.10.2026",
-    "fetchedAt": "2026-10-12T08:33:04.000",
-    "text": "New Delhi, Dated: 12.10.2026\nDue to security reasons, the entry and exit at the following metro stations will remain closed from 06:00 AM till 04:00 PM on 12th October, 2026. Further the situation will be reviewed by the security agencies and necessary updates will be shared accordingly. However, interchange facility will remain available at all the concerned metro stations.\n1. Patel Chowk\n2. Janpath\n3. Rajiv Chowk\n4. Mandi House\n5. Central Secretariat\n6. Barakhamba Road",
+    "fetchedAt": "2026-10-12T23:23:29.000",
+    "text": "New Delhi, Dated: 12.10.2026\nEntry and exit gates of all Metro Stations of the Delhi Metro network are now open. The interchange facility at all the concerned Metro stations is also available.",
     "title": "SERVICE UPDATE"
   },
-  "stations": {
-    "BRKR": {
-      "end": "12-Oct-2026 06:00PM",
-      "lineCodes": [
-        "LN3"
-      ],
-      "note": "Due to security reasons, Barakhambha Road metro Station is closed till further instructions.",
-      "phrase": "Station Closed",
-      "start": "12-Oct-2026 06:00AM",
-      "title": "Service Update"
-    },
-    "CTST": {
-      "end": "12-Oct-2026 06:00PM",
-      "lineCodes": [
-        "LN2",
-        "LN6"
-      ],
-      "note": "Due to security reasons, Central Secretariat Metro Station is closed till further instructions.\r\n\r\nHowever, Interchange facility is available at Central Secretariat .",
-      "phrase": "Station Closed",
-      "start": "12-Oct-2026 06:00AM",
-      "title": "Service Update"
-    },
-    "JNPH": {
-      "end": "12-Oct-2026 06:00PM",
-      "lineCodes": [
-        "LN6"
-      ],
-      "note": "Due to security reasons, Janpath metro Station is closed till further instructions.",
-      "phrase": "Station Closed",
-      "start": "12-Oct-2026 06:00AM",
-      "title": "Service Update"
-    },
-    "MDHS": {
-      "end": "12-Oct-2026 06:00PM",
-      "lineCodes": [
-        "LN3",
-        "LN6"
-      ],
-      "note": "Due to security reasons, Mandi House Metro Station is closed till further instructions.\r\n\r\nHowever, Interchange facility is available at Mandi House .",
-      "phrase": "Station Closed",
-      "start": "12-Oct-2026 06:00AM",
-      "title": "Service Update"
-    },
-    "PTCK": {
-      "end": "12-Oct-2026 06:00PM",
-      "lineCodes": [
-        "LN2"
-      ],
-      "note": "Due to security reasons, Patel Chowk Station is closed till further instructions.",
-      "phrase": "Station Closed",
-      "start": "12-Oct-2026 06:00AM",
-      "title": "Service Update"
-    },
-    "RCK": {
-      "end": "12-Oct-2026 06:00PM",
-      "lineCodes": [
-        "LN2",
-        "LN3"
-      ],
-      "note": "Due to security reasons, Rajiv Chowk Metro Station is  closed till further instructions.\r\n\r\nHowever, Interchange facility is available at Rajiv Chowk .",
-      "phrase": "Station Closed",
-      "start": "12-Oct-2026 06:00AM",
-      "title": "Service Update"
-    }
-  }
+  "stations": {}
 }
