@@ -1,18 +1,28 @@
-import type { StatusPack, StatusStation } from "./pack"
+import type { StatusPack, StatusStation, ServiceUpdate } from "./pack"
+import { readHistory, type StatusHistory } from "./history"
 
 const modules = import.meta.glob("../../../data/en/status.json", { eager: true, import: "default" }) as Record<
   string,
   unknown
 >
+const historyModules = import.meta.glob("../../../data/en/status-history.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, unknown>
 
 export function loadStatus(): StatusPack {
   const raw = Object.values(modules)[0]
   return readPack(raw)
 }
 
+export function loadStatusHistory(): StatusHistory {
+  const raw = Object.values(historyModules)[0]
+  return readHistory(raw)
+}
+
 export function readPack(raw: unknown): StatusPack {
   if (!raw || typeof raw !== "object") return { fetchedAt: "", stations: {} }
-  const row = raw as { fetchedAt?: unknown; stations?: unknown }
+  const row = raw as { fetchedAt?: unknown; stations?: unknown; serviceUpdate?: unknown }
   const fetchedAt = typeof row.fetchedAt === "string" ? row.fetchedAt : ""
   const stations: Record<string, StatusStation> = {}
   if (row.stations && typeof row.stations === "object") {
@@ -21,7 +31,8 @@ export function readPack(raw: unknown): StatusPack {
       if (station) stations[code] = station
     }
   }
-  return { fetchedAt, stations }
+  const serviceUpdate = readServiceUpdate(row.serviceUpdate)
+  return serviceUpdate ? { fetchedAt, stations, serviceUpdate } : { fetchedAt, stations }
 }
 
 export function statusClock(fetchedAt: string): string {
@@ -40,5 +51,17 @@ function readStation(value: unknown): StatusStation | null {
     start: typeof row.start === "string" ? row.start : null,
     end: typeof row.end === "string" ? row.end : null,
     lineCodes: Array.isArray(row.lineCodes) ? row.lineCodes.filter((item): item is string => typeof item === "string") : [],
+  }
+}
+
+function readServiceUpdate(value: unknown): ServiceUpdate | null {
+  if (!value || typeof value !== "object") return null
+  const row = value as Record<string, unknown>
+  if (typeof row.title !== "string" || typeof row.text !== "string" || !row.text.trim()) return null
+  return {
+    title: row.title.trim() || "Service update",
+    text: row.text.trim(),
+    dated: typeof row.dated === "string" && row.dated.trim() ? row.dated.trim() : null,
+    fetchedAt: typeof row.fetchedAt === "string" ? row.fetchedAt : "",
   }
 }
