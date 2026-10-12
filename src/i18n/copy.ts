@@ -202,6 +202,25 @@ export type Copy = {
   statusOpenLabel: string
   statusCheckedLabel: string
   statusLineClosed: (count: number) => string
+  statusHistoryTitle: string
+  statusHistoryLead: string
+  statusHistoryRange: string
+  statusHistoryAll: string
+  statusHistoryWeek: string
+  statusHistoryMonth: string
+  statusHistoryYear: string
+  statusHistoryAxisClosed: string
+  statusHistoryAxisDate: string
+  statusHistoryHint: string
+  statusHistoryNone: string
+  statusHistoryClose: string
+  statusHistoryDay: (date: string, count: number) => string
+  statusServiceTitle: string
+  statusServiceNotice: string
+  statusServiceLive: string
+  statusServiceSource: string
+  statusServiceFetched: (when: string) => string
+  statusServiceDated: (dated: string) => string
   gateBefore: (name: string, line: string | null, km: number | null) => string
   gateAfter: (name: string, line: string | null, km: number | null) => string
   gateNear: (name: string, km: number | null) => string
@@ -417,6 +436,26 @@ export const copy = {
   statusOpenLabel: "open",
   statusCheckedLabel: "checked",
   statusLineClosed: (count) => (count === 1 ? "1 closed" : `${count} closed`),
+  statusHistoryTitle: "Closures over time",
+  statusHistoryLead: "Closed gates recorded on each check day.",
+  statusHistoryRange: "History range",
+  statusHistoryAll: "All days",
+  statusHistoryWeek: "Last week",
+  statusHistoryMonth: "Last month",
+  statusHistoryYear: "Last year",
+  statusHistoryAxisClosed: "Closed",
+  statusHistoryAxisDate: "Date",
+  statusHistoryHint: "Tap a day to see which stations were closed.",
+  statusHistoryNone: "No closed stations recorded that day.",
+  statusHistoryClose: "Close",
+  statusHistoryDay: (date, count) =>
+    count === 1 ? `${date} · 1 closed` : `${date} · ${count} closed`,
+  statusServiceTitle: "Service update",
+  statusServiceNotice: "Official notice",
+  statusServiceLive: "Live",
+  statusServiceSource: "Packed from Delhi Metro service updates. Not an official DMRC app.",
+  statusServiceFetched: (when) => when,
+  statusServiceDated: (dated) => dated,
   gateBefore: (name, line, km) => `Before${line ? ` on the ${line}` : ""}: ${name}${kmText(km)}`,
   gateAfter: (name, line, km) => `After${line ? ` on the ${line}` : ""}: ${name}${kmText(km)}`,
   gateNear: (name, km) => `Closest open gate: ${name}${kmText(km)}`,
