@@ -25,7 +25,7 @@ import { clearTrips, readTripQuery, readTrips, removeTrip, toggleTrip, tripQuery
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
 import coordinatesFile from "../data/en/coordinates.json"
 import { accessByCode } from "./lib/status/pack"
-import { loadStatus, statusClock } from "./lib/status/load"
+import { loadStatus, loadStatusHistory, statusClock } from "./lib/status/load"
 import { locationCopy, readLocation, rememberedLocation, resetLocationMemory, type LocationResult } from "./lib/status/location"
 import { nearestBoardable, nearestStation, type Coordinate } from "./lib/status/nearest"
 import { allowSelectedEnds, substituteOpen } from "./lib/status/substitute"
@@ -42,6 +42,7 @@ import { ThemeChrome, ThemeCycle } from "./ui/ThemeCycle"
 
 const snapshot = loadSnapshot()
 const statusPack = loadStatus()
+const statusHistory = loadStatusHistory()
 const snapshotDate = snapshot.fetchedAt.slice(0, 10)
 const interchangeCodes = new Set(
   snapshot.stations.filter((station) => station.lines.en.length > 1).map((station) => station.code),
@@ -826,6 +827,7 @@ export function App() {
       <StatusView
         copy={copy}
         pack={statusPack}
+        history={statusHistory}
         names={namesFor(snapshot.stations, lang)}
         stations={snapshot.stations}
         lines={snapshot.lines}
