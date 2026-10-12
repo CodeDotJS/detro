@@ -72,7 +72,8 @@ export type Copy = {
   planError: string
   navLabel: string
   plan: string
-  map: string
+  /** Line browser (former Map tab). */
+  lines: string
   help: string
   saved: string
   onlineStatus: string
@@ -119,6 +120,7 @@ export type Copy = {
   removeSaved: (label: string) => string
   mapLead: string
   mapOnRoute: string
+  mapPickStation: string
   tripSaved: string
   shareRoute: string
   linkCopied: string
@@ -281,7 +283,7 @@ export const copy = {
   planError: "Delhi Metro’s planner did not return a route for these stations.",
   navLabel: "Primary",
   plan: "Plan",
-  map: "Map",
+  lines: "Lines",
   help: "Help",
   saved: "Saved",
   onlineStatus: "Online",
@@ -306,7 +308,7 @@ export const copy = {
   howToUse: "How to use this app",
   howStep1: "Choose where you start and where you are going.",
   howStep2: "Read which train to take and where to change.",
-  howStep3: "Open the map to look at a line or pick a station.",
+  howStep3: "Open Lines to look at a line or pick a station.",
   howStep4: "Open Status for the closed list. On Plan, Alternative is the ride via the nearest open gate.",
   textSize: "Text size",
   textSmall: "Small text",
@@ -326,8 +328,9 @@ export const copy = {
   saveTrip: "Save trip",
   removeTrip: "Remove",
   removeSaved: (label) => `Remove ${label}`,
-  mapLead: "Pick a line, then a station. You can start a trip there, or set it as where you are going.",
-  mapOnRoute: "Filled stations are on the route you just planned. Pick one to start there or go there.",
+  mapLead: "Pick a line, then a station to see what the snapshot lists for it.",
+  mapOnRoute: "Filled stations are on the route you just planned. Pick one to see its details.",
+  mapPickStation: "Pick a station on the line.",
   tripSaved: "Trip saved on this device.",
   shareRoute: "Share route",
   linkCopied: "Route link copied.",
