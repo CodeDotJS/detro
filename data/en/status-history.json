@@ -1,0 +1,220 @@
+{
+  "days": [
+    {
+      "count": 45,
+      "date": "2026-10-10",
+      "stations": [
+        {
+          "code": "AHRM",
+          "name": "ASHRAM"
+        },
+        {
+          "code": "AZU",
+          "name": "AZADPUR"
+        },
+        {
+          "code": "BIMR",
+          "name": "HAIDERPUR BADLI MOR"
+        },
+        {
+          "code": "BRKR",
+          "name": "BARAKHAMBA ROAD"
+        },
+        {
+          "code": "CTST",
+          "name": "CENTRAL SECRETARIAT"
+        },
+        {
+          "code": "CWBR",
+          "name": "CHAWRI BAZAR"
+        },
+        {
+          "code": "DLIG",
+          "name": "DELHI GATE"
+        },
+        {
+          "code": "GTBR",
+          "name": "GURU TEG BAHADUR NAGAR"
+        },
+        {
+          "code": "HKS",
+          "name": "HAUZ KHAS"
+        },
+        {
+          "code": "IDPT",
+          "name": "INDRAPRASTHA"
+        },
+        {
+          "code": "ILOK",
+          "name": "INDERLOK"
+        },
+        {
+          "code": "INA",
+          "name": "DILLI HAAT - INA"
+        },
+        {
+          "code": "ITO",
+          "name": "ITO"
+        },
+        {
+          "code": "JAMD",
+          "name": "JAMA MASJID"
+        },
+        {
+          "code": "JANR",
+          "name": "JAMIA MILLIA ISLAMIA"
+        },
+        {
+          "code": "JB",
+          "name": "JOR BAGH"
+        },
+        {
+          "code": "JFRB",
+          "name": "JAFRABAD"
+        },
+        {
+          "code": "JGPA",
+          "name": "JANGPURA"
+        },
+        {
+          "code": "JGPI",
+          "name": "JAHANGIRPURI"
+        },
+        {
+          "code": "JNPH",
+          "name": "JANPATH"
+        },
+        {
+          "code": "JW",
+          "name": "JHANDEWALAN"
+        },
+        {
+          "code": "KB",
+          "name": "KAROL BAGH"
+        },
+        {
+          "code": "KG",
+          "name": "KASHMERE GATE"
+        },
+        {
+          "code": "KJKS",
+          "name": "KHAJURI KHAS"
+        },
+        {
+          "code": "KM",
+          "name": "KHAN MARKET"
+        },
+        {
+          "code": "LJPN",
+          "name": "LAJPAT NAGAR"
+        },
+        {
+          "code": "LKM",
+          "name": "LOK KALYAN MARG"
+        },
+        {
+          "code": "MDHS",
+          "name": "MANDI HOUSE"
+        },
+        {
+          "code": "MKPR",
+          "name": "MAJLIS PARK"
+        },
+        {
+          "code": "MUPR",
+          "name": "MAUJPUR-BABARPUR"
+        },
+        {
+          "code": "NDI",
+          "name": "NEW DELHI (Yellow & Airport Line)"
+        },
+        {
+          "code": "NSHP",
+          "name": "NETAJI SUBHASH PLACE"
+        },
+        {
+          "code": "PTCK",
+          "name": "PATEL CHOWK"
+        },
+        {
+          "code": "PTMD",
+          "name": "SUPREME COURT"
+        },
+        {
+          "code": "RCK",
+          "name": "RAJIV CHOWK"
+        },
+        {
+          "code": "RI",
+          "name": "RITHALA"
+        },
+        {
+          "code": "RKAM",
+          "name": "RAMAKRISHNA ASHRAM MARG"
+        },
+        {
+          "code": "RP",
+          "name": "RAJENDRA PLACE"
+        },
+        {
+          "code": "SHD",
+          "name": "SHAHDARA"
+        },
+        {
+          "code": "SJSU",
+          "name": "SHIVAJI STADIUM"
+        },
+        {
+          "code": "SLAP",
+          "name": "SEELAMPUR"
+        },
+        {
+          "code": "UDB",
+          "name": "SEVA TEERTH (earlier UDYOG BHAWAN))"
+        },
+        {
+          "code": "VW",
+          "name": "VISHWAVIDYALAYA"
+        },
+        {
+          "code": "WC",
+          "name": "WELCOME"
+        },
+        {
+          "code": "YMVR",
+          "name": "YAMUNA VIHAR"
+        }
+      ]
+    },
+    {
+      "count": 6,
+      "date": "2026-10-12",
+      "stations": [
+        {
+          "code": "BRKR",
+          "name": "BARAKHAMBA ROAD"
+        },
+        {
+          "code": "CTST",
+          "name": "CENTRAL SECRETARIAT"
+        },
+        {
+          "code": "JNPH",
+          "name": "JANPATH"
+        },
+        {
+          "code": "MDHS",
+          "name": "MANDI HOUSE"
+        },
+        {
+          "code": "PTCK",
+          "name": "PATEL CHOWK"
+        },
+        {
+          "code": "RCK",
+          "name": "RAJIV CHOWK"
+        }
+      ]
+    }
+  ]
+}
