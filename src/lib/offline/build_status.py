@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
-"""Pack closed-station status from metro_line notes and linepage phrases."""
+"""Pack closed-station status, daily history, and corporate service update."""
 
 from __future__ import annotations
 
 import argparse
+import html as html_lib
 import json
+import re
 import sys
 import urllib.error
 import urllib.request
 from datetime import datetime
+from html.parser import HTMLParser
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "en" / "status.json"
+HISTORY_OUT = ROOT / "data" / "en" / "status-history.json"
+STATIONS_DIR = ROOT / "data" / "en" / "stations"
 BASE = "https://backend.delhimetrorail.com/api/v2/en"
 HEADERS = {
     "Accept": "application/json",
@@ -21,6 +26,7 @@ HEADERS = {
     "Referer": "https://delhimetrorail.com/",
     "User-Agent": "detro-status-bake",
 }
+DATE_RE = re.compile(r"Dated:\s*(\d{1,2}\.\d{1,2}\.\d{4})", re.I)
 
 
 def main() -> int:
@@ -28,21 +34,58 @@ def main() -> int:
     parser.add_argument("--from-dir", type=Path, help="Folder of saved line_list, metro/{code}.json, linepage/{code}.json")
     args = parser.parse_args()
     try:
-        fetched_at = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%dT%H:%M:%S.000")
+        now = datetime.now(ZoneInfo("Asia/Kolkata"))
+        fetched_at = now.strftime("%Y-%m-%dT%H:%M:%S.000")
+        day = now.strftime("%Y-%m-%d")
         lines = read_dir(args.from_dir) if args.from_dir else fetch_live()
         pack = pack_status(fetched_at, lines)
+        service = (
+            read_service_file(args.from_dir / "service-update.json", fetched_at)
+            if args.from_dir
+            else fetch_service_update(fetched_at)
+        )
+        names = load_station_names()
         previous = read_pack(OUT)
-        if previous is not None and previous.get("stations") == pack["stations"]:
-            kept = previous.get("fetchedAt") or "previous stamp"
-            print(f"unchanged {len(pack['stations'])} closed stations (kept {kept})", flush=True)
-            return 0
+        previous_history = read_history(HISTORY_OUT)
+        history = merge_history(previous_history, day, pack["stations"], names)
+
+        out = {"fetchedAt": fetched_at, "stations": pack["stations"]}
+        if service:
+            out["serviceUpdate"] = service
+        if previous is not None and previous.get("stations") == out["stations"]:
+            out["fetchedAt"] = previous.get("fetchedAt") or fetched_at
+
+        status_changed = previous is None or normalize_status(previous) != normalize_status(out)
+        history_changed = previous_history != history
+
         OUT.parent.mkdir(parents=True, exist_ok=True)
-        OUT.write_text(json.dumps(pack, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        print(f"wrote {len(pack['stations'])} closed stations at {fetched_at}", flush=True)
+        if status_changed:
+            OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            print(f"wrote {len(out['stations'])} closed stations at {out['fetchedAt']}", flush=True)
+        else:
+            print(f"unchanged {len(out['stations'])} closed stations (kept {out['fetchedAt']})", flush=True)
+
+        if history_changed:
+            HISTORY_OUT.write_text(
+                json.dumps(history, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            today = next((row for row in history["days"] if row["date"] == day), None)
+            count = today["count"] if today else 0
+            print(f"wrote history through {day} ({count} closed that day)", flush=True)
+        else:
+            print(f"history unchanged through {day}", flush=True)
         return 0
     except Exception as error:
         print(f"status bake failed: {error}", file=sys.stderr)
         return 1
+
+
+def normalize_status(pack: dict) -> dict:
+    return {
+        "stations": pack.get("stations") or {},
+        "serviceUpdate": pack.get("serviceUpdate"),
+    }
 
 
 def read_pack(path: Path) -> dict | None:
@@ -53,6 +96,85 @@ def read_pack(path: Path) -> dict | None:
     except (OSError, json.JSONDecodeError):
         return None
     return data if isinstance(data, dict) else None
+
+
+def read_history(path: Path) -> dict:
+    raw = read_pack(path)
+    if not raw or not isinstance(raw.get("days"), list):
+        return {"days": []}
+    days = []
+    for row in raw["days"]:
+        parsed = read_history_day(row)
+        if parsed:
+            days.append(parsed)
+    days.sort(key=lambda item: item["date"])
+    return {"days": days}
+
+
+def read_history_day(row: object) -> dict | None:
+    if not isinstance(row, dict):
+        return None
+    date = row.get("date")
+    if not isinstance(date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        return None
+    stations = []
+    raw_stations = row.get("stations")
+    if isinstance(raw_stations, list):
+        for item in raw_stations:
+            if not isinstance(item, dict):
+                continue
+            code = item.get("code")
+            name = item.get("name")
+            if isinstance(code, str) and code and isinstance(name, str) and name:
+                stations.append({"code": code, "name": name})
+    stations = unique_stations(stations)
+    return {"date": date, "count": len(stations), "stations": stations}
+
+
+def merge_history(history: dict, day: str, closed: dict, names: dict[str, str]) -> dict:
+    by_code: dict[str, str] = {}
+    existing = next((row for row in history.get("days", []) if row.get("date") == day), None)
+    if existing:
+        for item in existing.get("stations", []):
+            by_code[item["code"]] = item["name"]
+    for code in closed:
+        by_code[code] = names.get(code) or by_code.get(code) or code
+    stations = unique_stations([{"code": code, "name": name} for code, name in by_code.items()])
+    days = [row for row in history.get("days", []) if row.get("date") != day]
+    if stations:
+        days.append({"date": day, "count": len(stations), "stations": stations})
+    days.sort(key=lambda item: item["date"])
+    return {"days": days}
+
+
+def unique_stations(rows: list[dict]) -> list[dict]:
+    seen: dict[str, str] = {}
+    for row in rows:
+        code = row["code"]
+        if code not in seen:
+            seen[code] = row["name"]
+    return [{"code": code, "name": seen[code]} for code in sorted(seen)]
+
+
+def load_station_names() -> dict[str, str]:
+    names: dict[str, str] = {}
+    if not STATIONS_DIR.exists():
+        return names
+    for path in sorted(STATIONS_DIR.glob("*.json")):
+        try:
+            rows = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            code = row.get("station_code")
+            name = row.get("station_name")
+            if isinstance(code, str) and code and isinstance(name, str) and name:
+                names[code] = name
+    return names
 
 
 def fetch_live() -> list[dict]:
@@ -74,6 +196,103 @@ def fetch_live() -> list[dict]:
     if not rows:
         raise RuntimeError("line_list had no line codes")
     return rows
+
+
+def fetch_service_update(fetched_at: str) -> dict | None:
+    payload = get_json(f"{BASE}/corporate/service-update/")
+    return read_service_payload(payload, fetched_at)
+
+
+def read_service_file(path: Path, fetched_at: str) -> dict | None:
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return read_service_payload(payload, fetched_at)
+
+
+def read_service_payload(payload: object, fetched_at: str) -> dict | None:
+    row = None
+    if isinstance(payload, list):
+        row = next((item for item in payload if isinstance(item, dict)), None)
+    elif isinstance(payload, dict):
+        row = payload
+    if not row:
+        return None
+    title = clean_text(str(row.get("title") or "Service update"))
+    text = plain_from_html(str(row.get("content") or ""))
+    if not text:
+        return None
+    dated_match = DATE_RE.search(text) or DATE_RE.search(str(row.get("content") or ""))
+    dated = dated_match.group(1) if dated_match else None
+    return {
+        "title": title or "Service update",
+        "text": text,
+        "dated": dated,
+        "fetchedAt": fetched_at,
+    }
+
+
+def plain_from_html(raw: str) -> str:
+    parser = _TextExtractor()
+    parser.feed(raw)
+    parser.close()
+    text = html_lib.unescape(parser.text())
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    lines = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        lower = stripped.lower()
+        if lower in {"back", "delhimetro"}:
+            continue
+        if lower == "service update" and (not lines or lines[-1].lower() == "service update"):
+            continue
+        lines.append(stripped)
+    while lines and lines[0].lower() == "service update":
+        lines.pop(0)
+    return "\n".join(lines).strip()
+
+
+class _TextExtractor(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._chunks: list[str] = []
+        self._skip_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        classes = " ".join(value for key, value in attrs if key == "class" and value).lower()
+        if tag in {"script", "style"} or "d-none" in classes.split():
+            self._skip_depth += 1
+            return
+        if self._skip_depth:
+            self._skip_depth += 1
+            return
+        if tag in {"p", "div", "br", "h1", "h2", "h3", "h4", "li", "tr"}:
+            self._chunks.append("\n")
+
+    def handle_endtag(self, tag: str) -> None:
+        if self._skip_depth:
+            self._skip_depth -= 1
+            return
+        if tag in {"p", "div", "h1", "h2", "h3", "h4", "li", "tr"}:
+            self._chunks.append("\n")
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip_depth and data:
+            self._chunks.append(data)
+
+    def text(self) -> str:
+        return "".join(self._chunks)
+
+
+def clean_text(value: str) -> str:
+    return " ".join(value.split()).strip()
 
 
 def read_dir(folder: Path) -> list[dict]:

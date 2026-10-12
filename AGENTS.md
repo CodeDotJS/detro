@@ -25,11 +25,11 @@ src/lib/status/     Closed-gate pack. Missing codes stay open.
 src/lib/plan/       Plan state, saved trips, selection.
 src/lib/play/       Play games. Questions are built only from saved data.
 src/ui/             Screens. They consume transit types.
-data/en/            English snapshot that ships: lines, stations, briefs, coordinates, journeys, platforms, status.
+data/en/            English snapshot that ships: lines, stations, briefs, coordinates, journeys, platforms, status, status history.
 public/map-tiles/   Street tiles for the metro area, through zoom 14.
 ```
 
-Routes are calculated from station order. A packed journey supplies the fare, platform, and first and last train when that pair was saved. `python3 src/lib/offline/build_platforms.py` reads the packs and writes `data/en/platforms.json`, one boarding platform per station, line, and direction. `python3 src/lib/offline/build_status.py` writes `data/en/status.json` from live linepage phrases and metro_line notes. Closed gates cannot be boarded or left. Trains still pass. A transfer is allowed only when a note says the interchange facility is available. Plan still shows Least and Fewest for the asked pair, and Alternative via the one nearest open gate.
+Routes are calculated from station order. A packed journey supplies the fare, platform, and first and last train when that pair was saved. `python3 src/lib/offline/build_platforms.py` reads the packs and writes `data/en/platforms.json`, one boarding platform per station, line, and direction. `python3 src/lib/offline/build_status.py` writes `data/en/status.json` from live linepage phrases, metro_line notes, and the corporate service-update page, and unions each day’s closed stations into `data/en/status-history.json`. Closed gates cannot be boarded or left. Trains still pass. A transfer is allowed only when a note says the interchange facility is available. Plan still shows Least and Fewest for the asked pair, and Alternative via the one nearest open gate.
 
 ## Constraints
 

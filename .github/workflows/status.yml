@@ -1,9 +1,9 @@
 name: Status
 
 on:
-  # Asia/Kolkata wall times: 06:00, 14:00, 20:00. Cron is UTC (IST = UTC+5:30).
+  # Asia/Kolkata wall times: 08:00, 14:00, 20:00. Cron is UTC (IST = UTC+5:30).
   schedule:
-    - cron: "30 0,8,14 * * *"
+    - cron: "30 2,8,14 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -32,18 +32,20 @@ jobs:
             echo "STATUS_BAKE_TOKEN is missing. Add a classic PAT with repo scope as that secret." >&2
             exit 1
           fi
-          if git diff --quiet -- data/en/status.json; then
+          if git diff --quiet -- data/en/status.json data/en/status-history.json; then
             echo "status pack unchanged"
             exit 0
           fi
           cp data/en/status.json /tmp/status.json
+          cp data/en/status-history.json /tmp/status-history.json
           branch="chore/status-bake"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B "$branch" origin/main
           cp /tmp/status.json data/en/status.json
-          git add data/en/status.json
+          cp /tmp/status-history.json data/en/status-history.json
+          git add data/en/status.json data/en/status-history.json
           if git diff --cached --quiet; then
             echo "status pack unchanged on main"
             exit 0
@@ -60,11 +62,12 @@ jobs:
               --title "chore(status): bake station closures" \
               --body "$(cat <<'EOF'
           ## Summary
-          - Refresh `data/en/status.json` from the DMRC bake
+          - Refresh `data/en/status.json` and `data/en/status-history.json` from the DMRC bake
 
           ## Test plan
           - [ ] Status pack loads after merge
           - [ ] Closed list matches the bake
+          - [ ] History chart reflects the day
 
           EOF
           )")

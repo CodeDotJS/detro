@@ -18,7 +18,7 @@ Notes attach by station code across lines. If notes disagree, unavailable wins, 
 
 ## Refresh
 
-GitHub Actions fetches `line_list`, then `metro_line/{code}` and `station_by_line_linepage/{code}` for each line, three times a day at 06:00, 14:00, and 20:00 Asia/Kolkata (`30 0,8,14 * * *` UTC). `python3 src/lib/offline/build_status.py` writes `data/en/status.json` only when the closed-station map changed. A timestamp-only poll leaves the file alone, so no pull request opens. When there is a change, the bake opens `chore/status-bake` with the `STATUS_BAKE_TOKEN` secret (a classic PAT with `repo` scope), waits for `check`, and merges to `main` so production uploads. The default `GITHUB_TOKEN` cannot start CI from its own push. There is no R2, Worker, or Pages Function. GitHub may start a scheduled run a few minutes late under load.
+GitHub Actions fetches `line_list`, then `metro_line/{code}` and `station_by_line_linepage/{code}` for each line, three times a day at 08:00, 14:00, and 20:00 Asia/Kolkata (`30 2,8,14 * * *` UTC). `python3 src/lib/offline/build_status.py` writes `data/en/status.json` only when the closed-station map changed. A timestamp-only poll leaves the file alone, so no pull request opens. When there is a change, the bake opens `chore/status-bake` with the `STATUS_BAKE_TOKEN` secret (a classic PAT with `repo` scope), waits for `check`, and merges to `main` so production uploads. The default `GITHUB_TOKEN` cannot start CI from its own push. There is no R2, Worker, or Pages Function. GitHub may start a scheduled run a few minutes late under load.
 
 A failed fetch keeps the previous file and clock. Silence is not treated as all-clear.
 
@@ -26,7 +26,7 @@ The app never sends the official site’s `Origin` or `Referer`. The bake collec
 
 ## Surfaces
 
-- **Status** — closed and open counts, the pack clock, each closed station once, and one nearest open gate.
+- **Status** — closed and open counts, the pack clock, each closed station once, one nearest open gate, a closures-over-time chart from `status-history.json`, and the baked corporate service update when present.
 - **Plan** — Least and Fewest still use the asked pair. Alternative is the ride via the one nearest open gate.
 - **Lines, City** — a closed mark on those stations. A blocked change is skipped. Trains still ride through.
 - **Saved** — a stored pair is recalculated when the saved ride violates access. Fare and timing may then stay missing.

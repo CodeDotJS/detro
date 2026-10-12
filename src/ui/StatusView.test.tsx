@@ -6,6 +6,12 @@ import { StatusView } from "./StatusView"
 
 const pack: StatusPack = {
   fetchedAt: "2026-10-10T08:00:00.000",
+  serviceUpdate: {
+    title: "SERVICE UPDATE",
+    text: "New Delhi, Dated: 10.10.2026\nPatel Chowk and Rajiv Chowk stay closed.",
+    dated: "10.10.2026",
+    fetchedAt: "2026-10-10T08:00:00.000",
+  },
   stations: {
     RCK: {
       phrase: "Station Closed",
@@ -24,6 +30,27 @@ const pack: StatusPack = {
       lineCodes: ["LN2"],
     },
   },
+}
+
+const history = {
+  days: [
+    {
+      date: "2026-10-10",
+      count: 45,
+      stations: [
+        { code: "RCK", name: "RAJIV CHOWK" },
+        { code: "NDI", name: "NEW DELHI" },
+      ],
+    },
+    {
+      date: "2026-10-12",
+      count: 2,
+      stations: [
+        { code: "RCK", name: "RAJIV CHOWK" },
+        { code: "PTCK", name: "PATEL CHOWK" },
+      ],
+    },
+  ],
 }
 
 const lines = [
@@ -74,6 +101,7 @@ function render(props: {
     <StatusView
       copy={copy}
       pack={props.pack ?? pack}
+      history={history}
       names={names}
       stations={stations}
       lines={lines}
@@ -100,6 +128,29 @@ describe("status board", () => {
     expect(html).toContain("open")
     expect(html).toContain("RAJIV CHOWK")
     expect(html).toContain("NEW DELHI")
+  })
+
+  it("shows closure history and the baked service update", () => {
+    const html = render({})
+    expect(html).toContain("status-page")
+    expect(html).toContain("status-below")
+    expect(html).toContain("Closures over time")
+    expect(html).toContain("status-history")
+    expect(html).toContain("status-plot")
+    expect(html).toContain("status-plot-col")
+    expect(html).toContain("status-plot-fill")
+    expect(html).toContain("All days")
+    expect(html).toContain("status-history-trigger")
+    expect(html).toContain("status-plot-cols")
+    expect(html).toContain("10 Oct · 45 closed")
+    expect(html).toContain("12 Oct · 2 closed")
+    expect(html).not.toContain("Last week")
+    expect(html).not.toContain("Last month")
+    expect(html).toContain("status-service")
+    expect(html).toContain(">Live<")
+    expect(html).toContain("Packed from Delhi Metro")
+    expect(html).toContain("10.10.2026")
+    expect(html).toContain("Patel Chowk and Rajiv Chowk stay closed.")
   })
 
   it("looks up a station with the same catalog search as Plan", () => {
@@ -192,6 +243,7 @@ describe("status board", () => {
       <StatusView
         copy={copy}
         pack={pack}
+        history={history}
         names={names}
         stations={stations}
         lines={lines}

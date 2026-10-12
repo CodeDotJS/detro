@@ -5,11 +5,18 @@ describe("status pack file", () => {
   it("reads closed stations and treats a broken file as empty", () => {
     const pack = readPack({
       fetchedAt: "2026-10-10T08:00:00.000",
+      serviceUpdate: {
+        title: "SERVICE UPDATE",
+        text: "Gates closed at Rajiv Chowk.",
+        dated: "10.10.2026",
+        fetchedAt: "2026-10-10T08:00:00.000",
+      },
       stations: {
         RCK: { phrase: "Station Closed", note: "Stay on the train.", lineCodes: ["LN2"] },
       },
     })
     expect(pack.stations.RCK.phrase).toBe("Station Closed")
+    expect(pack.serviceUpdate?.dated).toBe("10.10.2026")
     expect(statusClock(pack.fetchedAt)).toBe("2026-10-10 08:00:00")
     expect(readPack(null)).toEqual({ fetchedAt: "", stations: {} })
   })
