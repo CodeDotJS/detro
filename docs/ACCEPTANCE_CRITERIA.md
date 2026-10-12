@@ -22,7 +22,7 @@ Milestone 1 is the only gate for the next implementation pass. Later items wait 
 
 ## Later product checks
 
-- Map selection can set start and destination and highlight a route whose ids exist on the map.
+- City map selection can set start and destination and highlight a route whose ids exist on the map.
 - Station details mark unverified gates, toilets, and access.
 - Saved trips survive a reload and can be cleared.
 - A shared link restores a trip from station codes.

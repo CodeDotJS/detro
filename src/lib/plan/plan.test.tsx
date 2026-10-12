@@ -271,16 +271,19 @@ describe("plan screen", () => {
     expect(html).not.toContain("Save a trip from Plan")
   })
 
-  it("lists Status between Saved and Play", () => {
+  it("lists tabs as Plan Status Saved City Play Lines Help", () => {
     const html = renderToStaticMarkup(
       <TabBar copy={copy} tab="plan" onTab={() => undefined} />,
     )
-    expect(html.indexOf('href="/city"')).toBeGreaterThan(-1)
-    expect(html.indexOf('href="/city"')).toBeLessThan(html.indexOf('href="/saved"'))
-    expect(html.indexOf('href="/saved"')).toBeLessThan(html.indexOf('href="/status"'))
-    expect(html.indexOf('href="/status"')).toBeLessThan(html.indexOf('href="/play"'))
-    expect(html.indexOf('href="/play"')).toBeLessThan(html.indexOf('href="/help"'))
+    expect(html.indexOf('href="/"')).toBeGreaterThan(-1)
+    expect(html.indexOf('href="/status"')).toBeGreaterThan(html.indexOf('href="/"'))
+    expect(html.indexOf('href="/saved"')).toBeGreaterThan(html.indexOf('href="/status"'))
+    expect(html.indexOf('href="/city"')).toBeGreaterThan(html.indexOf('href="/saved"'))
+    expect(html.indexOf('href="/play"')).toBeGreaterThan(html.indexOf('href="/city"'))
+    expect(html.indexOf('href="/lines"')).toBeGreaterThan(html.indexOf('href="/play"'))
+    expect(html.indexOf('href="/help"')).toBeGreaterThan(html.indexOf('href="/lines"'))
     expect(html).toContain("Status")
+    expect(html).toContain("Lines")
     expect(html).toContain("Play")
     expect(html).not.toContain("Online")
   })

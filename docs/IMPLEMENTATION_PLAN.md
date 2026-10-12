@@ -24,7 +24,7 @@ Goal: select origin → select destination → request a DMRC journey → read t
 
 Milestone 1 is in place for local use and fixture tests. A live route still needs the backend to answer this app’s origin.
 
-## Phase 2 — Map and station details
+## Phase 2 — Lines and station details
 
 - [x] Original SVG schematic from the saved line order, with zoom in, zoom out, and reset.
 - [x] Text list of stations on the selected line, with Start here and Go here.

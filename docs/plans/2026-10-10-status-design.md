@@ -28,7 +28,7 @@ The app never sends the official site’s `Origin` or `Referer`. The bake collec
 
 - **Status** — closed and open counts, the pack clock, each closed station once, and one nearest open gate.
 - **Plan** — Least and Fewest still use the asked pair. Alternative is the ride via the one nearest open gate.
-- **Map, City** — a closed mark on those stations. A blocked change is skipped. Trains still ride through.
+- **Lines, City** — a closed mark on those stations. A blocked change is skipped. Trains still ride through.
 - **Saved** — a stored pair is recalculated when the saved ride violates access. Fare and timing may then stay missing.
 - Location is requested only after the button. Coordinates are not stored. Share links stay station codes.
 

@@ -4,7 +4,7 @@ import { pathForTab } from "../lib/nav"
 import type { Copy } from "../i18n/copy"
 import { playCopy } from "../i18n/play"
 
-export type Tab = "plan" | "map" | "city" | "saved" | "status" | "play" | "help"
+export type Tab = "plan" | "status" | "saved" | "city" | "play" | "lines" | "help"
 
 export function TabBar({
   copy,
@@ -29,11 +29,11 @@ export function TabBar({
   }, [savedLand])
   const items: Array<{ id: Tab; label: string }> = [
     { id: "plan", label: copy.plan },
-    { id: "map", label: copy.map },
-    { id: "city", label: copy.cityMap },
-    { id: "saved", label: copy.saved },
     { id: "status", label: copy.status },
+    { id: "saved", label: copy.saved },
+    { id: "city", label: copy.cityMap },
     { id: "play", label: playCopy.tab },
+    { id: "lines", label: copy.lines },
     { id: "help", label: copy.help },
   ]
   return (
@@ -87,14 +87,6 @@ function TabIcon({ name, landing = false }: { name: Tab; landing?: boolean }) {
       </svg>
     )
   }
-  if (name === "map") {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="tab-icon">
-        <circle cx="12" cy="12" r="3" fill="currentColor" />
-        <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    )
-  }
   if (name === "city") {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="tab-icon">
@@ -131,6 +123,14 @@ function TabIcon({ name, landing = false }: { name: Tab; landing?: boolean }) {
         <circle cx="7" cy="12" r="2.2" fill="none" stroke="currentColor" strokeWidth="2" />
         <circle cx="17" cy="12" r="2.2" fill="none" stroke="currentColor" strokeWidth="2" />
         <path d="M9.2 12h5.6" fill="none" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    )
+  }
+  if (name === "lines") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="tab-icon">
+        <circle cx="12" cy="12" r="3" fill="currentColor" />
+        <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" strokeWidth="2" />
       </svg>
     )
   }

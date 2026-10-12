@@ -37,7 +37,7 @@ Do not add `docs/DMRC_DOWNLOAD.md`, `data/hi/`, pair downloads, or other paths f
 3. `bash .cursor/skills/deploy-detro/scripts/cycle.sh wait`  
    If it fails, stop and report the check and the URL. Do not merge.
 4. `bash .cursor/skills/deploy-detro/scripts/cycle.sh preview-url`  
-   For a product change, open that host and confirm `/`, `/map`, `/city`, `/saved`, `/status`, `/play`, and `/help` load.
+   For a product change, open that host and confirm `/`, `/status`, `/saved`, `/city`, `/play`, `/lines`, and `/help` load.
 5. Only after that walk (or after a green check on a nit they asked to ship), `bash .cursor/skills/deploy-detro/scripts/cycle.sh merge`.
 6. `bash .cursor/skills/deploy-detro/scripts/cycle.sh watch-main`  
    Production is `https://detro.pages.dev`. Fast-forward local `main`. CI deletes the feature branch after a successful production upload. Do not delete `main`. If production upload fails, the branch stays.

@@ -52,9 +52,9 @@ const closedCodes = new Set(Object.keys(statusPack.stations))
 const accessOf = (code: string) => accessByCode(statusPack, code)
 
 function pageMeta(tab: Tab): { title: string; description: string } {
-  if (tab === "map") {
+  if (tab === "lines") {
     return {
-      title: "Line map · DETRO",
+      title: "Lines · DETRO",
       description: "Browse the Delhi Metro line by line in DETRO. Pick a station and start a trip. Free, ad-free, and independent of DMRC.",
     }
   }
@@ -153,7 +153,6 @@ export function App() {
     window.scrollTo(0, 0)
   }, [tab])
   const [mapFocus, setMapFocus] = useState<{ line: string | null; token: number }>({ line: null, token: 0 })
-  const [mapJourney, setMapJourney] = useState<Journey | null>(null)
   const [cityFrom, setCityFrom] = useState<{ code: string; name: string } | null>(null)
   const [cityTo, setCityTo] = useState<{ code: string; name: string } | null>(null)
   const [cityJourney, setCityJourney] = useState<Journey | null>(null)
@@ -452,7 +451,6 @@ export function App() {
 
   function showRoute(fromCode: string, toCode: string, routeLang: Lang) {
     const id = ++requestId.current
-    setMapJourney(null)
     setPhase("loading")
     setMessage(null)
     setBypass(null)
@@ -581,21 +579,6 @@ export function App() {
     offerOrShow({ code: fromCode, name: fromName }, { code: toCode, name: toName })
   }
 
-  function placeStation(field: "from" | "to", code: string, name: string) {
-    dispatch({ type: "set-station", field, pick: { code, name } })
-    openTab("plan")
-    setPlacedField(field)
-    const from = field === "from" ? { code, name } : state.from
-    const to = field === "to" ? { code, name } : state.to
-    if (from && to && from.code !== to.code) {
-      if (!offerOrShow(from, to)) setMessage(copy.placedRoute(from.name, to.name))
-      return
-    }
-    clearResult()
-    setPlacedField(field)
-    setMessage(field === "from" ? copy.placedFrom(name) : copy.placedTo(name))
-  }
-
   function clearCityRoute() {
     cityRequest.current += 1
     setCityJourney(null)
@@ -702,7 +685,6 @@ export function App() {
     const last = shown.legs[shown.legs.length - 1]
     const fromCode = first?.stationCodes[0]
     const toCode = last?.stationCodes[last.stationCodes.length - 1]
-    setMapJourney(shown)
     setMapFocus((current) => ({ line, token: current.token + 1 }))
     if (fromCode && toCode) {
       setCityFrom({ code: fromCode, name: shown.originName })
@@ -874,24 +856,17 @@ export function App() {
         homeCodes={trips.flatMap((trip) => [trip.fromCode, trip.toCode])}
       />
     ) : null}
-    {tab === "map" ? (
+    {tab === "lines" ? (
       <MapView
         copy={copy}
         lang={lang}
         lines={snapshot.lines}
         interchangeCodes={interchangeCodes}
-        journey={mapJourney ?? journey}
         highlightCodes={
-          new Set(
-            (mapJourney ?? journey)
-              ? codesOnMap(journeyStationCodes((mapJourney ?? journey)!), knownStationCodes)
-              : [],
-          )
+          new Set(journey ? codesOnMap(journeyStationCodes(journey), knownStationCodes) : [])
         }
         focusLineCode={mapFocus.line}
         focusToken={mapFocus.token}
-        onStart={(code, name) => placeStation("from", code, name)}
-        onGo={(code, name) => placeStation("to", code, name)}
         closedCodes={closedCodes}
       />
     ) : null}

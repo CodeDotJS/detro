@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { Copy } from "../i18n/copy"
 import type { StationBrief } from "../lib/station/brief"
 import { stationBrief } from "../lib/station/briefs"
-import { legColor, matchingLine } from "../lib/transit/legStyle"
 import type { LineSequence } from "../lib/transit/route"
-import type { Journey, Lang } from "../lib/transit/types"
-import { RouteBoard } from "./RouteBoard"
-import { RouteMap } from "./RouteMap"
-import { ServiceTimes } from "./PlanView"
+import type { Lang } from "../lib/transit/types"
+import { MapMaze } from "./MapMaze"
 
 export function MapView({
   copy,
@@ -15,11 +12,8 @@ export function MapView({
   lines,
   interchangeCodes,
   highlightCodes,
-  journey = null,
   focusLineCode,
   focusToken,
-  onStart,
-  onGo,
   closedCodes = new Set(),
 }: {
   copy: Copy
@@ -27,33 +21,30 @@ export function MapView({
   lines: LineSequence[]
   interchangeCodes: Set<string>
   highlightCodes: Set<string>
-  journey?: Journey | null
   focusLineCode: string | null
   focusToken: number
-  onStart: (code: string, name: string) => void
-  onGo: (code: string, name: string) => void
   closedCodes?: Set<string>
 }) {
   const visible = lines.filter((line) => line.show && line.stations.length > 0)
   const [lineCode, setLineCode] = useState(focusLineCode ?? visible[0]?.code ?? "")
+  /** null = every line colored on the maze; a code greys the rest. */
+  const [mazeFocus, setMazeFocus] = useState<string | null>(focusLineCode)
+  /** Bumped on swatch click so the maze rebuilds; mount builds once at 0. */
+  const [mazeRebuild, setMazeRebuild] = useState(0)
   useEffect(() => {
-    if (focusToken > 0 && focusLineCode) setLineCode(focusLineCode)
+    if (focusToken > 0 && focusLineCode) {
+      setLineCode(focusLineCode)
+      setMazeFocus(focusLineCode)
+    }
   }, [focusToken, focusLineCode])
-  const [query, setQuery] = useState("")
   const [selected, setSelected] = useState<string | null>(null)
-  const [scale, setScale] = useState(1)
   const [brief, setBrief] = useState<StationBrief | null>(null)
-  const [briefState, setBriefState] = useState<"idle" | "loading" | "missing" | "ready">("idle")
+  const [briefState, setBriefState] = useState<"idle" | "missing" | "ready">("idle")
+  const chartRef = useRef<HTMLOListElement>(null)
+  const scrolledFocus = useRef(0)
+
   const line = visible.find((item) => item.code === lineCode) ?? visible[0]
   const stations = line?.stations ?? []
-  const filtered = useMemo(() => {
-    const needle = query.trim().toLocaleLowerCase()
-    if (!needle) return stations
-    return stations.filter((station) => {
-      const name = station.names[lang] ?? station.names.en ?? station.code
-      return name.toLocaleLowerCase().includes(needle) || station.code.toLocaleLowerCase().includes(needle)
-    })
-  }, [stations, query, lang])
   const selectedStation = stations.find((station) => station.code === selected) ?? null
   const selectedName = selectedStation
     ? (selectedStation.names[lang] ?? selectedStation.names.en ?? selectedStation.code)
@@ -65,186 +56,144 @@ export function MapView({
       setBriefState("idle")
       return
     }
+    if (!stations.some((station) => station.code === selected)) {
+      setSelected(null)
+      setBrief(null)
+      setBriefState("idle")
+      return
+    }
     const parsed = stationBrief(selected)
     setBrief(parsed)
     setBriefState(parsed ? "ready" : "missing")
-  }, [selected])
+  }, [selected, stations])
 
   useEffect(() => {
-    const frame = document.querySelector(".map-frame")
-    if (!frame) return
+    if (focusToken <= 0 || focusToken === scrolledFocus.current) return
+    scrolledFocus.current = focusToken
+    const list = chartRef.current
+    if (!list) return
     const index = stations.findIndex((station) => highlightCodes.has(station.code))
     if (index < 0) return
-    frame.scrollTop = Math.max(0, index * 64 * scale - 48)
-  }, [lineCode, focusToken, scale, stations, highlightCodes])
+    const row = list.children[index] as HTMLElement | undefined
+    if (!row) return
+    list.scrollTop = Math.max(0, row.offsetTop - 16)
+  }, [focusToken, stations, highlightCodes])
 
   if (!line) {
     return (
       <main className="sheet">
-        <h1>{copy.map}</h1>
+        <h1>{copy.lines}</h1>
       </main>
     )
   }
 
   const label = line.label[lang].colorName || line.label.en.colorName
-  const gap = 64
-  const height = Math.max(stations.length, 1) * gap
+  const color = line.label.en.color
 
   return (
-    <main className={journey ? "sheet split map-split has-route" : "sheet split map-split"}>
-      <div className="map-intro">
-      <h1>{copy.map}</h1>
-      <p>{highlightCodes.size > 0 ? copy.mapOnRoute : copy.mapLead}</p>
-      <label htmlFor="map-line">{copy.lineLabel}</label>
-      <select
-        id="map-line"
-        value={line.code}
-        onChange={(event) => {
-          setLineCode(event.target.value)
-          setSelected(null)
-          setQuery("")
-        }}
-      >
-        {visible.map((item) => (
-          <option key={item.code} value={item.code}>
-            {item.label[lang].colorName || item.label.en.colorName} ({item.code})
-          </option>
-        ))}
-      </select>
-      </div>
-      <div className="map-stage">
-      {journey && journey.legs.length > 0 ? (
-        <RouteMap copy={copy} journey={journey} lines={lines} lang={lang} closedCodes={closedCodes} />
-      ) : null}
-      {journey && journey.legs.length > 0 ? (
-        <div className="route-on-map">
-          <p className="map-route-title">
-            <span className="place-name">{journey.originName}</span>
-            <span aria-hidden="true"> → </span>
-            <span className="place-name">{journey.destinationName}</span>
-          </p>
-          <RouteBoard journey={journey} lines={lines} lang={lang} closedCodes={closedCodes} />
-          <div className="route-lines">
-            {journey.legs.map((leg, index) => {
-              const match = matchingLine(leg, lines, lang)
-              const color = legColor(leg, lines, lang)
-              if (!match) return null
-              return (
-                <button
-                  key={`${match.code}-${index}`}
-                  type="button"
-                  aria-pressed={line.code === match.code}
-                  onClick={() => {
-                    setLineCode(match.code)
-                    setSelected(null)
-                    setQuery("")
-                  }}
-                >
-                  <span className="swatch" style={{ background: color }} aria-hidden="true" />
-                  {match.label[lang].colorName || match.label.en.colorName}
-                </button>
-              )
-            })}
-          </div>
-          <ServiceTimes copy={copy} journey={journey} compact />
-        </div>
-      ) : null}
-      <p className="line-banner" style={{ background: line.label.en.color }}>
-        <span className="line-banner-name">
-          {label} ({line.code})
-        </span>
-      </p>
-      <div className="zoom-row">
-        <button type="button" onClick={() => setScale((value) => Math.min(2.4, value + 0.2))}>
-          {copy.zoomIn}
-        </button>
-        <button type="button" onClick={() => setScale((value) => Math.max(0.8, value - 0.2))}>
-          {copy.zoomOut}
-        </button>
-        <button type="button" onClick={() => setScale(1)}>
-          {copy.zoomReset}
-        </button>
-      </div>
-      <div className="map-frame" aria-hidden="true">
-        <svg
-          className="schematic"
-          viewBox={`0 0 420 ${height}`}
-          style={{ height: `${height * scale}px` }}
-          role="img"
-        >
-          <line x1="36" y1="32" x2="36" y2={height - 32} stroke={line.label.en.color} strokeWidth="8" />
-          {stations.map((station, index) => {
-            const y = 32 + index * gap
-            const name = station.names[lang] ?? station.names.en ?? station.code
+    <main className="sheet split map-split">
+      <div className="map-pane">
+        <h1>{copy.lines}</h1>
+        <p>{highlightCodes.size > 0 ? copy.mapOnRoute : copy.mapLead}</p>
+        <div className="map-line-swatches" role="group" aria-label={copy.lineLabel}>
+          {visible.map((item) => {
+            const name = item.label[lang].colorName || item.label.en.colorName
+            const swatch = item.label.en.color
+            const pressed = mazeFocus === item.code
             return (
-              <g key={station.code} transform={`translate(0 ${y})`}>
-                <circle
-                  cx="36"
-                  cy="0"
-                  r={interchangeCodes.has(station.code) ? 11 : 7}
-                  fill={
-                    closedCodes.has(station.code)
-                      ? "var(--card)"
-                      : highlightCodes.has(station.code)
-                        ? line.label.en.color
-                        : selected === station.code
-                          ? "var(--ink)"
-                          : "var(--halo)"
-                  }
-                  stroke="var(--ink)"
-                  strokeWidth="3"
-                />
-                <text x="60" y="6" fill="var(--ink)" fontSize="18">
-                  {name}
-                  {closedCodes.has(station.code) ? ` · ${copy.gatesClosed}` : ""}
-                </text>
-              </g>
+              <button
+                key={item.code}
+                type="button"
+                className="map-line-swatch"
+                aria-label={name}
+                aria-pressed={pressed}
+                title={name}
+                onClick={() => {
+                  if (mazeFocus === item.code) setMazeFocus(null)
+                  else setMazeFocus(item.code)
+                  setMazeRebuild((n) => n + 1)
+                  setLineCode(item.code)
+                  setSelected(null)
+                  if (chartRef.current) chartRef.current.scrollTop = 0
+                }}
+              >
+                <span className="map-line-swatch-face" style={{ background: swatch }} />
+              </button>
             )
           })}
-        </svg>
-      </div>
-      </div>
-      <div className="map-list">
-      <label htmlFor="map-find">{copy.findOnLine}</label>
-      <input id="map-find" value={query} onChange={(event) => setQuery(event.target.value)} />
-      {selectedStation ? (
-        <div className="station-actions">
-          <button type="button" onClick={() => onStart(selectedStation.code, selectedName)}>
-            {copy.startHere}
-          </button>
-          <button type="button" onClick={() => onGo(selectedStation.code, selectedName)}>
-            {copy.goHere}
-          </button>
         </div>
-      ) : null}
-      {selectedStation ? (
-        <section className="ticket">
-          <h2>
-            {selectedName}
-            {closedCodes.has(selectedStation.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
-          </h2>
-          {briefState === "missing" ? <p>{copy.noBrief}</p> : null}
-          {briefState === "ready" && brief ? <BriefDetails copy={copy} brief={brief} /> : null}
-        </section>
-      ) : null}
-      <ul className="station-list">
-        {filtered.map((station) => {
-          const name = station.names[lang] ?? station.names.en ?? station.code
-          return (
-            <li key={station.code}>
-              <button
-                type="button"
-                aria-pressed={selected === station.code}
-                onClick={() => setSelected(station.code)}
+        <p className="line-banner" style={{ background: color }}>
+          <span className="line-banner-name">
+            {label} ({line.code})
+          </span>
+        </p>
+        <ol className="map-line-chart" ref={chartRef} style={{ ["--line-color" as string]: color }}>
+          {stations.map((station, index) => {
+            const name = station.names[lang] ?? station.names.en ?? station.code
+            const hub = interchangeCodes.has(station.code)
+            const closed = closedCodes.has(station.code)
+            const onRoute = highlightCodes.has(station.code)
+            const pressed = selected === station.code
+            return (
+              <li key={station.code}>
+                <button type="button" aria-pressed={pressed} onClick={() => setSelected(station.code)}>
+                  <span className="map-rail" aria-hidden="true">
+                    <span
+                      className={hub ? "map-dot is-hub" : "map-dot"}
+                      style={{
+                        background: closed
+                          ? "var(--card)"
+                          : onRoute || pressed
+                            ? color
+                            : "var(--halo)",
+                      }}
+                    />
+                    {index < stations.length - 1 ? <span className="map-stem" /> : null}
+                  </span>
+                  <span className="map-stop">
+                    <span className="map-stop-name">{name}</span>
+                    <span className={closed ? "status-mark" : "status-mark is-open"}>
+                      {closed ? copy.gatesClosed : copy.statusOpen}
+                    </span>
+                    {onRoute ? <span className="quiet"> {copy.onRoute}</span> : null}
+                  </span>
+                </button>
+              </li>
+            )
+          })}
+        </ol>
+      </div>
+
+      <div className="map-detail">
+        {selectedStation ? (
+          <section className="map-station">
+            <h2>
+              {selectedName}
+              <span
+                className={
+                  closedCodes.has(selectedStation.code) ? "status-mark" : "status-mark is-open"
+                }
               >
-                {name}
-                {closedCodes.has(station.code) ? <span className="status-mark">{copy.gatesClosed}</span> : null}
-                {highlightCodes.has(station.code) ? <span className="quiet"> {copy.onRoute}</span> : null}
-              </button>
-            </li>
-          )
-        })}
-      </ul>
+                {closedCodes.has(selectedStation.code) ? copy.gatesClosed : copy.statusOpen}
+              </span>
+            </h2>
+            {briefState === "missing" ? <p>{copy.noBrief}</p> : null}
+            {briefState === "ready" && brief ? <BriefDetails copy={copy} brief={brief} /> : null}
+          </section>
+        ) : (
+          <div className="map-detail-stage">
+            <MapMaze
+              lines={visible.map((item) => ({
+                code: item.code,
+                color: item.label.en.color,
+                stations: item.stations.length,
+              }))}
+              focusedLineCode={mazeFocus}
+              rebuildKey={mazeRebuild}
+              label={copy.mapPickStation}
+            />
+          </div>
+        )}
       </div>
     </main>
   )
@@ -254,10 +203,10 @@ function BriefDetails({ copy, brief }: { copy: Copy; brief: StationBrief }) {
   return (
     <>
       <ul className="line-row">
-        {brief.lines.map((line) => (
-          <li key={line.code} className="line-chip">
-            <span className="swatch" style={{ background: line.color }} aria-hidden="true" />
-            {line.colorName} ({line.code})
+        {brief.lines.map((item) => (
+          <li key={item.code} className="line-chip">
+            <span className="swatch" style={{ background: item.color }} aria-hidden="true" />
+            {item.colorName} ({item.code})
           </li>
         ))}
       </ul>

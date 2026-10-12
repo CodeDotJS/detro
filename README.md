@@ -19,14 +19,14 @@ The network, the fares, the platforms, and the first and last trains come from a
 | --- | --- |
 | Plan | Origin, destination, swap, and one ride. A second ride appears when fewer changes visits different stations. Search accepts the station name or the station code. |
 | Ride | Line, direction, stop count, platform when the saved journey includes one, and weekday and weekend fare when it includes them. |
-| Map | One line at a time, with the stations on that line. Start here and Go here set the trip. Station details list the facilities saved for that station. |
+| Lines | One line at a time, with the stations on that line. Station details list the facilities saved for that station. |
 | City | 154 stations with a saved latitude and longitude, on street tiles kept in this repo. The ride is drawn between the ends that have positions. |
 | Offline | After this browser has loaded the app once, the snapshot still plans the trip with the network off. |
 | Saved trips | Own tab. Stored on this device. A shared link carries the two station codes. |
 | Play | Four games from the saved network: Next stop, Change here, Platform, and Faster or cheaper. Stamp stations, learn platforms and interchanges, and climb the ranks. Progress stays in the passport. |
 | Help | Usage, text size, and the snapshot date. |
 
-254 stations are in the snapshot. The city map omits the ones with no saved position. The plan and the line map still include them.
+254 stations are in the snapshot. The city map omits the ones with no saved position. Plan and Lines still include them.
 
 ## What you run
 
@@ -78,7 +78,7 @@ The file limits, the API token, and the order of steps are in [`docs/DEPLOYMENT.
 1. Choose the two stations. The ride shows the line, the direction, and the stops.
 2. When that pair is in the snapshot, the fare, the platform, and the first and last train are on the same screen.
 3. Save the trip on this device, or share a link that carries the two station codes.
-4. The line map and the city map open from the same trip. Help holds text size, theme, and the snapshot date.
+4. Lines and City open from the same trip. Help holds text size, theme, and the snapshot date.
 5. With the network off, a browser that has loaded the app once still opens that trip.
 
 | Kind | Where | How long |
