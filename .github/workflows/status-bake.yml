@@ -1,9 +1,9 @@
 name: Status
 
-# Register/refresh on push so Actions picks up this workflow (same fix as bitchat-mirror).
+# Renamed from status.yml so Actions creates a new workflow id (old path never got schedule).
 on:
-  # TEMP verify: every 10 minutes UTC. Restore to 08:00 / 14:00 / 20:00 IST after cron fires:
-  # schedule: - cron: "30 2,8,14 * * *"
+  # TEMP verify: every 10 minutes UTC. After a schedule run appears, restore:
+  # schedule: - cron: "30 2,8,14 * * *"   # 08:00 / 14:00 / 20:00 IST
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
