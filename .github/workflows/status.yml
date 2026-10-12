@@ -1,9 +1,11 @@
 name: Status
 
+# Register/refresh on push so Actions picks up this workflow (same fix as bitchat-mirror).
 on:
-  # Asia/Kolkata wall times: 08:00, 14:00, 20:00. Cron is UTC (IST = UTC+5:30).
+  # TEMP verify: every 10 minutes UTC. Restore to 08:00 / 14:00 / 20:00 IST after cron fires:
+  # schedule: - cron: "30 2,8,14 * * *"
   schedule:
-    - cron: "30 2,8,14 * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 concurrency:
