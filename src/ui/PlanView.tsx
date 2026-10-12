@@ -27,6 +27,7 @@ import { measureSwap, playSwap, type SwapDelta } from "./flipSwap"
 import { MetroScene } from "./MetroScene"
 import { Notice } from "./Notice"
 import { RouteBoard } from "./RouteBoard"
+import { useSuggestionPlacement } from "./useSuggestionPlacement"
 
 type Field = "from" | "to"
 
@@ -478,12 +479,15 @@ function StationField({
   onHighlight: (index: number) => void
   closedCodes?: Set<string>
 }) {
+  const inputRef = useRef<HTMLInputElement>(null)
   const active = state.activeField === field
   const listId = `${field}-suggestions`
   const query = field === "from" ? state.fromQuery : state.toQuery
   const pick = field === "from" ? state.from : state.to
   const stationLines = pick ? lineColors(pick.code, lines, lang) : []
   const open = active && (state.suggestionStatus === "ready" || state.suggestionStatus === "empty" || state.suggestionStatus === "loading" || state.suggestionStatus === "error")
+  const listOpen = open && state.suggestions.length > 0
+  const place = useSuggestionPlacement(listOpen, inputRef)
 
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (!active) return
@@ -501,8 +505,16 @@ function StationField({
     }
   }
 
+  const fieldClass = [
+    "field",
+    placed ? "field-placed" : "",
+    listOpen ? (place === "above" ? "is-list-above" : "is-list-below") : "",
+  ]
+    .filter(Boolean)
+    .join(" ")
+
   return (
-    <div className={placed ? "field field-placed" : "field"}>
+    <div className={fieldClass}>
       <label htmlFor={field}>
         <span>{field === "from" ? copy.from : copy.to}</span>
         {stationLines.length > 0 ? (
@@ -514,26 +526,31 @@ function StationField({
         ) : null}
       </label>
       <input
+        ref={inputRef}
         id={field}
         name={field}
         role="combobox"
         autoComplete="off"
         aria-autocomplete="list"
-        aria-expanded={open && state.suggestions.length > 0}
+        aria-expanded={listOpen}
         aria-controls={listId}
         aria-activedescendant={
           active && state.highlight >= 0 ? `${field}-option-${state.highlight}` : undefined
         }
         value={query}
         placeholder={copy.searchStation}
-        onFocus={() => onFocus(field)}
+        onFocus={(event) => {
+          onFocus(field)
+          const input = event.currentTarget
+          requestAnimationFrame(() => input.select())
+        }}
         onChange={(event) => onType(field, event.target.value)}
         onKeyDown={onKeyDown}
       />
       {open && state.suggestionStatus === "loading" ? <p className="hint">{copy.searching}</p> : null}
       {open && state.suggestionStatus === "empty" ? <p className="hint">{copy.noResults}</p> : null}
       {open && state.suggestionStatus === "error" ? <p className="hint">{copy.searchError}</p> : null}
-      {open && state.suggestions.length > 0 ? (
+      {listOpen ? (
         <ul id={listId} role="listbox">
           {state.suggestions.map((station, index) => (
             <li key={station.code} role="presentation">

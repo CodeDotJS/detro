@@ -196,6 +196,7 @@ export type Copy = {
   statusGetOff: string
   statusNeedStart: string
   statusChangeStop: string
+  statusClearStation: string
   statusReady: string
   statusFoot: (count: number, when: string) => string
   statusClosedLabel: string
@@ -429,6 +430,7 @@ export const copy = {
   statusGetOff: "Get off here",
   statusNeedStart: "First choose where you start.",
   statusChangeStop: "Change",
+  statusClearStation: "Clear station",
   statusReady: "Both gates are open.",
   statusFoot: (count, when) =>
     when ? `${count === 1 ? "1 station closed" : `${count} stations closed`} · ${when}` : `${count === 1 ? "1 station closed" : `${count} stations closed`}`,

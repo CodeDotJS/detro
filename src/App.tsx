@@ -755,6 +755,9 @@ export function App() {
         dispatch({ type: "select", field, code })
         setPlacedField(null)
         clearResult()
+        if (field === "from") {
+          requestAnimationFrame(() => document.getElementById("to")?.focus())
+        }
       }}
       onHighlight={(index) => dispatch({ type: "highlight", index })}
       onSwap={() => {

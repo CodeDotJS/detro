@@ -215,7 +215,7 @@ function StatusDayDialog({
   onClose: () => void
 }) {
   const box = useRef<HTMLDivElement>(null)
-  const title = copy.statusHistoryDay(formatHistoryDate(day.date), day.count)
+  const title = copy.statusHistoryDay(formatHistoryDate(day.date, true), day.count)
 
   useEffect(() => {
     const previous = document.body.style.overflow
@@ -242,12 +242,12 @@ function StatusDayDialog({
         aria-labelledby="status-day-title"
       >
         <div className="status-day-head">
-          <div>
+          <div className="status-day-titles">
             <p className="status-kicker">{copy.statusHistoryTitle}</p>
             <h3 id="status-day-title">{title}</h3>
           </div>
           <button type="button" className="status-day-close" onClick={onClose} aria-label={copy.statusHistoryClose}>
-            <X aria-hidden="true" size={18} strokeWidth={2} />
+            <X aria-hidden="true" size={16} strokeWidth={2} />
           </button>
         </div>
         {day.stations.length === 0 ? (
@@ -255,18 +255,14 @@ function StatusDayDialog({
         ) : (
           <ol className="status-day-list">
             {day.stations.map((stop, index) => {
-              const lines = lineByCode.get(stop.code) ?? []
-              const accent = lines[0]?.color
+              const accent = (lineByCode.get(stop.code) ?? [])[0]?.color
               return (
                 <li
                   key={stop.code}
                   style={accent ? { borderRightColor: accent } : undefined}
                 >
                   <span className="status-day-index">{index + 1}</span>
-                  <span className="status-day-main">
-                    <LineDots lines={lines} />
-                    <span className="status-day-name">{stop.name}</span>
-                  </span>
+                  <span className="status-day-name">{stop.name}</span>
                 </li>
               )
             })}
@@ -275,17 +271,6 @@ function StatusDayDialog({
       </div>
     </div>,
     document.body,
-  )
-}
-
-function LineDots({ lines }: { lines: LineChip[] }) {
-  if (lines.length === 0) return null
-  return (
-    <span className="line-dots" aria-hidden="true">
-      {lines.map((line) => (
-        <span key={line.code} className="line-dot" style={{ background: line.color }} title={line.colorName} />
-      ))}
-    </span>
   )
 }
 

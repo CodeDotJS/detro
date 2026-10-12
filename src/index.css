@@ -1214,6 +1214,7 @@ section:not(.ticket):not(.departures):not(.map-station):not(.status-service):not
 }
 
 .field {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space);
@@ -4237,6 +4238,33 @@ summary {
     gap: 8px;
   }
 
+  /* Keep suggestions on screen when the soft keyboard eats half the viewport. */
+  .field.is-list-below,
+  .field.is-list-above {
+    z-index: 5;
+  }
+
+  .field.is-list-below ul[role="listbox"],
+  .field.is-list-above ul[role="listbox"] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    max-height: min(42dvh, 16rem);
+    overflow-y: auto;
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+
+  .field.is-list-below ul[role="listbox"] {
+    top: calc(100% + 4px);
+    bottom: auto;
+  }
+
+  .field.is-list-above ul[role="listbox"] {
+    bottom: calc(100% + 4px);
+    top: auto;
+  }
+
   .planner,
   .map-intro,
   .map-list,
@@ -4832,6 +4860,34 @@ summary {
   gap: 4px;
 }
 
+.status-look-tools {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.status-look-clear {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.status-look-clear:hover,
+.status-look-clear:focus-visible {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  outline: none;
+}
+
 .status-look-name,
 .status-name {
   display: flex;
@@ -4965,7 +5021,7 @@ summary {
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 0 10px;
+  padding: 0 12px;
   background: var(--card);
   color: var(--ink);
   border: 1px solid var(--line);
@@ -4974,12 +5030,26 @@ summary {
   font-weight: 600;
 }
 
-.status-act:hover {
+.status-act:hover,
+.status-act:focus-visible {
   border-color: var(--ink);
+  outline: none;
 }
 
 .status-split .zoom-row button {
   min-height: 44px;
+}
+
+.status-split .zoom-row button.ghost {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.status-split .zoom-row button.ghost:hover,
+.status-split .zoom-row button.ghost:focus-visible {
+  border-color: var(--ink);
+  outline: none;
 }
 
 .status-row-main {
@@ -5624,28 +5694,49 @@ summary {
 }
 
 .status-day-head {
-  position: static;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
+  position: relative;
+  display: block;
   margin: 0 0 0.95rem;
-  padding: 0;
+  padding: 0 2.25rem;
   background: transparent;
+  text-align: center;
+}
+
+.status-day-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.status-day-titles .status-kicker,
+.status-day-titles h3 {
+  margin: 0;
+  text-align: center;
 }
 
 .status-day-close {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
   display: grid;
   place-items: center;
   margin: 0;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--shade);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.status-day-close:hover,
+.status-day-close:focus-visible {
   color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  outline: none;
 }
 
 .status-day-list {
@@ -5682,25 +5773,9 @@ summary {
   color: var(--muted);
 }
 
-.status-day-main {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.5rem;
-  min-width: 0;
-}
-
 .status-day-name {
+  min-width: 0;
   font-weight: 600;
-}
-
-.status-day-dialog .line-dots {
-  gap: 4px;
-}
-
-.status-day-dialog .line-dot {
-  width: 10px;
-  height: 10px;
 }
 
 .status-below > .status-service {
