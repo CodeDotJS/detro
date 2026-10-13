@@ -22,4 +22,4 @@ Date: 2026-10-12. Extends Status with a daily closed-station history chart and a
 
 ## Bake
 
-`python3 src/lib/offline/build_status.py` still packs linepage closed phrases. It also fetches service-update, strips HTML to plain text, merges today’s union into history, and writes only files that changed. GitHub Actions opens a PR when either file differs from `main`.
+`python3 src/lib/offline/build_status.py` still packs linepage closed phrases. It also fetches service-update, strips HTML to plain text, merges today’s union into history, and writes only files whose readable content changed (closed map, notice title/text/dated, or history days). Fetch clocks alone do not rewrite `status.json`. GitHub Actions opens a PR when either file differs from `main`.
