@@ -1,6 +1,8 @@
 /** Trial: last successful Status bake dispatch from the Cloudflare ping Worker. */
 export const STATUS_PING_URL = "https://detro-status-ping.rushforlinux.workers.dev"
 
+let sessionPoll: Promise<string | null> | null = null
+
 export function readLastPollPayload(raw: unknown): string | null {
   if (!raw || typeof raw !== "object") return null
   const polledAt = (raw as { polledAt?: unknown }).polledAt
@@ -19,4 +21,10 @@ export async function fetchLastPoll(signal?: AbortSignal): Promise<string | null
   } catch {
     return null
   }
+}
+
+/** One network read per app session (tab navigation must not refetch). */
+export function loadLastPoll(): Promise<string | null> {
+  if (!sessionPoll) sessionPoll = fetchLastPoll()
+  return sessionPoll
 }
