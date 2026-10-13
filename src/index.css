@@ -4771,30 +4771,44 @@ summary {
   text-align: center;
 }
 
+/* Trial chip row for Status counts — revert this block if the look does not stick. */
 .status-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 8px;
+}
+
+/* Keep 2×2 when polled is present — four columns in the Status pane wraps “11:23 PM”. */
+.status-stats.has-polled {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .status-stats p {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
   margin: 0;
-  padding: 0;
+  padding: 0.65rem 0.5rem 0.55rem;
+  text-align: center;
+  background: var(--shade);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 2px);
 }
 
 .status-stats strong {
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-variant-numeric: tabular-nums;
-  line-height: 1.1;
+  line-height: 1.15;
+  color: var(--ink);
+  white-space: nowrap;
 }
 
 .status-stats span {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--muted);
 }

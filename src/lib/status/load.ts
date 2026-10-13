@@ -40,6 +40,37 @@ export function statusClock(fetchedAt: string): string {
   return fetchedAt.replace("T", " ").replace(/\.\d+$/, "")
 }
 
+/** Compact 12-hour clock for Status stats, e.g. `8:00 AM`. */
+export function statusTime12(fetchedAt: string): string {
+  const parts = readClockParts(fetchedAt)
+  if (!parts) return ""
+  return `${parts.hour12}:${parts.minute} ${parts.ampm}`
+}
+
+/** Date plus 12-hour clock for tooltips, e.g. `2026-10-13 8:00 AM`. */
+export function statusStamp12(fetchedAt: string): string {
+  const parts = readClockParts(fetchedAt)
+  if (!parts) return statusClock(fetchedAt)
+  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour12}:${parts.minute} ${parts.ampm}`
+}
+
+function readClockParts(fetchedAt: string) {
+  if (!fetchedAt) return null
+  const match = fetchedAt.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::\d{2})?(?:\.\d+)?/)
+  if (!match) return null
+  const hour24 = Number(match[4])
+  const ampm = hour24 >= 12 ? "PM" : "AM"
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12
+  return {
+    year: match[1],
+    month: match[2],
+    day: match[3],
+    minute: match[5],
+    hour12: String(hour12),
+    ampm,
+  }
+}
+
 function readStation(value: unknown): StatusStation | null {
   if (!value || typeof value !== "object") return null
   const row = value as Record<string, unknown>

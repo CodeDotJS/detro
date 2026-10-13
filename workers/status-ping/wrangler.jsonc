@@ -13,5 +13,11 @@
     "GITHUB_OWNER": "CodeDotJS",
     "GITHUB_REPO": "detro",
     "GITHUB_WORKFLOW": "status-bake.yml"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "STATUS_POLL",
+      "id": "b2bf8d13bdfd47a09e33c0f67393200e"
+    }
+  ]
 }

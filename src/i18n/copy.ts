@@ -202,6 +202,8 @@ export type Copy = {
   statusClosedLabel: string
   statusOpenLabel: string
   statusCheckedLabel: string
+  statusPolledLabel: string
+  statusPolledFresh: (when: string) => string
   statusLineClosed: (count: number) => string
   statusHistoryTitle: string
   statusHistoryLead: string
@@ -437,6 +439,8 @@ export const copy = {
   statusClosedLabel: "closed",
   statusOpenLabel: "open",
   statusCheckedLabel: "checked",
+  statusPolledLabel: "polled",
+  statusPolledFresh: (when) => `Last poll ${when}`,
   statusLineClosed: (count) => (count === 1 ? "1 closed" : `${count} closed`),
   statusHistoryTitle: "Closures over time",
   statusHistoryLead: "Closed gates recorded on each check day.",
