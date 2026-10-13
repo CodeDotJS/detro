@@ -15,10 +15,19 @@ npx wrangler deploy
 # printf '%s' "$STATUS_BAKE_TOKEN" | npx wrangler secret put STATUS_BAKE_TOKEN
 ```
 
-Manual test after deploy (needs a workers.dev route or a custom route — enable `workers_dev` temporarily if needed):
+## Last poll (Status UI trial)
+
+Successful dispatches store Asia/Kolkata `polledAt` in KV (`STATUS_POLL`). Anyone may read it:
 
 ```bash
-curl -X POST "https://detro-status-ping.<account>.workers.dev" \
+curl -sS "https://detro-status-ping.rushforlinux.workers.dev"
+# {"polledAt":"2026-10-13T14:00:00.000"} or {"polledAt":null}
+```
+
+Manual kick (also refreshes `polledAt`):
+
+```bash
+curl -X POST "https://detro-status-ping.rushforlinux.workers.dev" \
   -H "Authorization: Bearer $STATUS_BAKE_TOKEN"
 ```
 
