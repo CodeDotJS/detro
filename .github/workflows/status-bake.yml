@@ -1,11 +1,8 @@
 name: Status
 
-# Renamed from status.yml so Actions creates a new workflow id (old path never got schedule).
+# Clock is Cloudflare Worker detro-status-ping (cron → this dispatch).
+# GitHub Actions schedule never registered on this repo; do not rely on it.
 on:
-  # TEMP verify: every 10 minutes UTC. After a schedule run appears, restore:
-  # schedule: - cron: "30 2,8,14 * * *"   # 08:00 / 14:00 / 20:00 IST
-  schedule:
-    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 concurrency:

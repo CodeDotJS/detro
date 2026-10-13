@@ -158,6 +158,10 @@ The workflow needs two GitHub secrets, both free to create: `CLOUDFLARE_API_TOKE
 
 The Status bake needs a third secret, `STATUS_BAKE_TOKEN`: a classic personal access token with the `repo` scope. The bake opens a pull request with that token so CI runs and production can upload. The default `GITHUB_TOKEN` cannot start workflows from its own push. Do not print the token and do not commit it.
 
+### Status bake clock (Worker)
+
+GitHub Actions `schedule` never registered on this repository. The clock is Worker `detro-status-ping` under `workers/status-ping/`: cron `30 2,8,14 * * *` UTC (08:00 / 14:00 / 20:00 Asia/Kolkata) `POST`s `workflow_dispatch` for `.github/workflows/status-bake.yml`. Put the same PAT on the Worker as secret `STATUS_BAKE_TOKEN` (`npx wrangler secret put STATUS_BAKE_TOKEN` from that folder). Deploy the Worker with Wrangler from this machine when the ping changes; do not upload the Pages site with Wrangler from this machine. See `workers/status-ping/README.md`.
+
 Sources: [Pages limits](https://developers.cloudflare.com/pages/platform/limits/), [Pages pricing](https://developers.cloudflare.com/pages/functions/pricing/), [Direct Upload with CI](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/).
 
 ## What must not be turned on
@@ -167,8 +171,8 @@ These are the switches that turn a free static site into a quota or a bill.
 - A second Git connection inside Cloudflare Pages, which would build again and deploy without the test job
 - Vercel Analytics, Speed Insights, and Image Optimization, if a Vercel project is ever added
 - Cloudflare Web Analytics, Zaraz, and Pages Functions
-- Workers, R2, KV, and D1
-- A server, a cron job, or a live call to the DMRC backend from the host
+- Extra Workers beyond `detro-status-ping`, and R2, KV, and D1
+- A live call to the DMRC backend from the Pages host or from any Worker (the status ping only calls GitHub)
 
 The installed app already contains the station lists, the journey pack, the station briefs, and the street tiles. The host only has to serve files.
 

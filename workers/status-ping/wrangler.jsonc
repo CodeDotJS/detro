@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "detro-status-ping",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-13",
+  // workers.dev URL is only for a locked POST smoke test (Bearer STATUS_BAKE_TOKEN).
+  "workers_dev": true,
+  "triggers": {
+    // 08:00 / 14:00 / 20:00 Asia/Kolkata
+    "crons": ["30 2,8,14 * * *"]
+  },
+  "vars": {
+    "GITHUB_OWNER": "CodeDotJS",
+    "GITHUB_REPO": "detro",
+    "GITHUB_WORKFLOW": "status-bake.yml"
+  }
+}

@@ -51,7 +51,12 @@ def main() -> int:
 
         out = {"fetchedAt": fetched_at, "stations": pack["stations"]}
         if service:
-            out["serviceUpdate"] = service
+            previous_service = previous.get("serviceUpdate") if previous else None
+            # Keep the prior notice object (including its fetch clock) when title/text/dated match.
+            if normalize_service(previous_service) == normalize_service(service):
+                out["serviceUpdate"] = previous_service
+            else:
+                out["serviceUpdate"] = service
         if previous is not None and previous.get("stations") == out["stations"]:
             out["fetchedAt"] = previous.get("fetchedAt") or fetched_at
 
@@ -81,10 +86,21 @@ def main() -> int:
         return 1
 
 
+def normalize_service(service: object) -> object | None:
+    """Compare notice content only. Fetch clocks alone must not open a bake PR."""
+    if not isinstance(service, dict):
+        return None if service is None else service
+    return {
+        "title": service.get("title"),
+        "text": service.get("text"),
+        "dated": service.get("dated"),
+    }
+
+
 def normalize_status(pack: dict) -> dict:
     return {
         "stations": pack.get("stations") or {},
-        "serviceUpdate": pack.get("serviceUpdate"),
+        "serviceUpdate": normalize_service(pack.get("serviceUpdate")),
     }
 
 
