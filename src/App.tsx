@@ -25,6 +25,7 @@ import { clearTrips, readTripQuery, readTrips, removeTrip, toggleTrip, tripQuery
 import type { Journey, Lang, Suggestion } from "./lib/transit/types"
 import coordinatesFile from "../data/en/coordinates.json"
 import { accessByCode } from "./lib/status/pack"
+import { loadLastPoll } from "./lib/status/lastPoll"
 import { loadStatus, loadStatusHistory, statusClock } from "./lib/status/load"
 import { locationCopy, readLocation, rememberedLocation, resetLocationMemory, type LocationResult } from "./lib/status/location"
 import { nearestBoardable, nearestStation, type Coordinate } from "./lib/status/nearest"
@@ -166,6 +167,10 @@ export function App() {
   const [helpNotice, setHelpNotice] = useState<string | null>(null)
   const [trips, setTrips] = useState<SavedTrip[]>(readStoredTrips)
   const [savedMark, setSavedMark] = useState<{ n: number; fromCode: string; toCode: string } | null>(null)
+  const [statusPolledAt, setStatusPolledAt] = useState<string | null>(null)
+  useEffect(() => {
+    void loadLastPoll().then(setStatusPolledAt)
+  }, [])
   useEffect(() => {
     if (tab !== "saved" || savedMark === null) return
     const id = window.setTimeout(() => setSavedMark(null), 1100)
@@ -838,6 +843,7 @@ export function App() {
         here={here}
         locating={locating}
         locateNote={locateNote}
+        polledAt={statusPolledAt}
         onLocate={() =>
           readHere(
             () => undefined,

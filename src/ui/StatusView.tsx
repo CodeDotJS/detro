@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
+import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
 import { ArrowRight, LocateFixed, X } from "lucide-react"
 import type { Copy } from "../i18n/copy"
 import { lineIndexFor, searchCatalog, type CatalogStation } from "../lib/dmrc/snapshot"
-import { fetchLastPoll } from "../lib/status/lastPoll"
 import { statusStamp12, statusTime12 } from "../lib/status/load"
 import { nearestOpen } from "../lib/status/gates"
 import { nearestStation, type Coordinate } from "../lib/status/nearest"
@@ -29,6 +28,7 @@ export function StatusView({
   onLocate,
   onPlan,
   onClear,
+  polledAt = null,
   initialFrom = null,
   initialDest = null,
 }: {
@@ -45,6 +45,7 @@ export function StatusView({
   onLocate: () => void
   onPlan: (from: Stop, to: Stop) => void
   onClear: () => void
+  polledAt?: string | null
   initialFrom?: string | null
   initialDest?: string | null
 }) {
@@ -56,7 +57,6 @@ export function StatusView({
   const [looked, setLooked] = useState<Stop | null>(() => named(initialFrom, names) ?? named(initialDest, names))
   const [openLine, setOpenLine] = useState<string | null>(null)
   const [focus, setFocus] = useState<string | null>(null)
-  const [polledAt, setPolledAt] = useState<string | null>(null)
   const closedCount = Object.keys(pack.stations).length
   const openCount = Math.max(0, names.size - closedCount)
   const clock = pack.fetchedAt ? statusTime12(pack.fetchedAt) : ""
@@ -91,17 +91,6 @@ export function StatusView({
   const tracks = useMemo(() => closedByLine(pack, lines, names), [pack, lines, names])
   const suggestions = useMemo(() => (query.trim() ? searchCatalog(stations, "en", query).slice(0, 8) : []), [query, stations])
   const listOpen = searchOpen && query.trim().length > 0
-
-  useEffect(() => {
-    let alive = true
-    // Do not abort on Strict Mode remount — a cancelled first request looks like a failure in DevTools.
-    fetchLastPoll().then((value) => {
-      if (alive) setPolledAt(value)
-    })
-    return () => {
-      alive = false
-    }
-  }, [])
 
   function lookAt(stop: Stop, lineCode?: string | null) {
     setLooked(stop)
