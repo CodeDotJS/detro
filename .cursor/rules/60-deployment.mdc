@@ -15,7 +15,7 @@ When the user says to deploy, follow `.cursor/skills/deploy-detro/SKILL.md`. Ope
 
 The Pages project `detro` already exists and is Direct Upload. Do not create a second project, do not connect Pages to Git, and do not upload with Wrangler from this machine.
 
-Production for the app is Cloudflare Pages only. No Vercel project, Pages Functions, R2, KV, D1, analytics, or a paid add-on. One exception: Worker `detro-status-ping` (`workers/status-ping`) may cron-dispatch the Status bake. Do not add other Workers.
+Production for the app is Cloudflare Pages only. No Vercel project, Pages Functions, R2, D1, analytics, or a paid add-on. One exception: Worker `detro-status-ping` (`workers/status-ping`) may cron-dispatch the Status bake and may use one KV namespace (`STATUS_POLL`) for the last-poll stamp. Do not add other Workers or KV.
 
 Do not deploy `data/en/routes/`, `data/en/fares/`, `data/en/first-last/`, `data/hi/`, `scripts/`, `detro.archives/`, `curls/`, or `prompt.md`.
 

@@ -171,7 +171,7 @@ These are the switches that turn a free static site into a quota or a bill.
 - A second Git connection inside Cloudflare Pages, which would build again and deploy without the test job
 - Vercel Analytics, Speed Insights, and Image Optimization, if a Vercel project is ever added
 - Cloudflare Web Analytics, Zaraz, and Pages Functions
-- Extra Workers beyond `detro-status-ping`, and R2, KV, and D1
+- Extra Workers beyond `detro-status-ping`, extra KV beyond `STATUS_POLL`, and R2 or D1
 - A live call to the DMRC backend from the Pages host or from any Worker (the status ping only calls GitHub)
 
 The installed app already contains the station lists, the journey pack, the station briefs, and the street tiles. The host only has to serve files.
