@@ -8,7 +8,8 @@ ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "data" / "en"
 OUT = DATA / "journeys"
 MODES = ("least-distance", "minimum-interchange")
-CLOCK = __import__("re").compile(r"^\d{2}:[0-5]\d:[0-5]\d$")
+# DMRC sometimes sends fractional seconds (e.g. 06:22:07.500000). Keep wall HH:MM:SS.
+CLOCK = __import__("re").compile(r"^\d{2}:[0-5]\d:[0-5]\d(?:\.\d+)?$")
 
 
 def main() -> None:
@@ -145,7 +146,7 @@ def duration_minutes(value):
 def clock(value):
     if not isinstance(value, str) or CLOCK.fullmatch(value) is None:
         return None
-    return value
+    return value.split(".", 1)[0]
 
 
 def text(value):
