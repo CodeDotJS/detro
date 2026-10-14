@@ -1,18 +1,31 @@
-export function backgroundOrder(list: { shell: string[]; snapshot: string[] }): string[][] {
-  const shell: string[] = []
+export type WarmGroups = {
+  shell: string[]
+  journeys: string[]
+  tiles: string[]
+}
+
+/** Split the build list into warm phases. Station briefs stay out — they ship in the JS bundle. */
+export function backgroundOrder(list: { shell: string[]; snapshot: string[] }): WarmGroups {
+  const pages: string[] = []
+  const assets: string[] = []
+  const other: string[] = []
   const tiles: string[] = []
   for (const url of list.shell) {
     if (url === "/sw.js") continue
     if (url.startsWith("/map-tiles/")) tiles.push(url)
-    else shell.push(url)
+    else if (url === "/" || url === "/index.html") pages.push(url)
+    else if (url.startsWith("/assets/")) assets.push(url)
+    else other.push(url)
   }
   const journeys: string[] = []
-  const briefs: string[] = []
   for (const url of list.snapshot) {
     if (url.startsWith("/snapshot/en/journeys/")) journeys.push(url)
-    else briefs.push(url)
   }
-  return [shell, journeys, briefs, tiles]
+  return {
+    shell: [...pages, ...assets, ...other],
+    journeys,
+    tiles,
+  }
 }
 
 export function classifyPrecache(urls: string[]): { shell: string[]; snapshot: string[] } {

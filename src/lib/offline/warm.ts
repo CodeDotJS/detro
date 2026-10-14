@@ -1,50 +1,76 @@
 import { backgroundOrder } from "./precache"
 import { SHELL_CACHE, SNAPSHOT_CACHE } from "./caches"
 
-const WIDTH = 2
+const SHELL_WIDTH = 4
+const HEAVY_WIDTH = 2
 
 let started = false
 let running = false
+let again = false
 
 export function warmOffline(): void {
-  if (started || !("caches" in window)) return
+  if (started || !("caches" in globalThis)) return
   started = true
-  const run = () => {
-    if (running) return
-    running = true
-    void fill().finally(() => {
-      running = false
-    })
+  void warm()
+  window.addEventListener("online", () => {
+    void warm()
+  })
+}
+
+async function warm(): Promise<void> {
+  if (running) {
+    again = true
+    return
   }
-  if ("requestIdleCallback" in window) window.requestIdleCallback(run, { timeout: 2000 })
-  else globalThis.setTimeout(run, 1500)
-  window.addEventListener("online", run)
+  running = true
+  try {
+    do {
+      again = false
+      await fill()
+    } while (again && navigator.onLine)
+  } finally {
+    running = false
+  }
 }
 
 async function fill(): Promise<void> {
   if (!navigator.onLine) return
-  let list: { shell: string[]; snapshot: string[] }
+  const list = await loadPrecache()
+  if (!list) return
+
+  const { shell, journeys, tiles } = backgroundOrder(list)
+  await refreshShell(list.shell)
+  if (!navigator.onLine) return
+  await storeMissing(SHELL_CACHE, shell, { width: SHELL_WIDTH })
+
+  if (!navigator.onLine) return
+  await whenIdle()
+  if (!navigator.onLine) return
+
+  await storeMissing(SNAPSHOT_CACHE, journeys, { width: HEAVY_WIDTH, priority: "low" })
+  if (!navigator.onLine) return
+  await storeMissing(SHELL_CACHE, tiles, { width: HEAVY_WIDTH, priority: "low" })
+}
+
+async function loadPrecache(): Promise<{ shell: string[]; snapshot: string[] } | null> {
   try {
     const response = await fetch("/precache.json")
-    if (!response.ok) return
+    if (!response.ok) return null
     const payload: unknown = await response.json()
-    if (!isList(payload)) return
-    list = payload
+    return isList(payload) ? payload : null
   } catch {
-    return
+    return null
   }
-  const [shell, journeys, briefs, tiles] = backgroundOrder(list)
-  const groups: Array<[string, string[]]> = [
-    [SHELL_CACHE, shell],
-    [SNAPSHOT_CACHE, journeys],
-    [SNAPSHOT_CACHE, briefs],
-    [SHELL_CACHE, tiles],
-  ]
-  await refreshShell(list.shell)
-  for (const [name, urls] of groups) {
-    if (!navigator.onLine) return
-    await storeMissing(name, urls)
-  }
+}
+
+function whenIdle(): Promise<void> {
+  return new Promise((resolve) => {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(() => resolve(), { timeout: 2000 })
+      return
+    }
+    globalThis.setTimeout(resolve, 1500)
+  })
 }
 
 const PAGES = ["/", "/index.html"]
@@ -59,7 +85,11 @@ async function refreshShell(current: string[]): Promise<void> {
   }
 }
 
-async function storeMissing(name: string, urls: string[]): Promise<void> {
+async function storeMissing(
+  name: string,
+  urls: string[],
+  options: { width: number; priority?: RequestPriority },
+): Promise<void> {
   const cache = await caches.open(name)
   const saved = new Set((await cache.keys()).map((request) => new URL(request.url).pathname))
   const pending = urls.filter((url) => !saved.has(url))
@@ -68,16 +98,16 @@ async function storeMissing(name: string, urls: string[]): Promise<void> {
     while (next < pending.length && navigator.onLine) {
       const url = pending[next]
       next += 1
-      await storeOne(cache, url)
+      await storeOne(cache, url, options.priority)
     }
   }
-  const workers = Math.min(WIDTH, pending.length)
+  const workers = Math.min(options.width, pending.length)
   await Promise.all(Array.from({ length: workers }, () => worker()))
 }
 
-async function storeOne(cache: Cache, url: string): Promise<void> {
+async function storeOne(cache: Cache, url: string, priority?: RequestPriority): Promise<void> {
   try {
-    const response = await fetch(url, { priority: "low" })
+    const response = await fetch(url, priority ? { priority } : undefined)
     if (!response.ok) return
     await cache.put(url, response)
   } catch {

@@ -20,18 +20,38 @@ describe("offline precache list", () => {
     ])
   })
 
-  it("saves the app, then journeys, then street tiles", () => {
+  it("saves pages and assets first, then journeys, then street tiles", () => {
     expect(
       backgroundOrder({
-        shell: ["/", "/sw.js", "/assets/app.js", "/map-tiles/9/1/1.png", "/attractions/metro-people.svg"],
+        shell: [
+          "/attractions/metro-people.svg",
+          "/sw.js",
+          "/assets/app.js",
+          "/",
+          "/map-tiles/9/1/1.png",
+          "/icons/icon-192.png",
+          "/index.html",
+        ],
         snapshot: ["/snapshot/en/station_brief/RI.json", "/snapshot/en/journeys/RI.json"],
       }),
-    ).toEqual([
-      ["/", "/assets/app.js", "/attractions/metro-people.svg"],
-      ["/snapshot/en/journeys/RI.json"],
-      ["/snapshot/en/station_brief/RI.json"],
-      ["/map-tiles/9/1/1.png"],
-    ])
+    ).toEqual({
+      shell: ["/", "/index.html", "/assets/app.js", "/attractions/metro-people.svg", "/icons/icon-192.png"],
+      journeys: ["/snapshot/en/journeys/RI.json"],
+      tiles: ["/map-tiles/9/1/1.png"],
+    })
+  })
+
+  it("does not background-warm station briefs already in the bundle", () => {
+    const ordered = backgroundOrder({
+      shell: ["/"],
+      snapshot: [
+        "/snapshot/en/station_brief/RI.json",
+        "/snapshot/en/station_brief/KG.json",
+        "/snapshot/en/journeys/KG.json",
+      ],
+    })
+    expect(ordered.journeys).toEqual(["/snapshot/en/journeys/KG.json"])
+    expect(JSON.stringify(ordered)).not.toContain("station_brief")
   })
 
   it("uses the same cache names as the service worker", () => {
