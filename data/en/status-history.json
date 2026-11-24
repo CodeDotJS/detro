@@ -317,6 +317,40 @@
           "name": "MADHUBAN CHOWK (earlier PITAMPURA)"
         }
       ]
+    },
+    {
+      "count": 7,
+      "date": "2026-11-24",
+      "stations": [
+        {
+          "code": "BIMR",
+          "name": "HAIDERPUR BADLI MOR"
+        },
+        {
+          "code": "BLSW",
+          "name": "BHALASWA"
+        },
+        {
+          "code": "DPCK",
+          "name": "DEEPALI CHOWK"
+        },
+        {
+          "code": "MKPR",
+          "name": "MAJLIS PARK"
+        },
+        {
+          "code": "NPPR",
+          "name": "NORTH PITAMPURA"
+        },
+        {
+          "code": "PHVR",
+          "name": "PRASHANT VIHAR"
+        },
+        {
+          "code": "PTP",
+          "name": "MADHUBAN CHOWK (earlier PITAMPURA)"
+        }
+      ]
     }
   ]
 }
